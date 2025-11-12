@@ -16,9 +16,9 @@
 #define GPIOB_PIN_14_NoPullUpPullDown           0x10000000UL
 #define GPIOB_PIN_14_ResetOut                   0x40000000UL
 
-#define BIT_SET(REG, BIT) ((REG) |= (BIT))
-#define BIT_RESET(REG, BIT) ((REG) &= ~(BIT))
-#define BIT_READ(REG, BIT)  ((REG) & (BIT))
+#define BIT_SET(REG, BIT)                       ((REG) |= (BIT))
+#define BIT_RESET(REG, BIT)                     ((REG) &= ~(BIT))
+#define BIT_READ(REG, BIT)                      ((REG) & (BIT))
 
 
 void RCC_init (void);
