@@ -4,14 +4,9 @@ void RCC_init (void) {
     SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_GPIOBEN)
 }
 
-// green PB0 blue PB7 red PB14
-
-
-
 void onboard_leds_init (void) {
 
 // green PB0 ручками
-
 *(uint32_t*)(0x40020400UL + 0x00UL) |= 0x01UL; // Moder 0_1
 *(uint32_t*)(0x40020400UL + 0x00UL) &= ~0x02UL; // Moder 1_0
 
@@ -25,9 +20,7 @@ void onboard_leds_init (void) {
 
 *(uint32_t*)(0x40020400UL + 0x18) |= 0x10000UL; // BSRR reser PB0 output
 
-
 // blue led PB7 через CMSIS
-
 SET_BIT(GPIOB -> MODER, GPIO_MODER_MODE7_0); // Moder 14_1
 CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE7_1); // Moder 15_0
 
@@ -39,16 +32,15 @@ CLEAR_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR7_1); // SPEED 15_0
 CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD7_0); // PUPDR 14_0
 CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD7_1); // PUPDR 15_0
 
-SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_7); // // BSRR reser PB7 output
+SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_7); // // BSRR reset PB7 output
 
 
 // red led PB14 через собственные директивы
-
-BIT_SET(GPIOB_MODER, GPIOB_PIN_14_GPOut);
-BIT_SET(GPIOB_OTYPER, GPIOB_PIN_14_PushPull);
-BIT_SET(GPIOB_OSPEEDR, GPIOB_PIN_14_MEDspd);
-BIT_RESET(GPIOB_PUPDR, GPIOB_PIN_14_NoPullUpPullDown);
-BIT_RESET(GPIOB_BSRR, GPIOB_PIN_14_ResetOut);
+BIT_SET(GPIOB_MODER, GPIOB_PIN_14_GPOut); // MODER 14 General-purpose Output
+BIT_SET(GPIOB_OTYPER, GPIOB_PIN_14_PushPull); // OTYPER 14 push-pull
+BIT_SET(GPIOB_OSPEEDR, GPIOB_PIN_14_MEDspd); // OSPEEDR 14 Medium
+BIT_RESET(GPIOB_PUPDR, GPIOB_PIN_14_NoPullUpPullDown); // PUPDR 14 No Pull-Up Pull-Down
+BIT_RESET(GPIOB_BSRR, GPIOB_PIN_14_ResetOut); // BSRR 14 Reset to 0
 
 }
 
