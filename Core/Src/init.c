@@ -36,68 +36,67 @@ SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_7); // // BSRR reset PB7 output
 
 
 // red led PB14 через собственные директивы
-BIT_SET(GPIOB_MODER, GPIOB_PIN_14_GPOut); // MODER 14 General-purpose Output
-BIT_SET(GPIOB_OTYPER, GPIOB_PIN_14_PushPull); // OTYPER 14 push-pull
-BIT_SET(GPIOB_OSPEEDR, GPIOB_PIN_14_MEDspd); // OSPEEDR 14 Medium
-BIT_RESET(GPIOB_PUPDR, GPIOB_PIN_14_NoPullUpPullDown); // PUPDR 14 No Pull-Up Pull-Down
-BIT_RESET(GPIOB_BSRR, GPIOB_PIN_14_ResetOut); // BSRR 14 Reset to 0
+BIT_SET(GPIOB_MODER, GPIOB_PIN_14_GPOut); // MODER14 General-purpose Output
+BIT_SET(GPIOB_OTYPER, GPIOB_PIN_14_PushPull); // OTYPER14 push-pull
+BIT_SET(GPIOB_OSPEEDR, GPIOB_PIN_14_MEDspd); // OSPEEDR14 Medium
+BIT_RESET(GPIOB_PUPDR, GPIOB_PIN_14_NoPullUpPullDown); // PUPDR14 No Pull-Up Pull-Down
+BIT_RESET(GPIOB_BSRR, GPIOB_PIN_14_ResetOut); // BSRR14 Reset to 0
 
 }
 
+// Button 1 PB12
+void button1_input (void) {
+    CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE12_0); //MODER12 00 (input)
+    CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE12_1); //MODER12 00 (input)
 
+    SET_BIT(GPIOB -> OTYPER, GPIO_OTYPER_OT12); //OTYPER12 open-drain
 
+    SET_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR12_0); // OSPEEDR12 10 (Medium speed)
+    CLEAR_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR12_1); // OSPEEDR12 10 (Medium speed)
 
-void button1_input (void);
-void button2_input (void);
-void button3_input (void);
-
-void led4_output (void);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-void GPIO_init (void) {
-    SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_GPIOBEN | RCC_AHB1ENR_GPIOCEN);
+    CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD12_0); // PUPDR12 pull-up
+    SET_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD12_1); // PUPDR12 pull-up
 }
 
-void GPIO_init_led_pb7_blue (void)
-{
-    *(uint32_t *)(0x40020400UL + 0x00UL) |= 0x4000UL;
-    *(uint32_t *)(0x40020400UL + 0x04UL) |= 0x00UL;
-    *(uint32_t *)(0x40020400UL + 0x08UL) |= 0x4000UL;
-    *(uint32_t *)(0x40020400UL + 0x18UL) |= 0x800000UL;
+// Button 2 PB15
+void button2_input (void) {
+    CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE15_0); //MODER15 00 (input)
+    CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE15_1); //MODER15 00 (input)
+
+    SET_BIT(GPIOB -> OTYPER, GPIO_OTYPER_OT15); //OTYPER15 open-drain
+
+    SET_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR15_0); // OSPEEDR15 10 (Medium speed)
+    CLEAR_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR15_1); // OSPEEDR15 10 (Medium speed)
+
+    CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD15_0); // PUPDR15 pull-up
+    SET_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD15_1); // PUPDR15 pull-up
 }
 
-void GPIO_init_led_pb14_red (void)
-{
-    BIT_SET(GPIOB_MODER, GPIO_PIN_OUT_14);
-    BIT_SET(GPIOB_OTYPER, GPIO_OFF);
-    BIT_SET(GPIOB_OSPEEDR, GPIO_PIN_MED_14);
-    BIT_SET(GPIOB_BSRR, GPIO_PIN_RESET_14);
+// Button 3 PB9
+void button3_input (void) {
+    CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE9_0); //MODER9 00 (input)
+    CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE9_1); //MODER9 00 (input)
+
+    SET_BIT(GPIOB -> OTYPER, GPIO_OTYPER_OT9); //OTYPER9 open-drain
+
+    SET_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR9_0); // OSPEEDR9 10 (Medium speed)
+    CLEAR_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR9_1); // OSPEEDR9 10 (Medium speed)
+
+    CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD9_0); // PUPDR9 pull-up
+    SET_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD9_1); // PUPDR9 pull-up
 }
 
-void GPIO_init_led_pb0_green (void)
-{
-   SET_BIT(GPIOB->MODER, GPIO_MODER_MODE0_0);
-   CLEAR_BIT(GPIOB->OTYPER,GPIO_OTYPER_OT_0);
-   SET_BIT(GPIOB->OSPEEDR, GPIO_OSPEEDER_OSPEEDR0_0);
-   SET_BIT(GPIOB->BSRR, GPIO_BSRR_BR0);
+// led 4 PB7
+void led4_output (void) {
+    CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE12_0); //MODER12 01 (General-purpose out)
+    SET_BIT(GPIOB -> MODER, GPIO_MODER_MODE12_1); //MODER12 01 (General-purpose out)
+
+    CLEAR_BIT(GPIOB -> OTYPER, GPIO_OTYPER_OT12); //OTYPER12 push-pull
+
+    SET_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR12_0); // OSPEEDR12 10 (Medium speed)
+    CLEAR_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR12_1); // OSPEEDR12 10 (Medium speed)
+
+    CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD12_0); // PUPDR12 00 no pull-up pull-down
+    CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD12_1); // PUPDR12 00 no pull-up pull-down
 }
 
