@@ -3,7 +3,7 @@
 
 bool Button1State = 0; // button 1 PB12 (pull-up)
 bool Button2State = 0; // button 2 PB15 (pull-up)
-bool Button3State = 0; // button 3 PB9  (pull-up)
+bool Button3State = 0; // button 3 PB9  (pull-down)
 
 bool mode = 0; // "0" = input, "1" = output
 
@@ -52,7 +52,7 @@ int main(void) {
             ButtonAndLed_input();
 
             Button3State = (READ_BIT(GPIOB -> IDR, GPIO_IDR_IDR_9));
-            if (Button3State == 0) {
+            if (Button3State == 1) {
                 SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BS_0);
             }
             else {
