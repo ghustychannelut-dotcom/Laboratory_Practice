@@ -23,10 +23,10 @@
 
 void RCC_init (void);
 
-void onboard_leds_init (void);
+void Onboard_leds_init (void);
 
-void button1_input (void);
-void button2_input (void);
-void button3_input (void);
+void Button1_input (void);
+void Button2_input (void);
+void ButtonAndLed_input (void);
 
-void led4_output (void);
+void ButtonAndLed_output (void);

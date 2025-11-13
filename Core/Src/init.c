@@ -4,7 +4,7 @@ void RCC_init (void) {
     SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_GPIOBEN)
 }
 
-void onboard_leds_init (void) {
+void Onboard_leds_init (void) {
 
 // green PB0 ручками
 *(uint32_t*)(0x40020400UL + 0x00UL) |= 0x01UL; // Moder 0_1
@@ -45,7 +45,7 @@ BIT_RESET(GPIOB_BSRR, GPIOB_PIN_14_ResetOut); // BSRR14 Reset to 0
 }
 
 // Button 1 PB12
-void button1_input (void) {
+void Button1_input (void) {
     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE12_0); //MODER12 00 (input)
     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE12_1); //MODER12 00 (input)
 
@@ -59,7 +59,7 @@ void button1_input (void) {
 }
 
 // Button 2 PB15
-void button2_input (void) {
+void Button2_input (void) {
     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE15_0); //MODER15 00 (input)
     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE15_1); //MODER15 00 (input)
 
@@ -73,7 +73,7 @@ void button2_input (void) {
 }
 
 // Button 3 PB9
-void button3_input (void) {
+void ButtonAndLed_input (void) {
     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE9_0); //MODER9 00 (input)
     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE9_1); //MODER9 00 (input)
 
@@ -87,7 +87,7 @@ void button3_input (void) {
 }
 
 // led 4 PB7
-void led4_output (void) {
+void ButtonAndLed_output (void) {
     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE12_0); //MODER12 01 (General-purpose out)
     SET_BIT(GPIOB -> MODER, GPIO_MODER_MODE12_1); //MODER12 01 (General-purpose out)
 
