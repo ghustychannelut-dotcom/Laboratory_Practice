@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccSAfho8.s 			page 1
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccu8v0oX.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -27,30 +27,316 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccSAfho8.s 			page 1
   24              		.thumb
   25              		.thumb_func
   27              	main:
-  28              	.LFB0:
-   1:Core/Src/main.c **** int main(void) {
-  29              		.loc 1 1 16 view -0
+  28              	.LFB130:
+   1:Core/Src/main.c **** #include "init.h"
+   2:Core/Src/main.c **** #include <stdbool.h>
+   3:Core/Src/main.c **** 
+   4:Core/Src/main.c **** 
+   5:Core/Src/main.c **** bool Button1State = 0; // button 1 PB12 (pull-up)
+   6:Core/Src/main.c **** bool Button2State = 0; // button 2 PB15 (pull-up)
+   7:Core/Src/main.c **** bool Button3State = 0; // button 3 PB9  (pull-down)
+   8:Core/Src/main.c **** 
+   9:Core/Src/main.c **** bool mode = 0; // "0" = input, "1" = output
+  10:Core/Src/main.c **** 
+  11:Core/Src/main.c **** int main(void) {
+  29              		.loc 1 11 16 view -0
   30              		.cfi_startproc
   31              		@ Volatile: function does not return.
   32              		@ args = 0, pretend = 0, frame = 0
   33              		@ frame_needed = 0, uses_anonymous_args = 0
-  34              		@ link register save eliminated.
-  35              	.L2:
-   2:Core/Src/main.c ****     while(1) {}
-  36              		.loc 1 2 5 view .LVU1
-  37              		.loc 1 2 15 view .LVU2
-  38              		.loc 1 2 10 view .LVU3
-  39 0000 FEE7     		b	.L2
-  40              		.cfi_endproc
-  41              	.LFE0:
-  43              		.text
-  44              	.Letext0:
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccSAfho8.s 			page 2
+  34 0000 08B5     		push	{r3, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 8
+  37              		.cfi_offset 3, -8
+  38              		.cfi_offset 14, -4
+  12:Core/Src/main.c ****     
+  13:Core/Src/main.c ****     // Initialization
+  14:Core/Src/main.c ****     RCC_init(); 
+  39              		.loc 1 14 5 view .LVU1
+  40 0002 FFF7FEFF 		bl	RCC_init
+  41              	.LVL0:
+  15:Core/Src/main.c ****     Onboard_leds_init(); // onboards: green PB0, blue PB7, red PB14; external: led 4 PB7
+  42              		.loc 1 15 5 view .LVU2
+  43 0006 FFF7FEFF 		bl	Onboard_leds_init
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccu8v0oX.s 			page 2
+
+
+  44              	.LVL1:
+  16:Core/Src/main.c ****     Button1_input();
+  45              		.loc 1 16 5 view .LVU3
+  46 000a FFF7FEFF 		bl	Button1_input
+  47              	.LVL2:
+  17:Core/Src/main.c ****     Button2_input();
+  48              		.loc 1 17 5 view .LVU4
+  49 000e FFF7FEFF 		bl	Button2_input
+  50              	.LVL3:
+  51 0012 29E0     		b	.L2
+  52              	.L3:
+  18:Core/Src/main.c **** 
+  19:Core/Src/main.c ****     while (1) {
+  20:Core/Src/main.c **** 
+  21:Core/Src/main.c ****         // reading buttons states and managing their LEDs
+  22:Core/Src/main.c ****         Button1State = !(READ_BIT(GPIOB -> IDR, GPIO_IDR_IDR_12));
+  23:Core/Src/main.c ****         if (Button1State == 1) {
+  24:Core/Src/main.c ****             SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BS_14);
+  25:Core/Src/main.c ****         }
+  26:Core/Src/main.c ****         else {
+  27:Core/Src/main.c ****             SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_14);
+  53              		.loc 1 27 13 view .LVU5
+  54 0014 2F49     		ldr	r1, .L13
+  55 0016 8A69     		ldr	r2, [r1, #24]
+  56 0018 42F08042 		orr	r2, r2, #1073741824
+  57 001c 8A61     		str	r2, [r1, #24]
+  58 001e 33E0     		b	.L4
+  59              	.L5:
+  28:Core/Src/main.c ****         }
+  29:Core/Src/main.c **** 
+  30:Core/Src/main.c ****         Button2State = !(READ_BIT(GPIOB -> IDR, GPIO_IDR_IDR_15));
+  31:Core/Src/main.c ****         if ((Button2State) == 1) {
+  32:Core/Src/main.c ****             SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BS_7);
+  33:Core/Src/main.c ****         }
+  34:Core/Src/main.c ****         else {
+  35:Core/Src/main.c ****             SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_7);
+  60              		.loc 1 35 13 view .LVU6
+  61 0020 2C48     		ldr	r0, .L13
+  62 0022 8169     		ldr	r1, [r0, #24]
+  63 0024 41F40001 		orr	r1, r1, #8388608
+  64 0028 8161     		str	r1, [r0, #24]
+  65 002a 3DE0     		b	.L6
+  66              	.L7:
+  36:Core/Src/main.c ****         }
+  37:Core/Src/main.c **** 
+  38:Core/Src/main.c ****         // changing modes 
+  39:Core/Src/main.c ****         if (Button1State && !Button2State) { 
+  40:Core/Src/main.c ****             mode = 0;
+  41:Core/Src/main.c ****         }
+  42:Core/Src/main.c ****         else if (!Button1State && Button2State) {
+  67              		.loc 1 42 14 view .LVU7
+  68              		.loc 1 42 17 is_stmt 0 view .LVU8
+  69 002c 1BB1     		cbz	r3, .L8
+  70              		.loc 1 42 32 discriminator 1 view .LVU9
+  71 002e 12B9     		cbnz	r2, .L8
+  43:Core/Src/main.c ****             mode = 1;
+  72              		.loc 1 43 13 is_stmt 1 view .LVU10
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccu8v0oX.s 			page 3
+
+
+  73              		.loc 1 43 18 is_stmt 0 view .LVU11
+  74 0030 294B     		ldr	r3, .L13+4
+  75 0032 0122     		movs	r2, #1
+  76 0034 1A70     		strb	r2, [r3]
+  77              	.L8:
+  44:Core/Src/main.c ****         }
+  45:Core/Src/main.c **** 
+  46:Core/Src/main.c ****         // modes
+  47:Core/Src/main.c ****         if (mode == 0) {
+  78              		.loc 1 47 9 is_stmt 1 view .LVU12
+  79              		.loc 1 47 18 is_stmt 0 view .LVU13
+  80 0036 284B     		ldr	r3, .L13+4
+  81 0038 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  82              		.loc 1 47 12 view .LVU14
+  83 003a 002B     		cmp	r3, #0
+  84 003c 42D1     		bne	.L9
+  48:Core/Src/main.c ****             // turning off external LED and setting pin as input
+  49:Core/Src/main.c ****             SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_9);
+  85              		.loc 1 49 13 is_stmt 1 view .LVU15
+  86 003e 254C     		ldr	r4, .L13
+  87 0040 A369     		ldr	r3, [r4, #24]
+  88 0042 43F00073 		orr	r3, r3, #33554432
+  89 0046 A361     		str	r3, [r4, #24]
+  50:Core/Src/main.c ****             ButtonAndLed_input();
+  90              		.loc 1 50 13 view .LVU16
+  91 0048 FFF7FEFF 		bl	ButtonAndLed_input
+  92              	.LVL4:
+  51:Core/Src/main.c **** 
+  52:Core/Src/main.c ****             Button3State = (READ_BIT(GPIOB -> IDR, GPIO_IDR_IDR_9));
+  93              		.loc 1 52 13 view .LVU17
+  94              		.loc 1 52 29 is_stmt 0 view .LVU18
+  95 004c 2369     		ldr	r3, [r4, #16]
+  96 004e 03F40073 		and	r3, r3, #512
+  97 0052 002B     		cmp	r3, #0
+  98 0054 14BF     		ite	ne
+  99 0056 0122     		movne	r2, #1
+ 100 0058 0022     		moveq	r2, #0
+ 101              		.loc 1 52 26 view .LVU19
+ 102 005a 204B     		ldr	r3, .L13+8
+ 103 005c 1A70     		strb	r2, [r3]
+  53:Core/Src/main.c ****             if (Button3State == 1) {
+ 104              		.loc 1 53 13 is_stmt 1 view .LVU20
+ 105              		.loc 1 53 16 is_stmt 0 view .LVU21
+ 106 005e 2BD0     		beq	.L10
+  54:Core/Src/main.c ****                 SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BS_0);
+ 107              		.loc 1 54 17 is_stmt 1 view .LVU22
+ 108 0060 A369     		ldr	r3, [r4, #24]
+ 109 0062 43F00103 		orr	r3, r3, #1
+ 110 0066 A361     		str	r3, [r4, #24]
+ 111              	.L2:
+  19:Core/Src/main.c **** 
+ 112              		.loc 1 19 5 view .LVU23
+  22:Core/Src/main.c ****         if (Button1State == 1) {
+ 113              		.loc 1 22 9 view .LVU24
+  22:Core/Src/main.c ****         if (Button1State == 1) {
+ 114              		.loc 1 22 26 is_stmt 0 view .LVU25
+ 115 0068 1A4B     		ldr	r3, .L13
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccu8v0oX.s 			page 4
+
+
+ 116 006a 1B69     		ldr	r3, [r3, #16]
+ 117 006c 03F48053 		and	r3, r3, #4096
+  22:Core/Src/main.c ****         if (Button1State == 1) {
+ 118              		.loc 1 22 24 view .LVU26
+ 119 0070 002B     		cmp	r3, #0
+ 120 0072 0CBF     		ite	eq
+ 121 0074 0121     		moveq	r1, #1
+ 122 0076 0021     		movne	r1, #0
+  22:Core/Src/main.c ****         if (Button1State == 1) {
+ 123              		.loc 1 22 22 view .LVU27
+ 124 0078 194A     		ldr	r2, .L13+12
+ 125 007a 1170     		strb	r1, [r2]
+  23:Core/Src/main.c ****             SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BS_14);
+ 126              		.loc 1 23 9 is_stmt 1 view .LVU28
+  23:Core/Src/main.c ****             SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BS_14);
+ 127              		.loc 1 23 12 is_stmt 0 view .LVU29
+ 128 007c CAD1     		bne	.L3
+  24:Core/Src/main.c ****         }
+ 129              		.loc 1 24 13 is_stmt 1 view .LVU30
+ 130 007e 1549     		ldr	r1, .L13
+ 131 0080 8A69     		ldr	r2, [r1, #24]
+ 132 0082 42F48042 		orr	r2, r2, #16384
+ 133 0086 8A61     		str	r2, [r1, #24]
+ 134              	.L4:
+  30:Core/Src/main.c ****         if ((Button2State) == 1) {
+ 135              		.loc 1 30 9 view .LVU31
+  30:Core/Src/main.c ****         if ((Button2State) == 1) {
+ 136              		.loc 1 30 26 is_stmt 0 view .LVU32
+ 137 0088 124A     		ldr	r2, .L13
+ 138 008a 1269     		ldr	r2, [r2, #16]
+ 139 008c 02F40042 		and	r2, r2, #32768
+  30:Core/Src/main.c ****         if ((Button2State) == 1) {
+ 140              		.loc 1 30 24 view .LVU33
+ 141 0090 002A     		cmp	r2, #0
+ 142 0092 0CBF     		ite	eq
+ 143 0094 0120     		moveq	r0, #1
+ 144 0096 0020     		movne	r0, #0
+  30:Core/Src/main.c ****         if ((Button2State) == 1) {
+ 145              		.loc 1 30 22 view .LVU34
+ 146 0098 1249     		ldr	r1, .L13+16
+ 147 009a 0870     		strb	r0, [r1]
+  31:Core/Src/main.c ****             SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BS_7);
+ 148              		.loc 1 31 9 is_stmt 1 view .LVU35
+  31:Core/Src/main.c ****             SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BS_7);
+ 149              		.loc 1 31 12 is_stmt 0 view .LVU36
+ 150 009c C0D1     		bne	.L5
+  32:Core/Src/main.c ****         }
+ 151              		.loc 1 32 13 is_stmt 1 view .LVU37
+ 152 009e 0D48     		ldr	r0, .L13
+ 153 00a0 8169     		ldr	r1, [r0, #24]
+ 154 00a2 41F08001 		orr	r1, r1, #128
+ 155 00a6 8161     		str	r1, [r0, #24]
+ 156              	.L6:
+  39:Core/Src/main.c ****             mode = 0;
+ 157              		.loc 1 39 9 view .LVU38
+  39:Core/Src/main.c ****             mode = 0;
+ 158              		.loc 1 39 12 is_stmt 0 view .LVU39
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccu8v0oX.s 			page 5
+
+
+ 159 00a8 002B     		cmp	r3, #0
+ 160 00aa BFD1     		bne	.L7
+  39:Core/Src/main.c ****             mode = 0;
+ 161              		.loc 1 39 26 discriminator 1 view .LVU40
+ 162 00ac 002A     		cmp	r2, #0
+ 163 00ae BDD0     		beq	.L7
+  40:Core/Src/main.c ****         }
+ 164              		.loc 1 40 13 is_stmt 1 view .LVU41
+  40:Core/Src/main.c ****         }
+ 165              		.loc 1 40 18 is_stmt 0 view .LVU42
+ 166 00b0 094B     		ldr	r3, .L13+4
+ 167 00b2 0022     		movs	r2, #0
+ 168 00b4 1A70     		strb	r2, [r3]
+ 169 00b6 BEE7     		b	.L8
+ 170              	.L10:
+  55:Core/Src/main.c ****             }
+  56:Core/Src/main.c ****             else {
+  57:Core/Src/main.c ****                 SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_0);
+ 171              		.loc 1 57 17 is_stmt 1 view .LVU43
+ 172 00b8 064A     		ldr	r2, .L13
+ 173 00ba 9369     		ldr	r3, [r2, #24]
+ 174 00bc 43F48033 		orr	r3, r3, #65536
+ 175 00c0 9361     		str	r3, [r2, #24]
+ 176 00c2 D1E7     		b	.L2
+ 177              	.L9:
+  58:Core/Src/main.c ****             }
+  59:Core/Src/main.c ****         }
+  60:Core/Src/main.c ****         else {
+  61:Core/Src/main.c ****             // turning on external LED and setting pin as output
+  62:Core/Src/main.c ****             ButtonAndLed_output();
+ 178              		.loc 1 62 13 view .LVU44
+ 179 00c4 FFF7FEFF 		bl	ButtonAndLed_output
+ 180              	.LVL5:
+  63:Core/Src/main.c ****             SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BS_9);
+ 181              		.loc 1 63 13 view .LVU45
+ 182 00c8 024A     		ldr	r2, .L13
+ 183 00ca 9369     		ldr	r3, [r2, #24]
+ 184 00cc 43F40073 		orr	r3, r3, #512
+ 185 00d0 9361     		str	r3, [r2, #24]
+ 186 00d2 C9E7     		b	.L2
+ 187              	.L14:
+ 188              		.align	2
+ 189              	.L13:
+ 190 00d4 00040240 		.word	1073873920
+ 191 00d8 00000000 		.word	mode
+ 192 00dc 00000000 		.word	Button3State
+ 193 00e0 00000000 		.word	Button1State
+ 194 00e4 00000000 		.word	Button2State
+ 195              		.cfi_endproc
+ 196              	.LFE130:
+ 198              		.global	mode
+ 199              		.section	.bss.mode,"aw",%nobits
+ 202              	mode:
+ 203 0000 00       		.space	1
+ 204              		.global	Button3State
+ 205              		.section	.bss.Button3State,"aw",%nobits
+ 208              	Button3State:
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccu8v0oX.s 			page 6
+
+
+ 209 0000 00       		.space	1
+ 210              		.global	Button2State
+ 211              		.section	.bss.Button2State,"aw",%nobits
+ 214              	Button2State:
+ 215 0000 00       		.space	1
+ 216              		.global	Button1State
+ 217              		.section	.bss.Button1State,"aw",%nobits
+ 220              	Button1State:
+ 221 0000 00       		.space	1
+ 222              		.text
+ 223              	.Letext0:
+ 224              		.file 2 "C:/tools/SysGCC/arm-none-eabi/include/machine/_default_types.h"
+ 225              		.file 3 "C:/tools/SysGCC/arm-none-eabi/include/sys/_stdint.h"
+ 226              		.file 4 "Core/Inc/../../CMSIS/Devices/Inc/stm32f429xx.h"
+ 227              		.file 5 "Core/Inc/init.h"
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccu8v0oX.s 			page 7
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccSAfho8.s:21     .text.main:00000000 $t
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccSAfho8.s:27     .text.main:00000000 main
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccu8v0oX.s:21     .text.main:00000000 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccu8v0oX.s:27     .text.main:00000000 main
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccu8v0oX.s:190    .text.main:000000d4 $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccu8v0oX.s:202    .bss.mode:00000000 mode
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccu8v0oX.s:208    .bss.Button3State:00000000 Button3State
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccu8v0oX.s:220    .bss.Button1State:00000000 Button1State
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccu8v0oX.s:214    .bss.Button2State:00000000 Button2State
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccu8v0oX.s:203    .bss.mode:00000000 $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccu8v0oX.s:209    .bss.Button3State:00000000 $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccu8v0oX.s:215    .bss.Button2State:00000000 $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccu8v0oX.s:221    .bss.Button1State:00000000 $d
 
-NO UNDEFINED SYMBOLS
+UNDEFINED SYMBOLS
+RCC_init
+Onboard_leds_init
+Button1_input
+Button2_input
+ButtonAndLed_input
+ButtonAndLed_output

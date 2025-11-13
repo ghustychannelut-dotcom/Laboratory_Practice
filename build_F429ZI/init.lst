@@ -1,0 +1,473 @@
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"init.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "Core/Src/init.c"
+  20              		.section	.text.RCC_init,"ax",%progbits
+  21              		.align	1
+  22              		.global	RCC_init
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	RCC_init:
+  28              	.LFB130:
+   1:Core/Src/init.c **** #include "init.h"
+   2:Core/Src/init.c **** 
+   3:Core/Src/init.c **** void RCC_init(void) {
+  29              		.loc 1 3 21 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+   4:Core/Src/init.c ****     SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_GPIOBEN);
+  34              		.loc 1 4 5 view .LVU1
+  35 0000 024A     		ldr	r2, .L2
+  36 0002 136B     		ldr	r3, [r2, #48]
+  37 0004 43F00203 		orr	r3, r3, #2
+  38 0008 1363     		str	r3, [r2, #48]
+   5:Core/Src/init.c **** }
+  39              		.loc 1 5 1 is_stmt 0 view .LVU2
+  40 000a 7047     		bx	lr
+  41              	.L3:
+  42              		.align	2
+  43              	.L2:
+  44 000c 00380240 		.word	1073887232
+  45              		.cfi_endproc
+  46              	.LFE130:
+  48              		.section	.text.Onboard_leds_init,"ax",%progbits
+  49              		.align	1
+  50              		.global	Onboard_leds_init
+  51              		.syntax unified
+  52              		.thumb
+  53              		.thumb_func
+  55              	Onboard_leds_init:
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s 			page 2
+
+
+  56              	.LFB131:
+   6:Core/Src/init.c **** 
+   7:Core/Src/init.c **** void Onboard_leds_init(void) {
+  57              		.loc 1 7 30 is_stmt 1 view -0
+  58              		.cfi_startproc
+  59              		@ args = 0, pretend = 0, frame = 0
+  60              		@ frame_needed = 0, uses_anonymous_args = 0
+  61              		@ link register save eliminated.
+   8:Core/Src/init.c **** 
+   9:Core/Src/init.c ****     // green led PB0 ручками
+  10:Core/Src/init.c ****     *(uint32_t*)(0x40020400UL + 0x00UL) |= 0x01UL; // Moder 0_1
+  62              		.loc 1 10 5 view .LVU4
+  63 0000 2B4A     		ldr	r2, .L5
+  64 0002 D2F80034 		ldr	r3, [r2, #1024]
+  65              		.loc 1 10 41 is_stmt 0 view .LVU5
+  66 0006 43F00101 		orr	r1, r3, #1
+  67 000a C2F80014 		str	r1, [r2, #1024]
+  11:Core/Src/init.c ****     *(uint32_t*)(0x40020400UL + 0x00UL) &= ~0x02UL; // Moder 1_0
+  68              		.loc 1 11 5 is_stmt 1 view .LVU6
+  69              		.loc 1 11 41 is_stmt 0 view .LVU7
+  70 000e 23F00203 		bic	r3, r3, #2
+  71 0012 43F00103 		orr	r3, r3, #1
+  72 0016 C2F80034 		str	r3, [r2, #1024]
+  12:Core/Src/init.c **** 
+  13:Core/Src/init.c ****     *(uint32_t*)(0x40020400UL + 0x04UL) |= 0x00UL; // OTYPER 0_0
+  73              		.loc 1 13 5 is_stmt 1 view .LVU8
+  14:Core/Src/init.c **** 
+  15:Core/Src/init.c ****     *(uint32_t*)(0x40020400UL + 0x08UL) |= 0x01UL; // SPEED 0_1
+  74              		.loc 1 15 5 view .LVU9
+  75 001a D2F80834 		ldr	r3, [r2, #1032]
+  76              		.loc 1 15 41 is_stmt 0 view .LVU10
+  77 001e 43F00101 		orr	r1, r3, #1
+  78 0022 C2F80814 		str	r1, [r2, #1032]
+  16:Core/Src/init.c ****     *(uint32_t*)(0x40020400UL + 0x08UL) &= ~0x02UL; // SPEED 1_0
+  79              		.loc 1 16 5 is_stmt 1 view .LVU11
+  80              		.loc 1 16 41 is_stmt 0 view .LVU12
+  81 0026 23F00203 		bic	r3, r3, #2
+  82 002a 43F00103 		orr	r3, r3, #1
+  83 002e C2F80834 		str	r3, [r2, #1032]
+  17:Core/Src/init.c **** 
+  18:Core/Src/init.c ****     *(uint32_t*)(0x40020400UL + 0x0CUL) &= ~0x00UL; // PUPDR 0_0 
+  84              		.loc 1 18 5 is_stmt 1 view .LVU13
+  85              		.loc 1 18 41 is_stmt 0 view .LVU14
+  86 0032 D2F80C34 		ldr	r3, [r2, #1036]
+  19:Core/Src/init.c ****     *(uint32_t*)(0x40020400UL + 0x0CUL) &= ~0x01UL; // PUPDR 1_0
+  87              		.loc 1 19 5 is_stmt 1 view .LVU15
+  88              		.loc 1 19 41 is_stmt 0 view .LVU16
+  89 0036 23F00103 		bic	r3, r3, #1
+  90 003a C2F80C34 		str	r3, [r2, #1036]
+  20:Core/Src/init.c **** 
+  21:Core/Src/init.c ****     *(uint32_t*)(0x40020400UL + 0x18) |= 0x10000UL; // BSRR reser PB0 output
+  91              		.loc 1 21 5 is_stmt 1 view .LVU17
+  92 003e D2F81834 		ldr	r3, [r2, #1048]
+  93              		.loc 1 21 39 is_stmt 0 view .LVU18
+  94 0042 43F48033 		orr	r3, r3, #65536
+  95 0046 C2F81834 		str	r3, [r2, #1048]
+  22:Core/Src/init.c **** 
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s 			page 3
+
+
+  23:Core/Src/init.c ****     // blue led PB7 через CMSIS
+  24:Core/Src/init.c ****     SET_BIT(GPIOB -> MODER, GPIO_MODER_MODE7_0); // Moder 14_1
+  96              		.loc 1 24 5 is_stmt 1 view .LVU19
+  97 004a 1A4B     		ldr	r3, .L5+4
+  98 004c 1968     		ldr	r1, [r3]
+  99 004e 41F48041 		orr	r1, r1, #16384
+ 100 0052 1960     		str	r1, [r3]
+  25:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE7_1); // Moder 15_0
+ 101              		.loc 1 25 5 view .LVU20
+ 102 0054 1968     		ldr	r1, [r3]
+ 103 0056 21F40041 		bic	r1, r1, #32768
+ 104 005a 1960     		str	r1, [r3]
+  26:Core/Src/init.c **** 
+  27:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> OTYPER, GPIO_OTYPER_OT7); // OTYPER 7_0
+ 105              		.loc 1 27 5 view .LVU21
+ 106 005c 5868     		ldr	r0, [r3, #4]
+ 107 005e 20F08000 		bic	r0, r0, #128
+ 108 0062 5860     		str	r0, [r3, #4]
+  28:Core/Src/init.c **** 
+  29:Core/Src/init.c ****     SET_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR7_0); // SPEED 14_1
+ 109              		.loc 1 29 5 view .LVU22
+ 110 0064 9868     		ldr	r0, [r3, #8]
+ 111 0066 40F48040 		orr	r0, r0, #16384
+ 112 006a 9860     		str	r0, [r3, #8]
+  30:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR7_1); // SPEED 15_0
+ 113              		.loc 1 30 5 view .LVU23
+ 114 006c 9868     		ldr	r0, [r3, #8]
+ 115 006e 20F40040 		bic	r0, r0, #32768
+ 116 0072 9860     		str	r0, [r3, #8]
+  31:Core/Src/init.c **** 
+  32:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD7_0); // PUPDR 14_0
+ 117              		.loc 1 32 5 view .LVU24
+ 118 0074 D868     		ldr	r0, [r3, #12]
+ 119 0076 20F48040 		bic	r0, r0, #16384
+ 120 007a D860     		str	r0, [r3, #12]
+  33:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD7_1); // PUPDR 15_0
+ 121              		.loc 1 33 5 view .LVU25
+ 122 007c D868     		ldr	r0, [r3, #12]
+ 123 007e 20F40040 		bic	r0, r0, #32768
+ 124 0082 D860     		str	r0, [r3, #12]
+  34:Core/Src/init.c **** 
+  35:Core/Src/init.c ****     SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_7); // // BSRR reset PB7 output
+ 125              		.loc 1 35 5 view .LVU26
+ 126 0084 9869     		ldr	r0, [r3, #24]
+ 127 0086 40F40000 		orr	r0, r0, #8388608
+ 128 008a 9861     		str	r0, [r3, #24]
+  36:Core/Src/init.c **** 
+  37:Core/Src/init.c ****     // red led PB14 через собственные директивы
+  38:Core/Src/init.c ****     BIT_SET(GPIOB_MODER, GPIOB_PIN_14_GPOut);        // MODER14: General-purpose Output
+ 129              		.loc 1 38 5 view .LVU27
+ 130 008c 41F08051 		orr	r1, r1, #268435456
+ 131 0090 C2F80014 		str	r1, [r2, #1024]
+  39:Core/Src/init.c ****     BIT_RESET(GPIOB_OTYPER, GPIOB_PIN_14_PushPull);  // OTYPER14: Push-pull (0)
+ 132              		.loc 1 39 5 view .LVU28
+  40:Core/Src/init.c ****     BIT_SET(GPIOB_OSPEEDR, GPIOB_PIN_14_MEDspd);     // OSPEEDR14: Medium speed
+ 133              		.loc 1 40 5 view .LVU29
+ 134 0094 D2F80834 		ldr	r3, [r2, #1032]
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s 			page 4
+
+
+ 135 0098 43F08073 		orr	r3, r3, #16777216
+ 136 009c C2F80834 		str	r3, [r2, #1032]
+  41:Core/Src/init.c ****     BIT_RESET(GPIOB_PUPDR, GPIOB_PIN_14_NoPullUpPullDown); // PUPDR14: No pull
+ 137              		.loc 1 41 5 view .LVU30
+  42:Core/Src/init.c ****     BIT_SET(GPIOB_BSRR, GPIOB_PIN_14_ResetOut);
+ 138              		.loc 1 42 5 view .LVU31
+ 139 00a0 D2F81834 		ldr	r3, [r2, #1048]
+ 140 00a4 43F08043 		orr	r3, r3, #1073741824
+ 141 00a8 C2F81834 		str	r3, [r2, #1048]
+  43:Core/Src/init.c **** }
+ 142              		.loc 1 43 1 is_stmt 0 view .LVU32
+ 143 00ac 7047     		bx	lr
+ 144              	.L6:
+ 145 00ae 00BF     		.align	2
+ 146              	.L5:
+ 147 00b0 00000240 		.word	1073872896
+ 148 00b4 00040240 		.word	1073873920
+ 149              		.cfi_endproc
+ 150              	.LFE131:
+ 152              		.section	.text.Button1_input,"ax",%progbits
+ 153              		.align	1
+ 154              		.global	Button1_input
+ 155              		.syntax unified
+ 156              		.thumb
+ 157              		.thumb_func
+ 159              	Button1_input:
+ 160              	.LFB132:
+  44:Core/Src/init.c **** 
+  45:Core/Src/init.c **** // Button 1 PB12
+  46:Core/Src/init.c **** void Button1_input (void) {
+ 161              		.loc 1 46 27 is_stmt 1 view -0
+ 162              		.cfi_startproc
+ 163              		@ args = 0, pretend = 0, frame = 0
+ 164              		@ frame_needed = 0, uses_anonymous_args = 0
+ 165              		@ link register save eliminated.
+  47:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE12_0); 
+ 166              		.loc 1 47 5 view .LVU34
+ 167 0000 0A4B     		ldr	r3, .L8
+ 168 0002 1A68     		ldr	r2, [r3]
+ 169 0004 22F08072 		bic	r2, r2, #16777216
+ 170 0008 1A60     		str	r2, [r3]
+  48:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE12_1); 
+ 171              		.loc 1 48 5 view .LVU35
+ 172 000a 1A68     		ldr	r2, [r3]
+ 173 000c 22F00072 		bic	r2, r2, #33554432
+ 174 0010 1A60     		str	r2, [r3]
+  49:Core/Src/init.c ****     
+  50:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD12_0); 
+ 175              		.loc 1 50 5 view .LVU36
+ 176 0012 DA68     		ldr	r2, [r3, #12]
+ 177 0014 22F08072 		bic	r2, r2, #16777216
+ 178 0018 DA60     		str	r2, [r3, #12]
+  51:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD12_1); 
+ 179              		.loc 1 51 5 view .LVU37
+ 180 001a DA68     		ldr	r2, [r3, #12]
+ 181 001c 22F00072 		bic	r2, r2, #33554432
+ 182 0020 DA60     		str	r2, [r3, #12]
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s 			page 5
+
+
+  52:Core/Src/init.c ****     SET_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD12_0); 
+ 183              		.loc 1 52 5 view .LVU38
+ 184 0022 DA68     		ldr	r2, [r3, #12]
+ 185 0024 42F08072 		orr	r2, r2, #16777216
+ 186 0028 DA60     		str	r2, [r3, #12]
+  53:Core/Src/init.c **** }
+ 187              		.loc 1 53 1 is_stmt 0 view .LVU39
+ 188 002a 7047     		bx	lr
+ 189              	.L9:
+ 190              		.align	2
+ 191              	.L8:
+ 192 002c 00040240 		.word	1073873920
+ 193              		.cfi_endproc
+ 194              	.LFE132:
+ 196              		.section	.text.Button2_input,"ax",%progbits
+ 197              		.align	1
+ 198              		.global	Button2_input
+ 199              		.syntax unified
+ 200              		.thumb
+ 201              		.thumb_func
+ 203              	Button2_input:
+ 204              	.LFB133:
+  54:Core/Src/init.c **** 
+  55:Core/Src/init.c **** // Button 2 PB15
+  56:Core/Src/init.c **** void Button2_input (void) {
+ 205              		.loc 1 56 27 is_stmt 1 view -0
+ 206              		.cfi_startproc
+ 207              		@ args = 0, pretend = 0, frame = 0
+ 208              		@ frame_needed = 0, uses_anonymous_args = 0
+ 209              		@ link register save eliminated.
+  57:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE15_0); 
+ 210              		.loc 1 57 5 view .LVU41
+ 211 0000 0A4B     		ldr	r3, .L11
+ 212 0002 1A68     		ldr	r2, [r3]
+ 213 0004 22F08042 		bic	r2, r2, #1073741824
+ 214 0008 1A60     		str	r2, [r3]
+  58:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE15_1); 
+ 215              		.loc 1 58 5 view .LVU42
+ 216 000a 1A68     		ldr	r2, [r3]
+ 217 000c 22F00042 		bic	r2, r2, #-2147483648
+ 218 0010 1A60     		str	r2, [r3]
+  59:Core/Src/init.c ****     
+  60:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD15_0); 
+ 219              		.loc 1 60 5 view .LVU43
+ 220 0012 DA68     		ldr	r2, [r3, #12]
+ 221 0014 22F08042 		bic	r2, r2, #1073741824
+ 222 0018 DA60     		str	r2, [r3, #12]
+  61:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD15_1); 
+ 223              		.loc 1 61 5 view .LVU44
+ 224 001a DA68     		ldr	r2, [r3, #12]
+ 225 001c 22F00042 		bic	r2, r2, #-2147483648
+ 226 0020 DA60     		str	r2, [r3, #12]
+  62:Core/Src/init.c ****     SET_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD15_0); 
+ 227              		.loc 1 62 5 view .LVU45
+ 228 0022 DA68     		ldr	r2, [r3, #12]
+ 229 0024 42F08042 		orr	r2, r2, #1073741824
+ 230 0028 DA60     		str	r2, [r3, #12]
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s 			page 6
+
+
+  63:Core/Src/init.c **** }
+ 231              		.loc 1 63 1 is_stmt 0 view .LVU46
+ 232 002a 7047     		bx	lr
+ 233              	.L12:
+ 234              		.align	2
+ 235              	.L11:
+ 236 002c 00040240 		.word	1073873920
+ 237              		.cfi_endproc
+ 238              	.LFE133:
+ 240              		.section	.text.ButtonAndLed_input,"ax",%progbits
+ 241              		.align	1
+ 242              		.global	ButtonAndLed_input
+ 243              		.syntax unified
+ 244              		.thumb
+ 245              		.thumb_func
+ 247              	ButtonAndLed_input:
+ 248              	.LFB134:
+  64:Core/Src/init.c **** 
+  65:Core/Src/init.c **** // Button 3 PB9 (режим входа)
+  66:Core/Src/init.c **** void ButtonAndLed_input (void) {
+ 249              		.loc 1 66 32 is_stmt 1 view -0
+ 250              		.cfi_startproc
+ 251              		@ args = 0, pretend = 0, frame = 0
+ 252              		@ frame_needed = 0, uses_anonymous_args = 0
+ 253              		@ link register save eliminated.
+  67:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE9_0); 
+ 254              		.loc 1 67 5 view .LVU48
+ 255 0000 0A4B     		ldr	r3, .L14
+ 256 0002 1A68     		ldr	r2, [r3]
+ 257 0004 22F48022 		bic	r2, r2, #262144
+ 258 0008 1A60     		str	r2, [r3]
+  68:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE9_1); 
+ 259              		.loc 1 68 5 view .LVU49
+ 260 000a 1A68     		ldr	r2, [r3]
+ 261 000c 22F40022 		bic	r2, r2, #524288
+ 262 0010 1A60     		str	r2, [r3]
+  69:Core/Src/init.c ****     
+  70:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD9_0); 
+ 263              		.loc 1 70 5 view .LVU50
+ 264 0012 DA68     		ldr	r2, [r3, #12]
+ 265 0014 22F48022 		bic	r2, r2, #262144
+ 266 0018 DA60     		str	r2, [r3, #12]
+  71:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD9_1); 
+ 267              		.loc 1 71 5 view .LVU51
+ 268 001a DA68     		ldr	r2, [r3, #12]
+ 269 001c 22F40022 		bic	r2, r2, #524288
+ 270 0020 DA60     		str	r2, [r3, #12]
+  72:Core/Src/init.c ****     SET_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD9_1); 
+ 271              		.loc 1 72 5 view .LVU52
+ 272 0022 DA68     		ldr	r2, [r3, #12]
+ 273 0024 42F40022 		orr	r2, r2, #524288
+ 274 0028 DA60     		str	r2, [r3, #12]
+  73:Core/Src/init.c **** }
+ 275              		.loc 1 73 1 is_stmt 0 view .LVU53
+ 276 002a 7047     		bx	lr
+ 277              	.L15:
+ 278              		.align	2
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s 			page 7
+
+
+ 279              	.L14:
+ 280 002c 00040240 		.word	1073873920
+ 281              		.cfi_endproc
+ 282              	.LFE134:
+ 284              		.section	.text.ButtonAndLed_output,"ax",%progbits
+ 285              		.align	1
+ 286              		.global	ButtonAndLed_output
+ 287              		.syntax unified
+ 288              		.thumb
+ 289              		.thumb_func
+ 291              	ButtonAndLed_output:
+ 292              	.LFB135:
+  74:Core/Src/init.c **** 
+  75:Core/Src/init.c **** void ButtonAndLed_output (void) {
+ 293              		.loc 1 75 33 is_stmt 1 view -0
+ 294              		.cfi_startproc
+ 295              		@ args = 0, pretend = 0, frame = 0
+ 296              		@ frame_needed = 0, uses_anonymous_args = 0
+ 297              		@ link register save eliminated.
+  76:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE9_0);
+ 298              		.loc 1 76 5 view .LVU55
+ 299 0000 124B     		ldr	r3, .L17
+ 300 0002 1A68     		ldr	r2, [r3]
+ 301 0004 22F48022 		bic	r2, r2, #262144
+ 302 0008 1A60     		str	r2, [r3]
+  77:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE9_1);
+ 303              		.loc 1 77 5 view .LVU56
+ 304 000a 1A68     		ldr	r2, [r3]
+ 305 000c 22F40022 		bic	r2, r2, #524288
+ 306 0010 1A60     		str	r2, [r3]
+  78:Core/Src/init.c ****     SET_BIT(GPIOB -> MODER, GPIO_MODER_MODE9_0); // MODER9: 01 (Output)
+ 307              		.loc 1 78 5 view .LVU57
+ 308 0012 1A68     		ldr	r2, [r3]
+ 309 0014 42F48022 		orr	r2, r2, #262144
+ 310 0018 1A60     		str	r2, [r3]
+  79:Core/Src/init.c **** 
+  80:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> OTYPER, GPIO_OTYPER_OT9); // OTYPER9: 0 (Push-pull)
+ 311              		.loc 1 80 5 view .LVU58
+ 312 001a 5A68     		ldr	r2, [r3, #4]
+ 313 001c 22F40072 		bic	r2, r2, #512
+ 314 0020 5A60     		str	r2, [r3, #4]
+  81:Core/Src/init.c **** 
+  82:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR9_0); 
+ 315              		.loc 1 82 5 view .LVU59
+ 316 0022 9A68     		ldr	r2, [r3, #8]
+ 317 0024 22F48022 		bic	r2, r2, #262144
+ 318 0028 9A60     		str	r2, [r3, #8]
+  83:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR9_1); 
+ 319              		.loc 1 83 5 view .LVU60
+ 320 002a 9A68     		ldr	r2, [r3, #8]
+ 321 002c 22F40022 		bic	r2, r2, #524288
+ 322 0030 9A60     		str	r2, [r3, #8]
+  84:Core/Src/init.c ****     SET_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR9_0); // OSPEEDR9: 01 (Medium)
+ 323              		.loc 1 84 5 view .LVU61
+ 324 0032 9A68     		ldr	r2, [r3, #8]
+ 325 0034 42F48022 		orr	r2, r2, #262144
+ 326 0038 9A60     		str	r2, [r3, #8]
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s 			page 8
+
+
+  85:Core/Src/init.c **** 
+  86:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD9_0); // PUPDR9: 00 (No pull)
+ 327              		.loc 1 86 5 view .LVU62
+ 328 003a DA68     		ldr	r2, [r3, #12]
+ 329 003c 22F48022 		bic	r2, r2, #262144
+ 330 0040 DA60     		str	r2, [r3, #12]
+  87:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD9_1); // PUPDR9: 00 (No pull)
+ 331              		.loc 1 87 5 view .LVU63
+ 332 0042 DA68     		ldr	r2, [r3, #12]
+ 333 0044 22F40022 		bic	r2, r2, #524288
+ 334 0048 DA60     		str	r2, [r3, #12]
+  88:Core/Src/init.c **** }
+ 335              		.loc 1 88 1 is_stmt 0 view .LVU64
+ 336 004a 7047     		bx	lr
+ 337              	.L18:
+ 338              		.align	2
+ 339              	.L17:
+ 340 004c 00040240 		.word	1073873920
+ 341              		.cfi_endproc
+ 342              	.LFE135:
+ 344              		.text
+ 345              	.Letext0:
+ 346              		.file 2 "C:/tools/SysGCC/arm-none-eabi/include/machine/_default_types.h"
+ 347              		.file 3 "C:/tools/SysGCC/arm-none-eabi/include/sys/_stdint.h"
+ 348              		.file 4 "Core/Inc/../../CMSIS/Devices/Inc/stm32f429xx.h"
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 init.c
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:21     .text.RCC_init:00000000 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:27     .text.RCC_init:00000000 RCC_init
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:44     .text.RCC_init:0000000c $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:49     .text.Onboard_leds_init:00000000 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:55     .text.Onboard_leds_init:00000000 Onboard_leds_init
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:147    .text.Onboard_leds_init:000000b0 $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:153    .text.Button1_input:00000000 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:159    .text.Button1_input:00000000 Button1_input
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:192    .text.Button1_input:0000002c $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:197    .text.Button2_input:00000000 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:203    .text.Button2_input:00000000 Button2_input
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:236    .text.Button2_input:0000002c $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:241    .text.ButtonAndLed_input:00000000 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:247    .text.ButtonAndLed_input:00000000 ButtonAndLed_input
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:280    .text.ButtonAndLed_input:0000002c $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:285    .text.ButtonAndLed_output:00000000 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:291    .text.ButtonAndLed_output:00000000 ButtonAndLed_output
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:340    .text.ButtonAndLed_output:0000004c $d
+
+NO UNDEFINED SYMBOLS
