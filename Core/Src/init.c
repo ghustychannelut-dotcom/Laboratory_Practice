@@ -1,7 +1,7 @@
 #include "init.h"
 
 void RCC_init (void) {
-    SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_GPIOBEN)
+    SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_GPIOBEN);
 }
 
 void Onboard_leds_init (void) {
