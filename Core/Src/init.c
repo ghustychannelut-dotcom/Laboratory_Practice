@@ -6,7 +6,7 @@ void RCC_init (void) {
 
 void Onboard_leds_init (void) {
 
-// green PB0 ручками
+// green led PB0 ручками
 *(uint32_t*)(0x40020400UL + 0x00UL) |= 0x01UL; // Moder 0_1
 *(uint32_t*)(0x40020400UL + 0x00UL) &= ~0x02UL; // Moder 1_0
 
