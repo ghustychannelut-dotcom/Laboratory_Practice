@@ -45,6 +45,7 @@ int main(void) {
 
         // modes
         if (mode == 0) {
+
             // turning off external LED and setting pin as input
             SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_9);
             ButtonAndLed_input();
@@ -58,6 +59,7 @@ int main(void) {
             }
         }
         else {
+            
             // turning on external LED and setting pin as output
             ButtonAndLed_output();
             SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BS_9);
