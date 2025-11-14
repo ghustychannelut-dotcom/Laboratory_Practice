@@ -4,19 +4,23 @@
 #include "../../CMSIS/Devices/Inc/stm32f4xx.h"
 #include <stdbool.h>
 
-void RCC_init(void);
+void RCC_init();
 
-void leds_init(void);
+void leds_init();
 
-void buttons_init(void);
+void buttons_init();
 
-int leds_flash(count);
+int leds_flash();
 
 void next_led_on();
 
-button_action check_action(void);
+button_action check_action();
 
-led_states get_led_states(void);
+led_states get_led_states();
+
+bool read_button1();
+bool read_button2();
+bool read_button3();
 
 
 

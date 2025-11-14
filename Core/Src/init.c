@@ -1,5 +1,7 @@
 #include "init.h"
 
+extern uint32_t long_press = 0;
+
 typedef struct {
 
     uint8_t button_num;
@@ -47,43 +49,43 @@ button_action check_action(void) {
 
     button_action action;
 
-    if (read_button1 == true) { // if button 1 pressed
+    if (read_button1() == true) { // if button 1 pressed
         int i;
 
         for (i = 0; i < long_press; i++) {
-            if (read_button1 == false) {
+            if (read_button1() == false) {
                 break;
             }
         }
 
         action.button_num = 1;
-        action.is_long = (i >= long_press));
+        action.is_long = (i >= long_press);
     }
 
-    else if (read_button2 == true) { // if button 2 pressed
+    else if (read_button2() == true) { // if button 2 pressed
         int i;
 
         for (i = 0; i < long_press; i++) {
-            if (read_button1 == false) {
+            if (read_button2() == false) {
                 break;
             }
         }
 
         action.button_num = 2;
-        action.is_long = (i >= long_press));
+        action.is_long = (i >= long_press);
     }
 
-    else if (read_button3 == true) { // if button 3 pressed
+    else if (read_button3() == true) { // if button 3 pressed
         int i;
 
         for (i = 0; i < long_press; i++) {
-            if (read_button1 == false) {
+            if (read_button3() == false) {
                 break;
             }
         }
 
         action.button_num = 3;
-        action.is_long = (i >= long_press));
+        action.is_long = (i >= long_press);
     }
 
     else { //if no buttons pressed 

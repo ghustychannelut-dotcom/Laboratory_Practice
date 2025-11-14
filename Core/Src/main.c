@@ -24,6 +24,7 @@ uint8_t crnt_led_frq = 0;
 uint8_t but_num = 0;
 uint32_t count = 0;
 
+
 int main(void) {
 
     RCC_init();
