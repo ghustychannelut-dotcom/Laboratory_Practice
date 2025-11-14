@@ -1,12 +1,98 @@
+/* Доп задание ЛБ 1:
+
+3 кнопки, 6 светодиодов, у каждой кнопки 2 функции.
+
+Кнопка 1:
+1) Короткое нажатие включает светодиоды последовательно
+2) Удержание меняет порядковый номер диода для которого будет настр частота в +1
+
+Кнопка 2:  
+1) Короткое нажатие выключает диоды циклично и включ
+2) Удержание изм порядк номер диода в -1
+
+Кнопка 3:
+1) Короткое нажатие изменяет частоту мигания диода в диапазоне 4 разных частот в +
+3) Удержание изменяет частоту мигания диода в диапазоне 4 разных частот в -
+
+*/
+
+#include "init.c"
+
+uint8_t led_num = 0;
+uint8_t crnt_led_frq = 0;
+
+uint8_t but_num = 0;
+uint32_t count = 0;
+
+int main(void) {
+
+    RCC_init();
+    leds_init();
+    buttons_init();
+
+
+
+
+    while(1) {
+
+        button_action action = check_action; // checking what if any button nas been pressed and for how long
+
+        switch (action.button_num) {
+
+            case 0:
+                break;
+
+            case 1:
+                if (action.is_long == true) {
+                    led_num++;
+                }
+                else {
+                    next_led_on();
+                }
+                break;
+
+            case 2:
+                if (action.is_long == true) {
+                    led_num--;
+                }
+                else {
+                    
+                }
+                break;
+
+            case 3:
+                if (action.is_long == true) {
+                    crnt_led_frq--;
+                }
+                else {
+                    crnt_led_frq++;
+                }
+                break;
+        }
+
+        leds_flash(count);
+        count++;
+    }
+}
+
+
+
+
+
+
+
+
+            /* 1 часть ЛБ 1
+
 #include "init.h"
 #include <stdbool.h>
-
 
 bool Button1State = 0; // button 1 PB12 (pull-up)
 bool Button2State = 0; // button 2 PB15 (pull-up)
 bool Button3State = 0; // button 3 PB9  (pull-down)
 
 bool mode = 0; // "0" = input, "1" = output
+
 
 int main(void) {
     
@@ -66,3 +152,5 @@ int main(void) {
         }
     }
 }
+
+*/

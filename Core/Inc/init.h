@@ -2,7 +2,41 @@
 #include "../../CMSIS/Devices/Inc/system_stm32f4xx.h"
 #include "../../CMSIS/Devices/Inc/stm32f429xx.h"
 #include "../../CMSIS/Devices/Inc/stm32f4xx.h"
+#include <stdbool.h>
 
+void RCC_init(void);
+
+void leds_init(void);
+
+void buttons_init(void);
+
+int leds_flash(count);
+
+void next_led_on();
+
+button_action check_action(void);
+
+led_states get_led_states(void);
+
+
+
+
+
+
+
+
+
+
+
+            /* 1 часть ЛБ 1
+
+
+#include <stdint.h>
+#include "../../CMSIS/Devices/Inc/system_stm32f4xx.h"
+#include "../../CMSIS/Devices/Inc/stm32f429xx.h"
+#include "../../CMSIS/Devices/Inc/stm32f4xx.h"
+
+#include <stdbool.h>
 
 #define GPIOB_MODER                             *(uint32_t *)(0x40020400UL + 0x00UL)
 #define GPIOB_OTYPER                            *(uint32_t *)(0x40020400UL + 0x04UL)

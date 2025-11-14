@@ -1,5 +1,124 @@
 #include "init.h"
 
+typedef struct {
+
+    uint8_t button_num;
+
+    bool is_long;
+
+} button_action;
+
+typedef struct {
+
+    uint8_t led1_state;
+
+    uint8_t led2_state;
+
+    uint8_t led3_state;
+
+    uint8_t led4_state;
+
+    uint8_t led5_state;
+
+    uint8_t led6_state;
+
+} led_states;
+
+
+led_states get_led_states(void) {
+    led_states states;
+    
+    states.led1_state = 0;
+
+    states.led2_state = 0;
+
+    states.led3_state = 0;
+
+    states.led4_state = 0;
+
+    states.led5_state = 0;
+
+    states.led6_state = 0;
+
+    return states;
+}
+
+button_action check_action(void) {
+
+    button_action action;
+
+    if (read_button1 == true) { // if button 1 pressed
+        int i;
+
+        for (i = 0; i < long_press; i++) {
+            if (read_button1 == false) {
+                break;
+            }
+        }
+
+        action.button_num = 1;
+        action.is_long = (i >= long_press));
+    }
+
+    else if (read_button2 == true) { // if button 2 pressed
+        int i;
+
+        for (i = 0; i < long_press; i++) {
+            if (read_button1 == false) {
+                break;
+            }
+        }
+
+        action.button_num = 2;
+        action.is_long = (i >= long_press));
+    }
+
+    else if (read_button3 == true) { // if button 3 pressed
+        int i;
+
+        for (i = 0; i < long_press; i++) {
+            if (read_button1 == false) {
+                break;
+            }
+        }
+
+        action.button_num = 3;
+        action.is_long = (i >= long_press));
+    }
+
+    else { //if no buttons pressed 
+
+        action.button_num = 0;
+        action.is_long = false;
+    }
+
+    return action;
+}
+
+void next_led_on(void);
+
+void RCC_init(void);
+
+void leds_init(void);
+
+void buttons_init(void);
+
+int leds_flash(uint32_t count);
+
+
+
+
+
+
+
+
+
+
+      
+      /* 1 часть ЛБ 1
+
+#include "init.h"
+
 void RCC_init(void) {
     SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_GPIOBEN);
 }
@@ -86,3 +205,5 @@ void ButtonAndLed_output (void) {
     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD9_0); // PUPDR9: 00 (No pull)
     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD9_1); // PUPDR9: 00 (No pull)
 }
+
+*/
