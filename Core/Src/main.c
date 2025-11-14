@@ -16,12 +16,21 @@
 
 */
 
+/*
+инит
+дефолт значения
+обработка нажатия
+изменение структуры
+	
+	изменение частоты
+	вкл/выкл диодов
+leds_flash
+count++
+*/
+
 #include "init.c"
 
 uint8_t led_num = 0;
-uint8_t crnt_led_frq = 0;
-
-uint8_t but_num = 0;
 uint32_t count = 0;
 
 
@@ -31,47 +40,35 @@ int main(void) {
     leds_init();
     buttons_init();
 
+    leds led_pwr = { // leds on/off memory
+        .led1 = 0,
+        .led2 = 0,
+        .led3 = 0,
+        .led4 = 0,
+        .led5 = 0,
+        .led6 = 0,
+    };
+
+    leds led_frq = { // leds frequences memory
+        .led1 = 0,
+        .led2 = 0,
+        .led3 = 0,
+        .led4 = 0,
+        .led5 = 0,
+        .led6 = 0,
+    };
 
 
 
     while(1) {
 
-        button_action action = check_action; // checking what if any button nas been pressed and for how long
+        button_action action = check_action(); // checking what if any button nas been pressed and for how long
 
-        switch (action.button_num) {
-
-            case 0:
-                break;
-
-            case 1:
-                if (action.is_long == true) {
-                    led_num++;
-                }
-                else {
-                    next_led_on();
-                }
-                break;
-
-            case 2:
-                if (action.is_long == true) {
-                    led_num--;
-                }
-                else {
-                    
-                }
-                break;
-
-            case 3:
-                if (action.is_long == true) {
-                    crnt_led_frq--;
-                }
-                else {
-                    crnt_led_frq++;
-                }
-                break;
-        }
+        led_pwr = change_pwr(led_pwr, action);
+        led_frq = change_frq(led_frq, action);
 
         leds_flash(count);
+
         count++;
     }
 }

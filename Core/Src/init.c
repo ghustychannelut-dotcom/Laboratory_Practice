@@ -10,41 +10,6 @@ typedef struct {
 
 } button_action;
 
-typedef struct {
-
-    uint8_t led1_state;
-
-    uint8_t led2_state;
-
-    uint8_t led3_state;
-
-    uint8_t led4_state;
-
-    uint8_t led5_state;
-
-    uint8_t led6_state;
-
-} led_states;
-
-
-led_states get_led_states(void) {
-    led_states states;
-    
-    states.led1_state = 0;
-
-    states.led2_state = 0;
-
-    states.led3_state = 0;
-
-    states.led4_state = 0;
-
-    states.led5_state = 0;
-
-    states.led6_state = 0;
-
-    return states;
-}
-
 button_action check_action(void) {
 
     button_action action;
@@ -97,15 +62,61 @@ button_action check_action(void) {
     return action;
 }
 
-void next_led_on(void);
 
-void RCC_init(void);
+typedef struct {
 
-void leds_init(void);
+    uint8_t led1;
+    uint8_t led2;
+    uint8_t led3;
+    uint8_t led4;
+    uint8_t led5;
+    uint8_t led6;
 
-void buttons_init(void);
+} leds;
 
-int leds_flash(uint32_t count);
+
+
+leds change_struct (leds led_states, button_action action) { // updating led states
+
+    leds new_leds = led_states; // copying current led states
+
+    if (action.button_num == 0) { //if no buttons pressed keep current states
+        return led_states;
+    }
+
+    switch (action.button_num) {
+
+        case 1:
+            if (action.is_long == true) {
+                
+            }
+            else {
+                next_led_on();
+            }
+            break;
+
+        case 2:
+            if (action.is_long == true) {
+                led_num--;
+            }
+            else {
+                
+            }
+            break;
+
+        case 3:
+            if (action.is_long == true) {
+                crnt_led_frq--;
+            }
+            else {
+                crnt_led_frq++;
+            }
+            break;
+    }
+
+    return new_leds;
+}
+
 
 
 
