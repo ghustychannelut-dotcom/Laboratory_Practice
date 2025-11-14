@@ -74,6 +74,88 @@ typedef struct {
 
 } leds;
 
+leds change_pwr (leds led_pwr, button_action action) {
+    if (action.button_num == 1 && action.is_long == false) {
+
+    }
+}
+
+void change_led (uint8_t led_num, button_action action) {
+
+    if (action.button_num == 1 && action.is_long == true) {
+        led_num++;
+    }
+
+    else if (action.button_num == 2 && action.is_long == true) {
+        led_num--;
+    }
+    return 0;
+}
+
+void change_frq (leds led_frq, uint8_t led_num, button_action action) {
+
+    if (action.button_num == 3 && action.is_long == false) {
+        
+        switch(led_num) {
+            case 1:
+                led_frq.led1++;
+                break;
+
+            case 2:
+                led_frq.led2++;
+                break;
+
+            case 3:
+                led_frq.led3++;
+                break;
+
+            case 4:
+                led_frq.led4++;
+                break;
+                
+            case 5:
+                led_frq.led5++;
+                break;
+
+            case 6:
+                led_frq.led6++;
+                break;
+        }
+    }
+
+    else if (action.button_num == 3 && action.is_long == true) {
+        switch(led_num) {
+            case 1:
+                led_frq.led1--;
+                break;
+
+            case 2:
+                led_frq.led2--;
+                break;
+
+            case 3:
+                led_frq.led3--;
+                break;
+
+            case 4:
+                led_frq.led4--;
+                break;
+                
+            case 5:
+                led_frq.led5--;
+                break;
+
+            case 6:
+                led_frq.led6--;
+                break;
+        }
+    }
+    return 0;
+}
+
+
+
+
 
 
 leds change_struct (leds led_states, button_action action) { // updating led states
