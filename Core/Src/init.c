@@ -3,6 +3,11 @@
 extern uint32_t long_press = 0;
 extern uint8_t frq_levels = 3;
 
+void RCC_init(void) {
+    SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_GPIOBEN);
+}
+
+
 typedef struct {
 
     uint8_t button_num;
@@ -262,7 +267,7 @@ leds change_pwr (leds led_pwr, button_action action) {
 }
 
 void leds_flash(uint32_t count, leds led_frq, leds led_pwr) {
-    
+
 };
 
 
