@@ -6,10 +6,20 @@ extern uint8_t frq_levels = 3;
 typedef struct {
 
     uint8_t button_num;
-
     bool is_long;
 
 } button_action;
+
+typedef struct {
+
+    uint8_t led1;
+    uint8_t led2;
+    uint8_t led3;
+    uint8_t led4;
+    uint8_t led5;
+    uint8_t led6;
+
+} leds;
 
 button_action check_action(void) {
 
@@ -62,20 +72,6 @@ button_action check_action(void) {
 
     return action;
 }
-
-
-typedef struct {
-
-    uint8_t led1;
-    uint8_t led2;
-    uint8_t led3;
-    uint8_t led4;
-    uint8_t led5;
-    uint8_t led6;
-
-} leds;
-
-
 
 leds change_led (uint8_t led_num, button_action action) {
 
@@ -189,57 +185,6 @@ leds change_pwr (leds led_pwr, button_action action) {
 
     }
 }
-
-
-
-
-
-
-leds change_struct (leds led_states, button_action action) { // updating led states
-
-    leds new_leds = led_states; // copying current led states
-
-    if (action.button_num == 0) { //if no buttons pressed keep current states
-        return led_states;
-    }
-
-    switch (action.button_num) {
-
-        case 1:
-            if (action.is_long == true) {
-                
-            }
-            else {
-                next_led_on();
-            }
-            break;
-
-        case 2:
-            if (action.is_long == true) {
-                led_num--;
-            }
-            else {
-                
-            }
-            break;
-
-        case 3:
-            if (action.is_long == true) {
-                crnt_led_frq--;
-            }
-            else {
-                crnt_led_frq++;
-            }
-            break;
-    }
-
-    return new_leds;
-}
-
-
-
-
-
 
 
 

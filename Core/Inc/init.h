@@ -5,23 +5,14 @@
 #include <stdbool.h>
 
 void RCC_init();
-
 void leds_init();
-
 void buttons_init();
 
-int leds_flash();
+button_action check_action(void);
 
-void next_led_on();
-
-button_action check_action();
-
-led_states get_led_states();
-
-bool read_button1();
-bool read_button2();
-bool read_button3();
-
+leds change_led (uint8_t led_num, button_action action);
+leds change_frq (leds led_frq, uint8_t led_num, button_action action);
+leds change_pwr (leds led_pwr, button_action action);
 
 
 
@@ -68,3 +59,5 @@ void Button2_input (void);
 void ButtonAndLed_input (void);
 
 void ButtonAndLed_output (void);
+
+*/
