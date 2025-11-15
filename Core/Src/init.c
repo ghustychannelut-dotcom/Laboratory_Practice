@@ -62,16 +62,74 @@ typedef struct {
 void led_on(uint8_t num) {
     switch (num) {
         case 1:
-            SET_BIT(GPIOB)
+            SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BS_15);
+            break;
+
+        case 2:
+            SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BS_13);
+            break;
+        
+        case 3:
+            SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BS_12);
+            break;
+
+        case 4:
+            SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BS_5);
+            break;
+
+        case 5:
+            SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BS_3);
+            break;
+
+        case 6:
+            SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BS_4);
+            break;
     }
 }
 
 void led_off(uint8_t num) {
+    switch (num) {
+        case 1:
+            SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_15);
+            break;
+
+        case 2:
+            SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_13);
+            break;
+        
+        case 3:
+            SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_12);
+            break;
+
+        case 4:
+            SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_5);
+            break;
+
+        case 5:
+            SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_3);
+            break;
+
+        case 6:
+            SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_4);
+            break;
+    }
 
 }
 
 bool read_button(uint8_t num) {
+    switch (num) {
+        case 1:
+            return READ_BIT(GPIOB -> IDR, GPIO_IDR_IDR_1);
+            break;
 
+        case 2:
+            return READ_BIT(GPIOB -> IDR, GPIO_IDR_IDR_6);
+            break;
+
+        case 3:
+            return READ_BIT(GPIOB -> IDR, GPIO_IDR_IDR_2);
+            break;
+    }
 }
 
 
