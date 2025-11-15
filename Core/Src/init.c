@@ -181,18 +181,95 @@ leds change_frq (leds led_frq, uint8_t led_change, button_action action) {
 }
 
 leds change_pwr (leds led_pwr, button_action action) {
-    if (action.button_num == 1 && action.is_long == false) {
 
+    if (action.button_num == 1 && action.is_long == false) {
+        led_num++;
+        if (led_num >= 6) {
+            led_num = 6;
+        }
+    }
+
+    else if (action.button_num == 2 && action.is_long == false) {
+        if (led_num <= 1) {
+            led_num = 1;
+        }
+    }
+
+    switch (led_num) {
+        case 1: 
+            leds new_pwr {
+                new_pwr.led1 = 1;
+                new_pwr.led2 = 0;
+                new_pwr.led3 = 0;
+                new_pwr.led4 = 0;
+                new_pwr.led5 = 0;
+                new_pwr.led6 = 0;
+            }
+            break;
+        case 2: 
+            leds new_pwr {
+                new_pwr.led1 = 1;
+                new_pwr.led2 = 1;
+                new_pwr.led3 = 0;
+                new_pwr.led4 = 0;
+                new_pwr.led5 = 0;
+                new_pwr.led6 = 0;
+            }
+            break;
+        case 3: 
+            leds new_pwr {
+                new_pwr.led1 = 1;
+                new_pwr.led2 = 1;
+                new_pwr.led3 = 1;
+                new_pwr.led4 = 0;
+                new_pwr.led5 = 0;
+                new_pwr.led6 = 0;
+            }
+            break;
+        case 4: 
+            leds new_pwr {
+                new_pwr.led1 = 1;
+                new_pwr.led2 = 1;
+                new_pwr.led3 = 1;
+                new_pwr.led4 = 1;
+                new_pwr.led5 = 0;
+                new_pwr.led6 = 0;
+            }
+            break;
+        case 5: 
+            leds new_pwr {
+                new_pwr.led1 = 1;
+                new_pwr.led2 = 1;
+                new_pwr.led3 = 1;
+                new_pwr.led4 = 1;
+                new_pwr.led5 = 1;
+                new_pwr.led6 = 0;
+            }
+            break;
+        case 6: 
+            leds new_pwr {
+                new_pwr.led1 = 1;
+                new_pwr.led2 = 1;
+                new_pwr.led3 = 1;
+                new_pwr.led4 = 1;
+                new_pwr.led5 = 1;
+                new_pwr.led6 = 1;
+            }
+            break;
+
+        return new_pwr;
     }
 }
 
-
+void leds_flash(uint32_t count, leds led_frq, leds led_pwr) {
+    
+};
 
 
 
 
       
-      /* 1 часть ЛБ 1
+/* 1 часть ЛБ 1
 
 #include "init.h"
 
