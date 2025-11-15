@@ -2,6 +2,7 @@
 
 extern uint32_t long_press = 0;
 extern uint8_t frq_levels = 3;
+extern uint32_t frq_step = 10000;
 
 void RCC_init(void) {
     SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_GPIOBEN);
@@ -267,7 +268,96 @@ leds change_pwr (leds led_pwr, button_action action) {
 }
 
 void leds_flash(uint32_t count, leds led_frq, leds led_pwr) {
+    
+    leds final_states = led_frq;
 
+    // combining pwr and frq
+
+    if (led_pwr.led1 = 0) {
+        final_states.led1 = 0;
+    }
+
+    if (led_pwr.led2 = 0) {
+        final_states.led2 = 0;
+    }
+
+    if (led_pwr.led3 = 0) {
+        final_states.led3 = 0;
+    }
+
+    if (led_pwr.led4 = 0) {
+        final_states.led4 = 0;
+    }
+
+    if (led_pwr.led5 = 0) {
+        final_states.led5 = 0;
+    }
+
+    if (led_pwr.led6 = 0) {
+        final_states.led6 = 0;
+    }
+
+    // actually flashing LEDs
+
+    if (final_states.led1 == 0) {
+        led1_off();
+    }
+    else if ((count % final_states.led1) == 0) {
+        led1_on();
+    }
+    else {
+        led1_off();
+    }
+
+    if (final_states.led2 == 0) {
+        led2_off();
+    }
+    else if ((count % final_states.led2) == 0) {
+        led2_on();
+    }
+    else {
+        led2_off();
+    }
+
+    if (final_states.led3 == 0) {
+        led3_off();
+    }
+    else if ((count % final_states.led3) == 0) {
+        led3_on();
+    }
+    else {
+        led3_off();
+    }
+
+    if (final_states.led4 == 0) {
+        led4_off();
+    }
+    else if ((count % final_states.led4) == 0) {
+        led4_on();
+    }
+    else {
+        led4_off();
+    }
+
+    if (final_states.led5 == 0) {
+        led5_off();
+    }
+    else if ((count % final_states.led5) == 0) {
+        led5_on();
+    }
+    else {
+        led5_off();
+    }
+
+    if (final_states.led6 == 0) {
+        led6_off();
+    }
+    else if ((count % final_states.led6) == 0) {
+        led6_on();
+    }
+    else {
+        led6_off();
+    }
 };
 
 
