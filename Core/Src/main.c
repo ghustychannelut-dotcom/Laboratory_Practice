@@ -65,9 +65,8 @@ int main(void) {
         button_action action = check_action(); // checking what if any button nas been pressed and for how long
 
         change_led(led_num, action);
-        led_frq = change_frq(led_frq, action);
+        led_frq = change_frq(led_frq, led_num, action);
         led_pwr = change_pwr(led_pwr, action);
-        
 
         leds_flash(count);
 

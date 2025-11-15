@@ -80,7 +80,7 @@ leds change_pwr (leds led_pwr, button_action action) {
     }
 }
 
-void change_led (uint8_t led_num, button_action action) {
+leds change_led (uint8_t led_num, button_action action) {
 
     if (action.button_num == 1 && action.is_long == true) {
         led_num++;
@@ -92,7 +92,7 @@ void change_led (uint8_t led_num, button_action action) {
     return 0;
 }
 
-void change_frq (leds led_frq, uint8_t led_num, button_action action) {
+leds change_frq (leds led_frq, uint8_t led_num, button_action action) {
 
     if (action.button_num == 3 && action.is_long == false) {
         
