@@ -73,22 +73,22 @@ button_action check_action(void) {
     return action;
 }
 
-leds change_led (uint8_t led_num, button_action action) {
+leds change_led (uint8_t led_change, button_action action) {
 
     if (action.button_num == 1 && action.is_long == true) {
-        led_num++;
+        led_change++;
     }
 
     else if (action.button_num == 2 && action.is_long == true) {
-        led_num--;
+        led_change--;
     }
 }
 
-leds change_frq (leds led_frq, uint8_t led_num, button_action action) {
+leds change_frq (leds led_frq, uint8_t led_change, button_action action) {
 
     if (action.button_num == 3 && action.is_long == false) {
         
-        switch(led_num) {
+        switch(led_change) {
             case 1:
                 led_frq.led1++;
                 if (led_frq.led1 >= frq_levels) {
@@ -134,7 +134,7 @@ leds change_frq (leds led_frq, uint8_t led_num, button_action action) {
     }
 
     else if (action.button_num == 3 && action.is_long == true) {
-        switch(led_num) {
+        switch(led_change) {
             case 1:
                 led_frq.led1--;
                 if (led_frq.led1 <= 0) {
