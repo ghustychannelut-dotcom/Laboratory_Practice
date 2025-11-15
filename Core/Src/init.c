@@ -39,15 +39,28 @@ typedef struct {
 
 // functions
 
+void led_on(uint8_t num) {
+
+}
+
+
+void led_off(uint8_t num) {
+
+}
+
+bool read_button(uint8_t num) {
+    
+}
+
 button_action check_action(void) {
 
     button_action action;
 
-    if (read_button1() == true) { // if button 1 pressed
+    if (read_button(1) == true) { // if button 1 pressed
         int i;
 
         for (i = 0; i < long_press; i++) {
-            if (read_button1() == false) {
+            if (read_button(1) == false) {
                 break;
             }
         }
@@ -56,11 +69,11 @@ button_action check_action(void) {
         action.is_long = (i >= long_press);
     }
 
-    else if (read_button2() == true) { // if button 2 pressed
+    else if (read_button(2) == true) { // if button 2 pressed
         int i;
 
         for (i = 0; i < long_press; i++) {
-            if (read_button2() == false) {
+            if (read_button(2) == false) {
                 break;
             }
         }
@@ -69,11 +82,11 @@ button_action check_action(void) {
         action.is_long = (i >= long_press);
     }
 
-    else if (read_button3() == true) { // if button 3 pressed
+    else if (read_button(3) == true) { // if button 3 pressed
         int i;
 
         for (i = 0; i < long_press; i++) {
-            if (read_button3() == false) {
+            if (read_button(3) == false) {
                 break;
             }
         }
@@ -312,63 +325,63 @@ void leds_flash(uint32_t count, leds led_frq, leds led_pwr) {
     // actually flashing LEDs
 
     if (final_states.led1 == 0) {
-        led1_off();
+        led_off(1);
     }
     else if ((count % final_states.led1) == 0) {
-        led1_on();
+        led_on(1);
     }
     else {
-        led1_off();
+        led_off(1);
     }
 
     if (final_states.led2 == 0) {
-        led2_off();
+        led_off(2);
     }
     else if ((count % final_states.led2) == 0) {
-        led2_on();
+        led_on(2);
     }
     else {
-        led2_off();
+        led_off(2);
     }
 
     if (final_states.led3 == 0) {
-        led3_off();
+        led_off(3);
     }
     else if ((count % final_states.led3) == 0) {
-        led3_on();
+        led_on(3);
     }
     else {
-        led3_off();
+        led_off(3);
     }
 
     if (final_states.led4 == 0) {
-        led4_off();
+        led_off(4);
     }
     else if ((count % final_states.led4) == 0) {
-        led4_on();
+        led_on(4);
     }
     else {
-        led4_off();
+        led_off(4);
     }
 
     if (final_states.led5 == 0) {
-        led5_off();
+        led_off(5);
     }
     else if ((count % final_states.led5) == 0) {
-        led5_on();
+        led_on(5);
     }
     else {
-        led5_off();
+        led_off(5);
     }
 
     if (final_states.led6 == 0) {
-        led6_off();
+        led_off(6);
     }
     else if ((count % final_states.led6) == 0) {
-        led6_on();
+        led_on(6);
     }
     else {
-        led6_off();
+        led_off(6);
     }
 };
 
@@ -376,7 +389,8 @@ void leds_flash(uint32_t count, leds led_frq, leds led_pwr) {
 
 
       
-/* 1 часть ЛБ 1
+/* 
+1 часть ЛБ 1
 
 #include "init.h"
 
