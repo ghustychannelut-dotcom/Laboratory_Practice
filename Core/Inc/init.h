@@ -4,15 +4,42 @@
 #include "../../CMSIS/Devices/Inc/stm32f4xx.h"
 #include <stdbool.h>
 
-void RCC_init();
-void leds_init();
-void buttons_init();
+// init functions
 
+void RCC_init(void);
+void leds_init(void);
+void buttons_init(void);
+
+// Structures 
+typedef struct {
+
+    uint8_t button_num;
+    bool is_long;
+
+} button_action;
+
+typedef struct {
+
+    uint8_t led1;
+    uint8_t led2;
+    uint8_t led3;
+    uint8_t led4;
+    uint8_t led5;
+    uint8_t led6;
+
+} leds;
+
+// functions
+
+void led_on(uint8_t num);
+void led_off(uint8_t num);
+bool read_button(uint8_t num);
 button_action check_action(void);
-
-leds change_led (uint8_t led_num, button_action action);
-leds change_frq (leds led_frq, uint8_t led_num, button_action action);
+leds change_led (uint8_t led_change, button_action action);
+leds change_frq (leds led_frq, uint8_t led_change, button_action action);
 leds change_pwr (leds led_pwr, button_action action);
+void leds_flash(uint32_t count, leds led_frq, leds led_pwr);
+
 
 
 

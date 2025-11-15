@@ -122,25 +122,6 @@ void buttons_init(void) {
 
 }
 
-// Structures 
-typedef struct {
-
-    uint8_t button_num;
-    bool is_long;
-
-} button_action;
-
-typedef struct {
-
-    uint8_t led1;
-    uint8_t led2;
-    uint8_t led3;
-    uint8_t led4;
-    uint8_t led5;
-    uint8_t led6;
-
-} leds;
-
 // functions
 
 void led_on(uint8_t num) {
@@ -548,8 +529,6 @@ void leds_flash(uint32_t count, leds led_frq, leds led_pwr) {
         led_off(6);
     }
 };
-
-
 
 
       
