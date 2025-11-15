@@ -1,5 +1,25 @@
 #include "init.h"
 
+/*
+
+LED pins: 
+    1 - PB15
+    2 - PB13
+    3 - PB12
+    4 - PB5
+    5 - PB3
+    6 - PB4
+
+Button pins:
+    1 - PB1
+    2 - PB6
+    3 - PB2
+
+*/
+
+
+// global variables
+
 extern uint32_t long_press = 0;
 extern uint8_t frq_levels = 3;
 extern uint32_t frq_step = 10000;
@@ -40,17 +60,20 @@ typedef struct {
 // functions
 
 void led_on(uint8_t num) {
-
+    switch (num) {
+        case 1:
+            SET_BIT(GPIOB)
+    }
 }
-
 
 void led_off(uint8_t num) {
 
 }
 
 bool read_button(uint8_t num) {
-    
+
 }
+
 
 button_action check_action(void) {
 
