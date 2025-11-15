@@ -1,6 +1,7 @@
 #include "init.h"
 
 extern uint32_t long_press = 0;
+extern uint8_t frq_levels = 3;
 
 typedef struct {
 
@@ -74,11 +75,7 @@ typedef struct {
 
 } leds;
 
-leds change_pwr (leds led_pwr, button_action action) {
-    if (action.button_num == 1 && action.is_long == false) {
 
-    }
-}
 
 leds change_led (uint8_t led_num, button_action action) {
 
@@ -89,7 +86,6 @@ leds change_led (uint8_t led_num, button_action action) {
     else if (action.button_num == 2 && action.is_long == true) {
         led_num--;
     }
-    return 0;
 }
 
 leds change_frq (leds led_frq, uint8_t led_num, button_action action) {
@@ -99,26 +95,44 @@ leds change_frq (leds led_frq, uint8_t led_num, button_action action) {
         switch(led_num) {
             case 1:
                 led_frq.led1++;
+                if (led_frq.led1 >= frq_levels) {
+                    led_frq.led1 = frq_levels; 
+                }
                 break;
 
             case 2:
                 led_frq.led2++;
+                if (led_frq.led2 >= frq_levels) {
+                    led_frq.led2 = frq_levels; 
+                }
                 break;
 
             case 3:
                 led_frq.led3++;
+                if (led_frq.led3 >= frq_levels) {
+                    led_frq.led3 = frq_levels; 
+                }
                 break;
 
             case 4:
                 led_frq.led4++;
+                if (led_frq.led4 >= frq_levels) {
+                    led_frq.led4 = frq_levels; 
+                }
                 break;
                 
             case 5:
                 led_frq.led5++;
+                if (led_frq.led5 >= frq_levels) {
+                    led_frq.led5 = frq_levels; 
+                }
                 break;
 
             case 6:
                 led_frq.led6++;
+                if (led_frq.led6 >= frq_levels) {
+                    led_frq.led6 = frq_levels; 
+                }
                 break;
         }
     }
@@ -127,30 +141,53 @@ leds change_frq (leds led_frq, uint8_t led_num, button_action action) {
         switch(led_num) {
             case 1:
                 led_frq.led1--;
+                if (led_frq.led1 <= 0) {
+                    led_frq.led1 = 0; 
+                }
                 break;
 
             case 2:
                 led_frq.led2--;
+                if (led_frq.led2 <= 0) {
+                    led_frq.led2 = 0; 
+                }
                 break;
 
             case 3:
                 led_frq.led3--;
+                if (led_frq.led3 <= 0) {
+                    led_frq.led3 = 0; 
+                }
                 break;
 
             case 4:
                 led_frq.led4--;
+                if (led_frq.led4 <= 0) {
+                    led_frq.led4 = 0; 
+                }
                 break;
                 
             case 5:
                 led_frq.led5--;
+                if (led_frq.led5 <= 0) {
+                    led_frq.led5 = 0; 
+                }
                 break;
 
             case 6:
                 led_frq.led6--;
+                if (led_frq.led6 <= 0) {
+                    led_frq.led6 = 0; 
+                }
                 break;
         }
     }
-    return 0;
+}
+
+leds change_pwr (leds led_pwr, button_action action) {
+    if (action.button_num == 1 && action.is_long == false) {
+
+    }
 }
 
 
