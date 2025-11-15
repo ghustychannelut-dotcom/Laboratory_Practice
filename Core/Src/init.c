@@ -4,11 +4,21 @@ extern uint32_t long_press = 0;
 extern uint8_t frq_levels = 3;
 extern uint32_t frq_step = 10000;
 
+// Actual initialization
+
 void RCC_init(void) {
     SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_GPIOBEN);
 }
 
+void leds_init(void) {
+    
+}
 
+void buttons_init(void) {
+    
+}
+
+// Structures 
 typedef struct {
 
     uint8_t button_num;
@@ -26,6 +36,8 @@ typedef struct {
     uint8_t led6;
 
 } leds;
+
+// functions
 
 button_action check_action(void) {
 
