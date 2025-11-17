@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s 			page 1
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -30,20 +30,48 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s 			page 1
   28              	.LFB130:
    1:Core/Src/init.c **** #include "init.h"
    2:Core/Src/init.c **** 
-   3:Core/Src/init.c **** void RCC_init(void) {
-  29              		.loc 1 3 21 view -0
+   3:Core/Src/init.c **** /*
+   4:Core/Src/init.c **** LED pins: 
+   5:Core/Src/init.c ****     1 - PB15
+   6:Core/Src/init.c ****     2 - PB13
+   7:Core/Src/init.c ****     3 - PB12
+   8:Core/Src/init.c ****     4 - PB5
+   9:Core/Src/init.c ****     5 - PB3
+  10:Core/Src/init.c ****     6 - PB4
+  11:Core/Src/init.c **** 
+  12:Core/Src/init.c **** Button pins:
+  13:Core/Src/init.c ****     1 - PB1
+  14:Core/Src/init.c ****     2 - PB6
+  15:Core/Src/init.c ****     3 - PB2
+  16:Core/Src/init.c **** */
+  17:Core/Src/init.c **** 
+  18:Core/Src/init.c **** uint32_t long_press = 1000;
+  19:Core/Src/init.c **** uint8_t frq_levels = 3;
+  20:Core/Src/init.c **** uint32_t frq_step = 10000;
+  21:Core/Src/init.c **** uint32_t count = 0;
+  22:Core/Src/init.c **** uint8_t led_change = 2;
+  23:Core/Src/init.c **** uint8_t led_num = 2;
+  24:Core/Src/init.c **** 
+  25:Core/Src/init.c **** 
+  26:Core/Src/init.c **** // Actual initialization
+  27:Core/Src/init.c **** 
+  28:Core/Src/init.c **** void RCC_init(void) {
+  29              		.loc 1 28 21 view -0
   30              		.cfi_startproc
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 2
+
+
   31              		@ args = 0, pretend = 0, frame = 0
   32              		@ frame_needed = 0, uses_anonymous_args = 0
   33              		@ link register save eliminated.
-   4:Core/Src/init.c ****     SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_GPIOBEN);
-  34              		.loc 1 4 5 view .LVU1
+  29:Core/Src/init.c ****     SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_GPIOBEN);
+  34              		.loc 1 29 5 view .LVU1
   35 0000 024A     		ldr	r2, .L2
   36 0002 136B     		ldr	r3, [r2, #48]
   37 0004 43F00203 		orr	r3, r3, #2
   38 0008 1363     		str	r3, [r2, #48]
-   5:Core/Src/init.c **** }
-  39              		.loc 1 5 1 is_stmt 0 view .LVU2
+  30:Core/Src/init.c **** }
+  39              		.loc 1 30 1 is_stmt 0 view .LVU2
   40 000a 7047     		bx	lr
   41              	.L3:
   42              		.align	2
@@ -51,423 +79,2583 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s 			page 1
   44 000c 00380240 		.word	1073887232
   45              		.cfi_endproc
   46              	.LFE130:
-  48              		.section	.text.Onboard_leds_init,"ax",%progbits
+  48              		.section	.text.leds_init,"ax",%progbits
   49              		.align	1
-  50              		.global	Onboard_leds_init
+  50              		.global	leds_init
   51              		.syntax unified
   52              		.thumb
   53              		.thumb_func
-  55              	Onboard_leds_init:
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s 			page 2
-
-
+  55              	leds_init:
   56              	.LFB131:
-   6:Core/Src/init.c **** 
-   7:Core/Src/init.c **** void Onboard_leds_init(void) {
-  57              		.loc 1 7 30 is_stmt 1 view -0
+  31:Core/Src/init.c **** 
+  32:Core/Src/init.c **** void leds_init(void) {
+  57              		.loc 1 32 22 is_stmt 1 view -0
   58              		.cfi_startproc
   59              		@ args = 0, pretend = 0, frame = 0
   60              		@ frame_needed = 0, uses_anonymous_args = 0
   61              		@ link register save eliminated.
-   8:Core/Src/init.c **** 
-   9:Core/Src/init.c ****     // green led PB0 ручками
-  10:Core/Src/init.c ****     *(uint32_t*)(0x40020400UL + 0x00UL) |= 0x01UL; // Moder 0_1
-  62              		.loc 1 10 5 view .LVU4
-  63 0000 2B4A     		ldr	r2, .L5
-  64 0002 D2F80034 		ldr	r3, [r2, #1024]
-  65              		.loc 1 10 41 is_stmt 0 view .LVU5
-  66 0006 43F00101 		orr	r1, r3, #1
-  67 000a C2F80014 		str	r1, [r2, #1024]
-  11:Core/Src/init.c ****     *(uint32_t*)(0x40020400UL + 0x00UL) &= ~0x02UL; // Moder 1_0
-  68              		.loc 1 11 5 is_stmt 1 view .LVU6
-  69              		.loc 1 11 41 is_stmt 0 view .LVU7
-  70 000e 23F00203 		bic	r3, r3, #2
-  71 0012 43F00103 		orr	r3, r3, #1
-  72 0016 C2F80034 		str	r3, [r2, #1024]
-  12:Core/Src/init.c **** 
-  13:Core/Src/init.c ****     *(uint32_t*)(0x40020400UL + 0x04UL) |= 0x00UL; // OTYPER 0_0
-  73              		.loc 1 13 5 is_stmt 1 view .LVU8
-  14:Core/Src/init.c **** 
-  15:Core/Src/init.c ****     *(uint32_t*)(0x40020400UL + 0x08UL) |= 0x01UL; // SPEED 0_1
-  74              		.loc 1 15 5 view .LVU9
-  75 001a D2F80834 		ldr	r3, [r2, #1032]
-  76              		.loc 1 15 41 is_stmt 0 view .LVU10
-  77 001e 43F00101 		orr	r1, r3, #1
-  78 0022 C2F80814 		str	r1, [r2, #1032]
-  16:Core/Src/init.c ****     *(uint32_t*)(0x40020400UL + 0x08UL) &= ~0x02UL; // SPEED 1_0
-  79              		.loc 1 16 5 is_stmt 1 view .LVU11
-  80              		.loc 1 16 41 is_stmt 0 view .LVU12
-  81 0026 23F00203 		bic	r3, r3, #2
-  82 002a 43F00103 		orr	r3, r3, #1
-  83 002e C2F80834 		str	r3, [r2, #1032]
-  17:Core/Src/init.c **** 
-  18:Core/Src/init.c ****     *(uint32_t*)(0x40020400UL + 0x0CUL) &= ~0x00UL; // PUPDR 0_0 
-  84              		.loc 1 18 5 is_stmt 1 view .LVU13
-  85              		.loc 1 18 41 is_stmt 0 view .LVU14
-  86 0032 D2F80C34 		ldr	r3, [r2, #1036]
-  19:Core/Src/init.c ****     *(uint32_t*)(0x40020400UL + 0x0CUL) &= ~0x01UL; // PUPDR 1_0
-  87              		.loc 1 19 5 is_stmt 1 view .LVU15
-  88              		.loc 1 19 41 is_stmt 0 view .LVU16
-  89 0036 23F00103 		bic	r3, r3, #1
-  90 003a C2F80C34 		str	r3, [r2, #1036]
-  20:Core/Src/init.c **** 
-  21:Core/Src/init.c ****     *(uint32_t*)(0x40020400UL + 0x18) |= 0x10000UL; // BSRR reser PB0 output
-  91              		.loc 1 21 5 is_stmt 1 view .LVU17
-  92 003e D2F81834 		ldr	r3, [r2, #1048]
-  93              		.loc 1 21 39 is_stmt 0 view .LVU18
-  94 0042 43F48033 		orr	r3, r3, #65536
-  95 0046 C2F81834 		str	r3, [r2, #1048]
-  22:Core/Src/init.c **** 
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s 			page 3
+  33:Core/Src/init.c ****     
+  34:Core/Src/init.c ****     // LED 1: PB15 General purpose output, push-pull, medium speed, no pull-up/pull-down
+  35:Core/Src/init.c ****     SET_BIT(GPIOB -> MODER, GPIO_MODER_MODE15_0);
+  62              		.loc 1 35 5 view .LVU4
+  63 0000 604B     		ldr	r3, .L5
+  64 0002 1A68     		ldr	r2, [r3]
+  65 0004 42F08042 		orr	r2, r2, #1073741824
+  66 0008 1A60     		str	r2, [r3]
+  36:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE15_1);
+  67              		.loc 1 36 5 view .LVU5
+  68 000a 1A68     		ldr	r2, [r3]
+  69 000c 22F00042 		bic	r2, r2, #-2147483648
+  70 0010 1A60     		str	r2, [r3]
+  37:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> OTYPER, GPIO_OTYPER_OT15);
+  71              		.loc 1 37 5 view .LVU6
+  72 0012 5A68     		ldr	r2, [r3, #4]
+  73 0014 22F40042 		bic	r2, r2, #32768
+  74 0018 5A60     		str	r2, [r3, #4]
+  38:Core/Src/init.c ****     SET_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR15_0);
+  75              		.loc 1 38 5 view .LVU7
+  76 001a 9A68     		ldr	r2, [r3, #8]
+  77 001c 42F08042 		orr	r2, r2, #1073741824
+  78 0020 9A60     		str	r2, [r3, #8]
+  39:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR15_1);
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 3
 
 
-  23:Core/Src/init.c ****     // blue led PB7 через CMSIS
-  24:Core/Src/init.c ****     SET_BIT(GPIOB -> MODER, GPIO_MODER_MODE7_0); // Moder 14_1
-  96              		.loc 1 24 5 is_stmt 1 view .LVU19
-  97 004a 1A4B     		ldr	r3, .L5+4
-  98 004c 1968     		ldr	r1, [r3]
-  99 004e 41F48041 		orr	r1, r1, #16384
- 100 0052 1960     		str	r1, [r3]
-  25:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE7_1); // Moder 15_0
- 101              		.loc 1 25 5 view .LVU20
- 102 0054 1968     		ldr	r1, [r3]
- 103 0056 21F40041 		bic	r1, r1, #32768
- 104 005a 1960     		str	r1, [r3]
-  26:Core/Src/init.c **** 
-  27:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> OTYPER, GPIO_OTYPER_OT7); // OTYPER 7_0
- 105              		.loc 1 27 5 view .LVU21
- 106 005c 5868     		ldr	r0, [r3, #4]
- 107 005e 20F08000 		bic	r0, r0, #128
- 108 0062 5860     		str	r0, [r3, #4]
-  28:Core/Src/init.c **** 
-  29:Core/Src/init.c ****     SET_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR7_0); // SPEED 14_1
- 109              		.loc 1 29 5 view .LVU22
- 110 0064 9868     		ldr	r0, [r3, #8]
- 111 0066 40F48040 		orr	r0, r0, #16384
- 112 006a 9860     		str	r0, [r3, #8]
-  30:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR7_1); // SPEED 15_0
- 113              		.loc 1 30 5 view .LVU23
- 114 006c 9868     		ldr	r0, [r3, #8]
- 115 006e 20F40040 		bic	r0, r0, #32768
- 116 0072 9860     		str	r0, [r3, #8]
-  31:Core/Src/init.c **** 
-  32:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD7_0); // PUPDR 14_0
- 117              		.loc 1 32 5 view .LVU24
- 118 0074 D868     		ldr	r0, [r3, #12]
- 119 0076 20F48040 		bic	r0, r0, #16384
- 120 007a D860     		str	r0, [r3, #12]
-  33:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD7_1); // PUPDR 15_0
- 121              		.loc 1 33 5 view .LVU25
- 122 007c D868     		ldr	r0, [r3, #12]
- 123 007e 20F40040 		bic	r0, r0, #32768
- 124 0082 D860     		str	r0, [r3, #12]
-  34:Core/Src/init.c **** 
-  35:Core/Src/init.c ****     SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_7); // // BSRR reset PB7 output
- 125              		.loc 1 35 5 view .LVU26
- 126 0084 9869     		ldr	r0, [r3, #24]
- 127 0086 40F40000 		orr	r0, r0, #8388608
- 128 008a 9861     		str	r0, [r3, #24]
-  36:Core/Src/init.c **** 
-  37:Core/Src/init.c ****     // red led PB14 через собственные директивы
-  38:Core/Src/init.c ****     BIT_SET(GPIOB_MODER, GPIOB_PIN_14_GPOut);        // MODER14: General-purpose Output
- 129              		.loc 1 38 5 view .LVU27
- 130 008c 41F08051 		orr	r1, r1, #268435456
- 131 0090 C2F80014 		str	r1, [r2, #1024]
-  39:Core/Src/init.c ****     BIT_RESET(GPIOB_OTYPER, GPIOB_PIN_14_PushPull);  // OTYPER14: Push-pull (0)
- 132              		.loc 1 39 5 view .LVU28
-  40:Core/Src/init.c ****     BIT_SET(GPIOB_OSPEEDR, GPIOB_PIN_14_MEDspd);     // OSPEEDR14: Medium speed
- 133              		.loc 1 40 5 view .LVU29
- 134 0094 D2F80834 		ldr	r3, [r2, #1032]
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s 			page 4
+  79              		.loc 1 39 5 view .LVU8
+  80 0022 9A68     		ldr	r2, [r3, #8]
+  81 0024 22F00042 		bic	r2, r2, #-2147483648
+  82 0028 9A60     		str	r2, [r3, #8]
+  40:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD15_0);
+  83              		.loc 1 40 5 view .LVU9
+  84 002a DA68     		ldr	r2, [r3, #12]
+  85 002c 22F08042 		bic	r2, r2, #1073741824
+  86 0030 DA60     		str	r2, [r3, #12]
+  41:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD15_0);
+  87              		.loc 1 41 5 view .LVU10
+  88 0032 DA68     		ldr	r2, [r3, #12]
+  89 0034 22F08042 		bic	r2, r2, #1073741824
+  90 0038 DA60     		str	r2, [r3, #12]
+  42:Core/Src/init.c ****     SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_15); // LED reset to 0
+  91              		.loc 1 42 5 view .LVU11
+  92 003a 9A69     		ldr	r2, [r3, #24]
+  93 003c 42F00042 		orr	r2, r2, #-2147483648
+  94 0040 9A61     		str	r2, [r3, #24]
+  43:Core/Src/init.c **** 
+  44:Core/Src/init.c ****     // LED 2: PB13 General purpose output, push-pull, medium speed, no pull-up/pull-down
+  45:Core/Src/init.c ****     SET_BIT(GPIOB -> MODER, GPIO_MODER_MODE13_0);
+  95              		.loc 1 45 5 view .LVU12
+  96 0042 1A68     		ldr	r2, [r3]
+  97 0044 42F08062 		orr	r2, r2, #67108864
+  98 0048 1A60     		str	r2, [r3]
+  46:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE13_1);
+  99              		.loc 1 46 5 view .LVU13
+ 100 004a 1A68     		ldr	r2, [r3]
+ 101 004c 22F00062 		bic	r2, r2, #134217728
+ 102 0050 1A60     		str	r2, [r3]
+  47:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> OTYPER, GPIO_OTYPER_OT13);
+ 103              		.loc 1 47 5 view .LVU14
+ 104 0052 5A68     		ldr	r2, [r3, #4]
+ 105 0054 22F40052 		bic	r2, r2, #8192
+ 106 0058 5A60     		str	r2, [r3, #4]
+  48:Core/Src/init.c ****     SET_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR13_0);
+ 107              		.loc 1 48 5 view .LVU15
+ 108 005a 9A68     		ldr	r2, [r3, #8]
+ 109 005c 42F08062 		orr	r2, r2, #67108864
+ 110 0060 9A60     		str	r2, [r3, #8]
+  49:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR13_1);
+ 111              		.loc 1 49 5 view .LVU16
+ 112 0062 9A68     		ldr	r2, [r3, #8]
+ 113 0064 22F00062 		bic	r2, r2, #134217728
+ 114 0068 9A60     		str	r2, [r3, #8]
+  50:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD13_0);
+ 115              		.loc 1 50 5 view .LVU17
+ 116 006a DA68     		ldr	r2, [r3, #12]
+ 117 006c 22F08062 		bic	r2, r2, #67108864
+ 118 0070 DA60     		str	r2, [r3, #12]
+  51:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD13_0);
+ 119              		.loc 1 51 5 view .LVU18
+ 120 0072 DA68     		ldr	r2, [r3, #12]
+ 121 0074 22F08062 		bic	r2, r2, #67108864
+ 122 0078 DA60     		str	r2, [r3, #12]
+  52:Core/Src/init.c ****     SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_13); // LED reset to 0
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 4
 
 
- 135 0098 43F08073 		orr	r3, r3, #16777216
- 136 009c C2F80834 		str	r3, [r2, #1032]
-  41:Core/Src/init.c ****     BIT_RESET(GPIOB_PUPDR, GPIOB_PIN_14_NoPullUpPullDown); // PUPDR14: No pull
- 137              		.loc 1 41 5 view .LVU30
-  42:Core/Src/init.c ****     BIT_SET(GPIOB_BSRR, GPIOB_PIN_14_ResetOut);
- 138              		.loc 1 42 5 view .LVU31
- 139 00a0 D2F81834 		ldr	r3, [r2, #1048]
- 140 00a4 43F08043 		orr	r3, r3, #1073741824
- 141 00a8 C2F81834 		str	r3, [r2, #1048]
-  43:Core/Src/init.c **** }
- 142              		.loc 1 43 1 is_stmt 0 view .LVU32
- 143 00ac 7047     		bx	lr
- 144              	.L6:
- 145 00ae 00BF     		.align	2
- 146              	.L5:
- 147 00b0 00000240 		.word	1073872896
- 148 00b4 00040240 		.word	1073873920
- 149              		.cfi_endproc
- 150              	.LFE131:
- 152              		.section	.text.Button1_input,"ax",%progbits
- 153              		.align	1
- 154              		.global	Button1_input
- 155              		.syntax unified
- 156              		.thumb
- 157              		.thumb_func
- 159              	Button1_input:
- 160              	.LFB132:
-  44:Core/Src/init.c **** 
-  45:Core/Src/init.c **** // Button 1 PB12
-  46:Core/Src/init.c **** void Button1_input (void) {
- 161              		.loc 1 46 27 is_stmt 1 view -0
- 162              		.cfi_startproc
- 163              		@ args = 0, pretend = 0, frame = 0
- 164              		@ frame_needed = 0, uses_anonymous_args = 0
- 165              		@ link register save eliminated.
-  47:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE12_0); 
- 166              		.loc 1 47 5 view .LVU34
- 167 0000 0A4B     		ldr	r3, .L8
- 168 0002 1A68     		ldr	r2, [r3]
- 169 0004 22F08072 		bic	r2, r2, #16777216
- 170 0008 1A60     		str	r2, [r3]
-  48:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE12_1); 
- 171              		.loc 1 48 5 view .LVU35
- 172 000a 1A68     		ldr	r2, [r3]
- 173 000c 22F00072 		bic	r2, r2, #33554432
- 174 0010 1A60     		str	r2, [r3]
-  49:Core/Src/init.c ****     
-  50:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD12_0); 
- 175              		.loc 1 50 5 view .LVU36
- 176 0012 DA68     		ldr	r2, [r3, #12]
- 177 0014 22F08072 		bic	r2, r2, #16777216
- 178 0018 DA60     		str	r2, [r3, #12]
-  51:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD12_1); 
- 179              		.loc 1 51 5 view .LVU37
- 180 001a DA68     		ldr	r2, [r3, #12]
- 181 001c 22F00072 		bic	r2, r2, #33554432
- 182 0020 DA60     		str	r2, [r3, #12]
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s 			page 5
+ 123              		.loc 1 52 5 view .LVU19
+ 124 007a 9A69     		ldr	r2, [r3, #24]
+ 125 007c 42F00052 		orr	r2, r2, #536870912
+ 126 0080 9A61     		str	r2, [r3, #24]
+  53:Core/Src/init.c **** 
+  54:Core/Src/init.c ****     // LED 3: PB12 General purpose output, push-pull, medium speed, no pull-up/pull-down
+  55:Core/Src/init.c ****     SET_BIT(GPIOB -> MODER, GPIO_MODER_MODE12_0);
+ 127              		.loc 1 55 5 view .LVU20
+ 128 0082 1A68     		ldr	r2, [r3]
+ 129 0084 42F08072 		orr	r2, r2, #16777216
+ 130 0088 1A60     		str	r2, [r3]
+  56:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE12_1);
+ 131              		.loc 1 56 5 view .LVU21
+ 132 008a 1A68     		ldr	r2, [r3]
+ 133 008c 22F00072 		bic	r2, r2, #33554432
+ 134 0090 1A60     		str	r2, [r3]
+  57:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> OTYPER, GPIO_OTYPER_OT12);
+ 135              		.loc 1 57 5 view .LVU22
+ 136 0092 5A68     		ldr	r2, [r3, #4]
+ 137 0094 22F48052 		bic	r2, r2, #4096
+ 138 0098 5A60     		str	r2, [r3, #4]
+  58:Core/Src/init.c ****     SET_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR12_0);
+ 139              		.loc 1 58 5 view .LVU23
+ 140 009a 9A68     		ldr	r2, [r3, #8]
+ 141 009c 42F08072 		orr	r2, r2, #16777216
+ 142 00a0 9A60     		str	r2, [r3, #8]
+  59:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR12_1);
+ 143              		.loc 1 59 5 view .LVU24
+ 144 00a2 9A68     		ldr	r2, [r3, #8]
+ 145 00a4 22F00072 		bic	r2, r2, #33554432
+ 146 00a8 9A60     		str	r2, [r3, #8]
+  60:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD12_0);
+ 147              		.loc 1 60 5 view .LVU25
+ 148 00aa DA68     		ldr	r2, [r3, #12]
+ 149 00ac 22F08072 		bic	r2, r2, #16777216
+ 150 00b0 DA60     		str	r2, [r3, #12]
+  61:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD12_0);
+ 151              		.loc 1 61 5 view .LVU26
+ 152 00b2 DA68     		ldr	r2, [r3, #12]
+ 153 00b4 22F08072 		bic	r2, r2, #16777216
+ 154 00b8 DA60     		str	r2, [r3, #12]
+  62:Core/Src/init.c ****     SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_12); // LED reset to 0
+ 155              		.loc 1 62 5 view .LVU27
+ 156 00ba 9A69     		ldr	r2, [r3, #24]
+ 157 00bc 42F08052 		orr	r2, r2, #268435456
+ 158 00c0 9A61     		str	r2, [r3, #24]
+  63:Core/Src/init.c **** 
+  64:Core/Src/init.c ****     // LED 4: PB5 General purpose output, push-pull, medium speed, no pull-up/pull-down
+  65:Core/Src/init.c ****     SET_BIT(GPIOB -> MODER, GPIO_MODER_MODE5_0);
+ 159              		.loc 1 65 5 view .LVU28
+ 160 00c2 1A68     		ldr	r2, [r3]
+ 161 00c4 42F48062 		orr	r2, r2, #1024
+ 162 00c8 1A60     		str	r2, [r3]
+  66:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE5_1);
+ 163              		.loc 1 66 5 view .LVU29
+ 164 00ca 1A68     		ldr	r2, [r3]
+ 165 00cc 22F40062 		bic	r2, r2, #2048
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 5
 
 
-  52:Core/Src/init.c ****     SET_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD12_0); 
- 183              		.loc 1 52 5 view .LVU38
- 184 0022 DA68     		ldr	r2, [r3, #12]
- 185 0024 42F08072 		orr	r2, r2, #16777216
- 186 0028 DA60     		str	r2, [r3, #12]
-  53:Core/Src/init.c **** }
- 187              		.loc 1 53 1 is_stmt 0 view .LVU39
- 188 002a 7047     		bx	lr
- 189              	.L9:
- 190              		.align	2
- 191              	.L8:
- 192 002c 00040240 		.word	1073873920
- 193              		.cfi_endproc
- 194              	.LFE132:
- 196              		.section	.text.Button2_input,"ax",%progbits
- 197              		.align	1
- 198              		.global	Button2_input
- 199              		.syntax unified
- 200              		.thumb
- 201              		.thumb_func
- 203              	Button2_input:
- 204              	.LFB133:
-  54:Core/Src/init.c **** 
-  55:Core/Src/init.c **** // Button 2 PB15
-  56:Core/Src/init.c **** void Button2_input (void) {
- 205              		.loc 1 56 27 is_stmt 1 view -0
- 206              		.cfi_startproc
- 207              		@ args = 0, pretend = 0, frame = 0
- 208              		@ frame_needed = 0, uses_anonymous_args = 0
- 209              		@ link register save eliminated.
-  57:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE15_0); 
- 210              		.loc 1 57 5 view .LVU41
- 211 0000 0A4B     		ldr	r3, .L11
- 212 0002 1A68     		ldr	r2, [r3]
- 213 0004 22F08042 		bic	r2, r2, #1073741824
- 214 0008 1A60     		str	r2, [r3]
-  58:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE15_1); 
- 215              		.loc 1 58 5 view .LVU42
- 216 000a 1A68     		ldr	r2, [r3]
- 217 000c 22F00042 		bic	r2, r2, #-2147483648
- 218 0010 1A60     		str	r2, [r3]
-  59:Core/Src/init.c ****     
-  60:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD15_0); 
- 219              		.loc 1 60 5 view .LVU43
- 220 0012 DA68     		ldr	r2, [r3, #12]
- 221 0014 22F08042 		bic	r2, r2, #1073741824
- 222 0018 DA60     		str	r2, [r3, #12]
-  61:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD15_1); 
- 223              		.loc 1 61 5 view .LVU44
- 224 001a DA68     		ldr	r2, [r3, #12]
- 225 001c 22F00042 		bic	r2, r2, #-2147483648
- 226 0020 DA60     		str	r2, [r3, #12]
-  62:Core/Src/init.c ****     SET_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD15_0); 
- 227              		.loc 1 62 5 view .LVU45
- 228 0022 DA68     		ldr	r2, [r3, #12]
- 229 0024 42F08042 		orr	r2, r2, #1073741824
- 230 0028 DA60     		str	r2, [r3, #12]
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s 			page 6
+ 166 00d0 1A60     		str	r2, [r3]
+  67:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> OTYPER, GPIO_OTYPER_OT5);
+ 167              		.loc 1 67 5 view .LVU30
+ 168 00d2 5A68     		ldr	r2, [r3, #4]
+ 169 00d4 22F02002 		bic	r2, r2, #32
+ 170 00d8 5A60     		str	r2, [r3, #4]
+  68:Core/Src/init.c ****     SET_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR5_0);
+ 171              		.loc 1 68 5 view .LVU31
+ 172 00da 9A68     		ldr	r2, [r3, #8]
+ 173 00dc 42F48062 		orr	r2, r2, #1024
+ 174 00e0 9A60     		str	r2, [r3, #8]
+  69:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR5_1);
+ 175              		.loc 1 69 5 view .LVU32
+ 176 00e2 9A68     		ldr	r2, [r3, #8]
+ 177 00e4 22F40062 		bic	r2, r2, #2048
+ 178 00e8 9A60     		str	r2, [r3, #8]
+  70:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD5_0);
+ 179              		.loc 1 70 5 view .LVU33
+ 180 00ea DA68     		ldr	r2, [r3, #12]
+ 181 00ec 22F48062 		bic	r2, r2, #1024
+ 182 00f0 DA60     		str	r2, [r3, #12]
+  71:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD5_0);
+ 183              		.loc 1 71 5 view .LVU34
+ 184 00f2 DA68     		ldr	r2, [r3, #12]
+ 185 00f4 22F48062 		bic	r2, r2, #1024
+ 186 00f8 DA60     		str	r2, [r3, #12]
+  72:Core/Src/init.c ****     SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_5); // LED reset to 0
+ 187              		.loc 1 72 5 view .LVU35
+ 188 00fa 9A69     		ldr	r2, [r3, #24]
+ 189 00fc 42F40012 		orr	r2, r2, #2097152
+ 190 0100 9A61     		str	r2, [r3, #24]
+  73:Core/Src/init.c **** 
+  74:Core/Src/init.c ****     // LED 5: PB3 General purpose output, push-pull, medium speed, no pull-up/pull-down
+  75:Core/Src/init.c ****     SET_BIT(GPIOB -> MODER, GPIO_MODER_MODE3_0);
+ 191              		.loc 1 75 5 view .LVU36
+ 192 0102 1A68     		ldr	r2, [r3]
+ 193 0104 42F04002 		orr	r2, r2, #64
+ 194 0108 1A60     		str	r2, [r3]
+  76:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE3_1);
+ 195              		.loc 1 76 5 view .LVU37
+ 196 010a 1A68     		ldr	r2, [r3]
+ 197 010c 22F08002 		bic	r2, r2, #128
+ 198 0110 1A60     		str	r2, [r3]
+  77:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> OTYPER, GPIO_OTYPER_OT3);
+ 199              		.loc 1 77 5 view .LVU38
+ 200 0112 5A68     		ldr	r2, [r3, #4]
+ 201 0114 22F00802 		bic	r2, r2, #8
+ 202 0118 5A60     		str	r2, [r3, #4]
+  78:Core/Src/init.c ****     SET_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR3_0);
+ 203              		.loc 1 78 5 view .LVU39
+ 204 011a 9A68     		ldr	r2, [r3, #8]
+ 205 011c 42F04002 		orr	r2, r2, #64
+ 206 0120 9A60     		str	r2, [r3, #8]
+  79:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR3_1);
+ 207              		.loc 1 79 5 view .LVU40
+ 208 0122 9A68     		ldr	r2, [r3, #8]
+ 209 0124 22F08002 		bic	r2, r2, #128
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 6
 
 
-  63:Core/Src/init.c **** }
- 231              		.loc 1 63 1 is_stmt 0 view .LVU46
- 232 002a 7047     		bx	lr
- 233              	.L12:
- 234              		.align	2
- 235              	.L11:
- 236 002c 00040240 		.word	1073873920
- 237              		.cfi_endproc
- 238              	.LFE133:
- 240              		.section	.text.ButtonAndLed_input,"ax",%progbits
- 241              		.align	1
- 242              		.global	ButtonAndLed_input
- 243              		.syntax unified
- 244              		.thumb
- 245              		.thumb_func
- 247              	ButtonAndLed_input:
- 248              	.LFB134:
-  64:Core/Src/init.c **** 
-  65:Core/Src/init.c **** // Button 3 PB9 (режим входа)
-  66:Core/Src/init.c **** void ButtonAndLed_input (void) {
- 249              		.loc 1 66 32 is_stmt 1 view -0
- 250              		.cfi_startproc
- 251              		@ args = 0, pretend = 0, frame = 0
- 252              		@ frame_needed = 0, uses_anonymous_args = 0
- 253              		@ link register save eliminated.
-  67:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE9_0); 
- 254              		.loc 1 67 5 view .LVU48
- 255 0000 0A4B     		ldr	r3, .L14
- 256 0002 1A68     		ldr	r2, [r3]
- 257 0004 22F48022 		bic	r2, r2, #262144
- 258 0008 1A60     		str	r2, [r3]
-  68:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE9_1); 
- 259              		.loc 1 68 5 view .LVU49
- 260 000a 1A68     		ldr	r2, [r3]
- 261 000c 22F40022 		bic	r2, r2, #524288
- 262 0010 1A60     		str	r2, [r3]
-  69:Core/Src/init.c ****     
-  70:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD9_0); 
- 263              		.loc 1 70 5 view .LVU50
- 264 0012 DA68     		ldr	r2, [r3, #12]
- 265 0014 22F48022 		bic	r2, r2, #262144
- 266 0018 DA60     		str	r2, [r3, #12]
-  71:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD9_1); 
- 267              		.loc 1 71 5 view .LVU51
- 268 001a DA68     		ldr	r2, [r3, #12]
- 269 001c 22F40022 		bic	r2, r2, #524288
- 270 0020 DA60     		str	r2, [r3, #12]
-  72:Core/Src/init.c ****     SET_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD9_1); 
- 271              		.loc 1 72 5 view .LVU52
- 272 0022 DA68     		ldr	r2, [r3, #12]
- 273 0024 42F40022 		orr	r2, r2, #524288
- 274 0028 DA60     		str	r2, [r3, #12]
-  73:Core/Src/init.c **** }
- 275              		.loc 1 73 1 is_stmt 0 view .LVU53
- 276 002a 7047     		bx	lr
- 277              	.L15:
- 278              		.align	2
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s 			page 7
+ 210 0128 9A60     		str	r2, [r3, #8]
+  80:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD3_0);
+ 211              		.loc 1 80 5 view .LVU41
+ 212 012a DA68     		ldr	r2, [r3, #12]
+ 213 012c 22F04002 		bic	r2, r2, #64
+ 214 0130 DA60     		str	r2, [r3, #12]
+  81:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD3_0);
+ 215              		.loc 1 81 5 view .LVU42
+ 216 0132 DA68     		ldr	r2, [r3, #12]
+ 217 0134 22F04002 		bic	r2, r2, #64
+ 218 0138 DA60     		str	r2, [r3, #12]
+  82:Core/Src/init.c ****     SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_3); // LED reset to 0
+ 219              		.loc 1 82 5 view .LVU43
+ 220 013a 9A69     		ldr	r2, [r3, #24]
+ 221 013c 42F40022 		orr	r2, r2, #524288
+ 222 0140 9A61     		str	r2, [r3, #24]
+  83:Core/Src/init.c **** 
+  84:Core/Src/init.c ****     // LED 6: PB4 General purpose output, push-pull, medium speed, no pull-up/pull-down
+  85:Core/Src/init.c ****     SET_BIT(GPIOB -> MODER, GPIO_MODER_MODE4_0);
+ 223              		.loc 1 85 5 view .LVU44
+ 224 0142 1A68     		ldr	r2, [r3]
+ 225 0144 42F48072 		orr	r2, r2, #256
+ 226 0148 1A60     		str	r2, [r3]
+  86:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE4_1);
+ 227              		.loc 1 86 5 view .LVU45
+ 228 014a 1A68     		ldr	r2, [r3]
+ 229 014c 22F40072 		bic	r2, r2, #512
+ 230 0150 1A60     		str	r2, [r3]
+  87:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> OTYPER, GPIO_OTYPER_OT4);
+ 231              		.loc 1 87 5 view .LVU46
+ 232 0152 5A68     		ldr	r2, [r3, #4]
+ 233 0154 22F01002 		bic	r2, r2, #16
+ 234 0158 5A60     		str	r2, [r3, #4]
+  88:Core/Src/init.c ****     SET_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR4_0);
+ 235              		.loc 1 88 5 view .LVU47
+ 236 015a 9A68     		ldr	r2, [r3, #8]
+ 237 015c 42F48072 		orr	r2, r2, #256
+ 238 0160 9A60     		str	r2, [r3, #8]
+  89:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR4_1);
+ 239              		.loc 1 89 5 view .LVU48
+ 240 0162 9A68     		ldr	r2, [r3, #8]
+ 241 0164 22F40072 		bic	r2, r2, #512
+ 242 0168 9A60     		str	r2, [r3, #8]
+  90:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD4_0);
+ 243              		.loc 1 90 5 view .LVU49
+ 244 016a DA68     		ldr	r2, [r3, #12]
+ 245 016c 22F48072 		bic	r2, r2, #256
+ 246 0170 DA60     		str	r2, [r3, #12]
+  91:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD4_0);
+ 247              		.loc 1 91 5 view .LVU50
+ 248 0172 DA68     		ldr	r2, [r3, #12]
+ 249 0174 22F48072 		bic	r2, r2, #256
+ 250 0178 DA60     		str	r2, [r3, #12]
+  92:Core/Src/init.c ****     SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_4); // LED reset to 0
+ 251              		.loc 1 92 5 view .LVU51
+ 252 017a 9A69     		ldr	r2, [r3, #24]
+ 253 017c 42F48012 		orr	r2, r2, #1048576
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 7
 
 
- 279              	.L14:
- 280 002c 00040240 		.word	1073873920
- 281              		.cfi_endproc
- 282              	.LFE134:
- 284              		.section	.text.ButtonAndLed_output,"ax",%progbits
- 285              		.align	1
- 286              		.global	ButtonAndLed_output
- 287              		.syntax unified
- 288              		.thumb
- 289              		.thumb_func
- 291              	ButtonAndLed_output:
- 292              	.LFB135:
-  74:Core/Src/init.c **** 
-  75:Core/Src/init.c **** void ButtonAndLed_output (void) {
- 293              		.loc 1 75 33 is_stmt 1 view -0
- 294              		.cfi_startproc
- 295              		@ args = 0, pretend = 0, frame = 0
- 296              		@ frame_needed = 0, uses_anonymous_args = 0
- 297              		@ link register save eliminated.
-  76:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE9_0);
- 298              		.loc 1 76 5 view .LVU55
- 299 0000 124B     		ldr	r3, .L17
- 300 0002 1A68     		ldr	r2, [r3]
- 301 0004 22F48022 		bic	r2, r2, #262144
- 302 0008 1A60     		str	r2, [r3]
-  77:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE9_1);
- 303              		.loc 1 77 5 view .LVU56
- 304 000a 1A68     		ldr	r2, [r3]
- 305 000c 22F40022 		bic	r2, r2, #524288
- 306 0010 1A60     		str	r2, [r3]
-  78:Core/Src/init.c ****     SET_BIT(GPIOB -> MODER, GPIO_MODER_MODE9_0); // MODER9: 01 (Output)
- 307              		.loc 1 78 5 view .LVU57
- 308 0012 1A68     		ldr	r2, [r3]
- 309 0014 42F48022 		orr	r2, r2, #262144
- 310 0018 1A60     		str	r2, [r3]
-  79:Core/Src/init.c **** 
-  80:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> OTYPER, GPIO_OTYPER_OT9); // OTYPER9: 0 (Push-pull)
- 311              		.loc 1 80 5 view .LVU58
- 312 001a 5A68     		ldr	r2, [r3, #4]
- 313 001c 22F40072 		bic	r2, r2, #512
- 314 0020 5A60     		str	r2, [r3, #4]
-  81:Core/Src/init.c **** 
-  82:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR9_0); 
- 315              		.loc 1 82 5 view .LVU59
- 316 0022 9A68     		ldr	r2, [r3, #8]
- 317 0024 22F48022 		bic	r2, r2, #262144
- 318 0028 9A60     		str	r2, [r3, #8]
-  83:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR9_1); 
- 319              		.loc 1 83 5 view .LVU60
- 320 002a 9A68     		ldr	r2, [r3, #8]
- 321 002c 22F40022 		bic	r2, r2, #524288
- 322 0030 9A60     		str	r2, [r3, #8]
-  84:Core/Src/init.c ****     SET_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR9_0); // OSPEEDR9: 01 (Medium)
- 323              		.loc 1 84 5 view .LVU61
- 324 0032 9A68     		ldr	r2, [r3, #8]
- 325 0034 42F48022 		orr	r2, r2, #262144
- 326 0038 9A60     		str	r2, [r3, #8]
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s 			page 8
+ 254 0180 9A61     		str	r2, [r3, #24]
+  93:Core/Src/init.c **** 
+  94:Core/Src/init.c **** }
+ 255              		.loc 1 94 1 is_stmt 0 view .LVU52
+ 256 0182 7047     		bx	lr
+ 257              	.L6:
+ 258              		.align	2
+ 259              	.L5:
+ 260 0184 00040240 		.word	1073873920
+ 261              		.cfi_endproc
+ 262              	.LFE131:
+ 264              		.section	.text.buttons_init,"ax",%progbits
+ 265              		.align	1
+ 266              		.global	buttons_init
+ 267              		.syntax unified
+ 268              		.thumb
+ 269              		.thumb_func
+ 271              	buttons_init:
+ 272              	.LFB132:
+  95:Core/Src/init.c **** 
+  96:Core/Src/init.c **** /*
+  97:Core/Src/init.c **** void buttons_init(void) {
+  98:Core/Src/init.c ****    
+  99:Core/Src/init.c ****     // button 1: PB1 input, push-pull, medium speed, pull-up
+ 100:Core/Src/init.c ****     SET_BIT(GPIOB -> MODER, GPIO_MODER_MODE1_0);
+ 101:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE1_0);
+ 102:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> OTYPER, GPIO_OTYPER_OT1);
+ 103:Core/Src/init.c ****     SET_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR1_0);
+ 104:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR1_1);
+ 105:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD1_0);
+ 106:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD1_1);
+ 107:Core/Src/init.c **** 
+ 108:Core/Src/init.c ****     // button 2: PB6 input, push-pull, medium speed, pull-up
+ 109:Core/Src/init.c ****     SET_BIT(GPIOB -> MODER, GPIO_MODER_MODE6_0);
+ 110:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE6_0);
+ 111:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> OTYPER, GPIO_OTYPER_OT6);
+ 112:Core/Src/init.c ****     SET_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR6_0);
+ 113:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR6_1);
+ 114:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD6_0);
+ 115:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD6_1);
+ 116:Core/Src/init.c **** 
+ 117:Core/Src/init.c ****     // button 3: PB2 input, push-pull, medium speed, pull-up
+ 118:Core/Src/init.c ****     SET_BIT(GPIOB -> MODER, GPIO_MODER_MODE2_0);
+ 119:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE2_0);
+ 120:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> OTYPER, GPIO_OTYPER_OT2);
+ 121:Core/Src/init.c ****     SET_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR2_0);
+ 122:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR2_1);
+ 123:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD2_0);
+ 124:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD2_1);
+ 125:Core/Src/init.c **** 
+ 126:Core/Src/init.c **** }
+ 127:Core/Src/init.c **** 
+ 128:Core/Src/init.c **** */
+ 129:Core/Src/init.c **** 
+ 130:Core/Src/init.c **** void buttons_init(void) {
+ 273              		.loc 1 130 25 is_stmt 1 view -0
+ 274              		.cfi_startproc
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 8
 
 
-  85:Core/Src/init.c **** 
-  86:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD9_0); // PUPDR9: 00 (No pull)
- 327              		.loc 1 86 5 view .LVU62
- 328 003a DA68     		ldr	r2, [r3, #12]
- 329 003c 22F48022 		bic	r2, r2, #262144
- 330 0040 DA60     		str	r2, [r3, #12]
-  87:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD9_1); // PUPDR9: 00 (No pull)
- 331              		.loc 1 87 5 view .LVU63
- 332 0042 DA68     		ldr	r2, [r3, #12]
- 333 0044 22F40022 		bic	r2, r2, #524288
- 334 0048 DA60     		str	r2, [r3, #12]
-  88:Core/Src/init.c **** }
- 335              		.loc 1 88 1 is_stmt 0 view .LVU64
- 336 004a 7047     		bx	lr
- 337              	.L18:
- 338              		.align	2
- 339              	.L17:
- 340 004c 00040240 		.word	1073873920
- 341              		.cfi_endproc
- 342              	.LFE135:
- 344              		.text
- 345              	.Letext0:
- 346              		.file 2 "C:/tools/SysGCC/arm-none-eabi/include/machine/_default_types.h"
- 347              		.file 3 "C:/tools/SysGCC/arm-none-eabi/include/sys/_stdint.h"
- 348              		.file 4 "Core/Inc/../../CMSIS/Devices/Inc/stm32f429xx.h"
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s 			page 9
+ 275              		@ args = 0, pretend = 0, frame = 0
+ 276              		@ frame_needed = 0, uses_anonymous_args = 0
+ 277              		@ link register save eliminated.
+ 131:Core/Src/init.c ****     // Кнопка 1: PB1 - INPUT mode (00), Pull-down
+ 132:Core/Src/init.c ****     GPIOB->MODER &= ~(0x3 << (1 * 2));    // Input mode (00)
+ 278              		.loc 1 132 5 view .LVU54
+ 279              		.loc 1 132 10 is_stmt 0 view .LVU55
+ 280 0000 124B     		ldr	r3, .L8
+ 281 0002 1A68     		ldr	r2, [r3]
+ 282              		.loc 1 132 18 view .LVU56
+ 283 0004 22F00C02 		bic	r2, r2, #12
+ 284 0008 1A60     		str	r2, [r3]
+ 133:Core/Src/init.c ****     GPIOB->PUPDR &= ~(0x3 << (1 * 2));    // Clear pull settings
+ 285              		.loc 1 133 5 is_stmt 1 view .LVU57
+ 286              		.loc 1 133 10 is_stmt 0 view .LVU58
+ 287 000a DA68     		ldr	r2, [r3, #12]
+ 288              		.loc 1 133 18 view .LVU59
+ 289 000c 22F00C02 		bic	r2, r2, #12
+ 290 0010 DA60     		str	r2, [r3, #12]
+ 134:Core/Src/init.c ****     GPIOB->PUPDR |= (0x2 << (1 * 2));     // Pull-down (10)
+ 291              		.loc 1 134 5 is_stmt 1 view .LVU60
+ 292              		.loc 1 134 10 is_stmt 0 view .LVU61
+ 293 0012 DA68     		ldr	r2, [r3, #12]
+ 294              		.loc 1 134 18 view .LVU62
+ 295 0014 42F00802 		orr	r2, r2, #8
+ 296 0018 DA60     		str	r2, [r3, #12]
+ 135:Core/Src/init.c **** 
+ 136:Core/Src/init.c ****     // Кнопка 2: PB6 - INPUT mode (00), Pull-down
+ 137:Core/Src/init.c ****     GPIOB->MODER &= ~(0x3 << (6 * 2));    // Input mode (00)
+ 297              		.loc 1 137 5 is_stmt 1 view .LVU63
+ 298              		.loc 1 137 10 is_stmt 0 view .LVU64
+ 299 001a 1A68     		ldr	r2, [r3]
+ 300              		.loc 1 137 18 view .LVU65
+ 301 001c 22F44052 		bic	r2, r2, #12288
+ 302 0020 1A60     		str	r2, [r3]
+ 138:Core/Src/init.c ****     GPIOB->PUPDR &= ~(0x3 << (6 * 2));    // Clear pull settings
+ 303              		.loc 1 138 5 is_stmt 1 view .LVU66
+ 304              		.loc 1 138 10 is_stmt 0 view .LVU67
+ 305 0022 DA68     		ldr	r2, [r3, #12]
+ 306              		.loc 1 138 18 view .LVU68
+ 307 0024 22F44052 		bic	r2, r2, #12288
+ 308 0028 DA60     		str	r2, [r3, #12]
+ 139:Core/Src/init.c ****     GPIOB->PUPDR |= (0x2 << (6 * 2));     // Pull-down (10)
+ 309              		.loc 1 139 5 is_stmt 1 view .LVU69
+ 310              		.loc 1 139 10 is_stmt 0 view .LVU70
+ 311 002a DA68     		ldr	r2, [r3, #12]
+ 312              		.loc 1 139 18 view .LVU71
+ 313 002c 42F40052 		orr	r2, r2, #8192
+ 314 0030 DA60     		str	r2, [r3, #12]
+ 140:Core/Src/init.c **** 
+ 141:Core/Src/init.c ****     // Кнопка 3: PB2 - INPUT mode (00), Pull-down
+ 142:Core/Src/init.c ****     GPIOB->MODER &= ~(0x3 << (2 * 2));    // Input mode (00)
+ 315              		.loc 1 142 5 is_stmt 1 view .LVU72
+ 316              		.loc 1 142 10 is_stmt 0 view .LVU73
+ 317 0032 1A68     		ldr	r2, [r3]
+ 318              		.loc 1 142 18 view .LVU74
+ 319 0034 22F03002 		bic	r2, r2, #48
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 9
+
+
+ 320 0038 1A60     		str	r2, [r3]
+ 143:Core/Src/init.c ****     GPIOB->PUPDR &= ~(0x3 << (2 * 2));    // Clear pull settings
+ 321              		.loc 1 143 5 is_stmt 1 view .LVU75
+ 322              		.loc 1 143 10 is_stmt 0 view .LVU76
+ 323 003a DA68     		ldr	r2, [r3, #12]
+ 324              		.loc 1 143 18 view .LVU77
+ 325 003c 22F03002 		bic	r2, r2, #48
+ 326 0040 DA60     		str	r2, [r3, #12]
+ 144:Core/Src/init.c ****     GPIOB->PUPDR |= (0x2 << (2 * 2));     // Pull-down (10)
+ 327              		.loc 1 144 5 is_stmt 1 view .LVU78
+ 328              		.loc 1 144 10 is_stmt 0 view .LVU79
+ 329 0042 DA68     		ldr	r2, [r3, #12]
+ 330              		.loc 1 144 18 view .LVU80
+ 331 0044 42F02002 		orr	r2, r2, #32
+ 332 0048 DA60     		str	r2, [r3, #12]
+ 145:Core/Src/init.c **** }
+ 333              		.loc 1 145 1 view .LVU81
+ 334 004a 7047     		bx	lr
+ 335              	.L9:
+ 336              		.align	2
+ 337              	.L8:
+ 338 004c 00040240 		.word	1073873920
+ 339              		.cfi_endproc
+ 340              	.LFE132:
+ 342              		.section	.text.led_on,"ax",%progbits
+ 343              		.align	1
+ 344              		.global	led_on
+ 345              		.syntax unified
+ 346              		.thumb
+ 347              		.thumb_func
+ 349              	led_on:
+ 350              	.LVL0:
+ 351              	.LFB133:
+ 146:Core/Src/init.c **** 
+ 147:Core/Src/init.c **** // functions
+ 148:Core/Src/init.c **** 
+ 149:Core/Src/init.c **** void led_on(uint8_t num) {
+ 352              		.loc 1 149 26 is_stmt 1 view -0
+ 353              		.cfi_startproc
+ 354              		@ args = 0, pretend = 0, frame = 0
+ 355              		@ frame_needed = 0, uses_anonymous_args = 0
+ 356              		@ link register save eliminated.
+ 150:Core/Src/init.c ****     switch (num) {
+ 357              		.loc 1 150 5 view .LVU83
+ 358 0000 0138     		subs	r0, r0, #1
+ 359              	.LVL1:
+ 360              		.loc 1 150 5 is_stmt 0 view .LVU84
+ 361 0002 0528     		cmp	r0, #5
+ 362 0004 27D8     		bhi	.L10
+ 363 0006 DFE800F0 		tbb	[pc, r0]
+ 364              	.L13:
+ 365 000a 03       		.byte	(.L18-.L13)/2
+ 366 000b 09       		.byte	(.L17-.L13)/2
+ 367 000c 0F       		.byte	(.L16-.L13)/2
+ 368 000d 15       		.byte	(.L15-.L13)/2
+ 369 000e 1B       		.byte	(.L14-.L13)/2
+ 370 000f 21       		.byte	(.L12-.L13)/2
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 10
+
+
+ 371              		.p2align 1
+ 372              	.L18:
+ 151:Core/Src/init.c ****         case 1:
+ 152:Core/Src/init.c ****             SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BS_15);
+ 373              		.loc 1 152 13 is_stmt 1 view .LVU85
+ 374 0010 114A     		ldr	r2, .L20
+ 375 0012 9369     		ldr	r3, [r2, #24]
+ 376 0014 43F40043 		orr	r3, r3, #32768
+ 377 0018 9361     		str	r3, [r2, #24]
+ 153:Core/Src/init.c ****             break;
+ 378              		.loc 1 153 13 view .LVU86
+ 379 001a 7047     		bx	lr
+ 380              	.L17:
+ 154:Core/Src/init.c **** 
+ 155:Core/Src/init.c ****         case 2:
+ 156:Core/Src/init.c ****             SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BS_13);
+ 381              		.loc 1 156 13 view .LVU87
+ 382 001c 0E4A     		ldr	r2, .L20
+ 383 001e 9369     		ldr	r3, [r2, #24]
+ 384 0020 43F40053 		orr	r3, r3, #8192
+ 385 0024 9361     		str	r3, [r2, #24]
+ 157:Core/Src/init.c ****             break;
+ 386              		.loc 1 157 13 view .LVU88
+ 387 0026 7047     		bx	lr
+ 388              	.L16:
+ 158:Core/Src/init.c ****         
+ 159:Core/Src/init.c ****         case 3:
+ 160:Core/Src/init.c ****             SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BS_12);
+ 389              		.loc 1 160 13 view .LVU89
+ 390 0028 0B4A     		ldr	r2, .L20
+ 391 002a 9369     		ldr	r3, [r2, #24]
+ 392 002c 43F48053 		orr	r3, r3, #4096
+ 393 0030 9361     		str	r3, [r2, #24]
+ 161:Core/Src/init.c ****             break;
+ 394              		.loc 1 161 13 view .LVU90
+ 395 0032 7047     		bx	lr
+ 396              	.L15:
+ 162:Core/Src/init.c **** 
+ 163:Core/Src/init.c ****         case 4:
+ 164:Core/Src/init.c ****             SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BS_5);
+ 397              		.loc 1 164 13 view .LVU91
+ 398 0034 084A     		ldr	r2, .L20
+ 399 0036 9369     		ldr	r3, [r2, #24]
+ 400 0038 43F02003 		orr	r3, r3, #32
+ 401 003c 9361     		str	r3, [r2, #24]
+ 165:Core/Src/init.c ****             break;
+ 402              		.loc 1 165 13 view .LVU92
+ 403 003e 7047     		bx	lr
+ 404              	.L14:
+ 166:Core/Src/init.c **** 
+ 167:Core/Src/init.c ****         case 5:
+ 168:Core/Src/init.c ****             SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BS_3);
+ 405              		.loc 1 168 13 view .LVU93
+ 406 0040 054A     		ldr	r2, .L20
+ 407 0042 9369     		ldr	r3, [r2, #24]
+ 408 0044 43F00803 		orr	r3, r3, #8
+ 409 0048 9361     		str	r3, [r2, #24]
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 11
+
+
+ 169:Core/Src/init.c ****             break;
+ 410              		.loc 1 169 13 view .LVU94
+ 411 004a 7047     		bx	lr
+ 412              	.L12:
+ 170:Core/Src/init.c **** 
+ 171:Core/Src/init.c ****         case 6:
+ 172:Core/Src/init.c ****             SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BS_4);
+ 413              		.loc 1 172 13 view .LVU95
+ 414 004c 024A     		ldr	r2, .L20
+ 415 004e 9369     		ldr	r3, [r2, #24]
+ 416 0050 43F01003 		orr	r3, r3, #16
+ 417 0054 9361     		str	r3, [r2, #24]
+ 173:Core/Src/init.c ****             break;
+ 418              		.loc 1 173 13 view .LVU96
+ 419              	.L10:
+ 174:Core/Src/init.c ****     }
+ 175:Core/Src/init.c **** }
+ 420              		.loc 1 175 1 is_stmt 0 view .LVU97
+ 421 0056 7047     		bx	lr
+ 422              	.L21:
+ 423              		.align	2
+ 424              	.L20:
+ 425 0058 00040240 		.word	1073873920
+ 426              		.cfi_endproc
+ 427              	.LFE133:
+ 429              		.section	.text.led_off,"ax",%progbits
+ 430              		.align	1
+ 431              		.global	led_off
+ 432              		.syntax unified
+ 433              		.thumb
+ 434              		.thumb_func
+ 436              	led_off:
+ 437              	.LVL2:
+ 438              	.LFB134:
+ 176:Core/Src/init.c **** 
+ 177:Core/Src/init.c **** void led_off(uint8_t num) {
+ 439              		.loc 1 177 27 is_stmt 1 view -0
+ 440              		.cfi_startproc
+ 441              		@ args = 0, pretend = 0, frame = 0
+ 442              		@ frame_needed = 0, uses_anonymous_args = 0
+ 443              		@ link register save eliminated.
+ 178:Core/Src/init.c ****     switch (num) {
+ 444              		.loc 1 178 5 view .LVU99
+ 445 0000 0138     		subs	r0, r0, #1
+ 446              	.LVL3:
+ 447              		.loc 1 178 5 is_stmt 0 view .LVU100
+ 448 0002 0528     		cmp	r0, #5
+ 449 0004 27D8     		bhi	.L22
+ 450 0006 DFE800F0 		tbb	[pc, r0]
+ 451              	.L25:
+ 452 000a 03       		.byte	(.L30-.L25)/2
+ 453 000b 09       		.byte	(.L29-.L25)/2
+ 454 000c 0F       		.byte	(.L28-.L25)/2
+ 455 000d 15       		.byte	(.L27-.L25)/2
+ 456 000e 1B       		.byte	(.L26-.L25)/2
+ 457 000f 21       		.byte	(.L24-.L25)/2
+ 458              		.p2align 1
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 12
+
+
+ 459              	.L30:
+ 179:Core/Src/init.c ****         case 1:
+ 180:Core/Src/init.c ****             SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_15);
+ 460              		.loc 1 180 13 is_stmt 1 view .LVU101
+ 461 0010 114A     		ldr	r2, .L32
+ 462 0012 9369     		ldr	r3, [r2, #24]
+ 463 0014 43F00043 		orr	r3, r3, #-2147483648
+ 464 0018 9361     		str	r3, [r2, #24]
+ 181:Core/Src/init.c ****             break;
+ 465              		.loc 1 181 13 view .LVU102
+ 466 001a 7047     		bx	lr
+ 467              	.L29:
+ 182:Core/Src/init.c **** 
+ 183:Core/Src/init.c ****         case 2:
+ 184:Core/Src/init.c ****             SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_13);
+ 468              		.loc 1 184 13 view .LVU103
+ 469 001c 0E4A     		ldr	r2, .L32
+ 470 001e 9369     		ldr	r3, [r2, #24]
+ 471 0020 43F00053 		orr	r3, r3, #536870912
+ 472 0024 9361     		str	r3, [r2, #24]
+ 185:Core/Src/init.c ****             break;
+ 473              		.loc 1 185 13 view .LVU104
+ 474 0026 7047     		bx	lr
+ 475              	.L28:
+ 186:Core/Src/init.c ****         
+ 187:Core/Src/init.c ****         case 3:
+ 188:Core/Src/init.c ****             SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_12);
+ 476              		.loc 1 188 13 view .LVU105
+ 477 0028 0B4A     		ldr	r2, .L32
+ 478 002a 9369     		ldr	r3, [r2, #24]
+ 479 002c 43F08053 		orr	r3, r3, #268435456
+ 480 0030 9361     		str	r3, [r2, #24]
+ 189:Core/Src/init.c ****             break;
+ 481              		.loc 1 189 13 view .LVU106
+ 482 0032 7047     		bx	lr
+ 483              	.L27:
+ 190:Core/Src/init.c **** 
+ 191:Core/Src/init.c ****         case 4:
+ 192:Core/Src/init.c ****             SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_5);
+ 484              		.loc 1 192 13 view .LVU107
+ 485 0034 084A     		ldr	r2, .L32
+ 486 0036 9369     		ldr	r3, [r2, #24]
+ 487 0038 43F40013 		orr	r3, r3, #2097152
+ 488 003c 9361     		str	r3, [r2, #24]
+ 193:Core/Src/init.c ****             break;
+ 489              		.loc 1 193 13 view .LVU108
+ 490 003e 7047     		bx	lr
+ 491              	.L26:
+ 194:Core/Src/init.c **** 
+ 195:Core/Src/init.c ****         case 5:
+ 196:Core/Src/init.c ****             SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_3);
+ 492              		.loc 1 196 13 view .LVU109
+ 493 0040 054A     		ldr	r2, .L32
+ 494 0042 9369     		ldr	r3, [r2, #24]
+ 495 0044 43F40023 		orr	r3, r3, #524288
+ 496 0048 9361     		str	r3, [r2, #24]
+ 197:Core/Src/init.c ****             break;
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 13
+
+
+ 497              		.loc 1 197 13 view .LVU110
+ 498 004a 7047     		bx	lr
+ 499              	.L24:
+ 198:Core/Src/init.c **** 
+ 199:Core/Src/init.c ****         case 6:
+ 200:Core/Src/init.c ****             SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_4);
+ 500              		.loc 1 200 13 view .LVU111
+ 501 004c 024A     		ldr	r2, .L32
+ 502 004e 9369     		ldr	r3, [r2, #24]
+ 503 0050 43F48013 		orr	r3, r3, #1048576
+ 504 0054 9361     		str	r3, [r2, #24]
+ 201:Core/Src/init.c ****             break;
+ 505              		.loc 1 201 13 view .LVU112
+ 506              	.L22:
+ 202:Core/Src/init.c ****     }
+ 203:Core/Src/init.c **** 
+ 204:Core/Src/init.c **** }
+ 507              		.loc 1 204 1 is_stmt 0 view .LVU113
+ 508 0056 7047     		bx	lr
+ 509              	.L33:
+ 510              		.align	2
+ 511              	.L32:
+ 512 0058 00040240 		.word	1073873920
+ 513              		.cfi_endproc
+ 514              	.LFE134:
+ 516              		.section	.text.read_button,"ax",%progbits
+ 517              		.align	1
+ 518              		.global	read_button
+ 519              		.syntax unified
+ 520              		.thumb
+ 521              		.thumb_func
+ 523              	read_button:
+ 524              	.LVL4:
+ 525              	.LFB135:
+ 205:Core/Src/init.c **** 
+ 206:Core/Src/init.c **** bool read_button(uint8_t num) {
+ 526              		.loc 1 206 31 is_stmt 1 view -0
+ 527              		.cfi_startproc
+ 528              		@ args = 0, pretend = 0, frame = 0
+ 529              		@ frame_needed = 0, uses_anonymous_args = 0
+ 530              		@ link register save eliminated.
+ 207:Core/Src/init.c ****     // Для pull-down конфигурации:
+ 208:Core/Src/init.c ****     // - Нажата = 1 (подтянута к VCC через кнопку)
+ 209:Core/Src/init.c ****     // - Отпущена = 0 (подтянута к земле)
+ 210:Core/Src/init.c ****     
+ 211:Core/Src/init.c ****     switch (num) {
+ 531              		.loc 1 211 5 view .LVU115
+ 532 0000 0228     		cmp	r0, #2
+ 533 0002 08D0     		beq	.L35
+ 534 0004 0328     		cmp	r0, #3
+ 535 0006 0BD0     		beq	.L36
+ 536 0008 0128     		cmp	r0, #1
+ 537 000a 0ED1     		bne	.L38
+ 212:Core/Src/init.c ****         case 1:
+ 213:Core/Src/init.c ****             return (GPIOB->IDR & GPIO_IDR_ID1) != 0; // Нажата если 1
+ 538              		.loc 1 213 13 view .LVU116
+ 539              		.loc 1 213 26 is_stmt 0 view .LVU117
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 14
+
+
+ 540 000c 084B     		ldr	r3, .L39
+ 541 000e 1869     		ldr	r0, [r3, #16]
+ 542              	.LVL5:
+ 543              		.loc 1 213 48 view .LVU118
+ 544 0010 C0F34000 		ubfx	r0, r0, #1, #1
+ 545 0014 7047     		bx	lr
+ 546              	.LVL6:
+ 547              	.L35:
+ 214:Core/Src/init.c ****         case 2:
+ 215:Core/Src/init.c ****             return (GPIOB->IDR & GPIO_IDR_ID6) != 0; // Нажата если 1
+ 548              		.loc 1 215 13 is_stmt 1 view .LVU119
+ 549              		.loc 1 215 26 is_stmt 0 view .LVU120
+ 550 0016 064B     		ldr	r3, .L39
+ 551 0018 1869     		ldr	r0, [r3, #16]
+ 552              	.LVL7:
+ 553              		.loc 1 215 48 view .LVU121
+ 554 001a C0F38010 		ubfx	r0, r0, #6, #1
+ 555 001e 7047     		bx	lr
+ 556              	.LVL8:
+ 557              	.L36:
+ 216:Core/Src/init.c ****         case 3:
+ 217:Core/Src/init.c ****             return (GPIOB->IDR & GPIO_IDR_ID2) != 0; // Нажата если 1
+ 558              		.loc 1 217 13 is_stmt 1 view .LVU122
+ 559              		.loc 1 217 26 is_stmt 0 view .LVU123
+ 560 0020 034B     		ldr	r3, .L39
+ 561 0022 1869     		ldr	r0, [r3, #16]
+ 562              	.LVL9:
+ 563              		.loc 1 217 48 view .LVU124
+ 564 0024 C0F38000 		ubfx	r0, r0, #2, #1
+ 565 0028 7047     		bx	lr
+ 566              	.LVL10:
+ 567              	.L38:
+ 211:Core/Src/init.c ****         case 1:
+ 568              		.loc 1 211 5 view .LVU125
+ 569 002a 0020     		movs	r0, #0
+ 570              	.LVL11:
+ 218:Core/Src/init.c ****         default:
+ 219:Core/Src/init.c ****             return false;
+ 220:Core/Src/init.c ****     }
+ 221:Core/Src/init.c **** }
+ 571              		.loc 1 221 1 view .LVU126
+ 572 002c 7047     		bx	lr
+ 573              	.L40:
+ 574 002e 00BF     		.align	2
+ 575              	.L39:
+ 576 0030 00040240 		.word	1073873920
+ 577              		.cfi_endproc
+ 578              	.LFE135:
+ 580              		.section	.text.check_action,"ax",%progbits
+ 581              		.align	1
+ 582              		.global	check_action
+ 583              		.syntax unified
+ 584              		.thumb
+ 585              		.thumb_func
+ 587              	check_action:
+ 588              	.LFB136:
+ 222:Core/Src/init.c **** 
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 15
+
+
+ 223:Core/Src/init.c **** button_action check_action(void) {
+ 589              		.loc 1 223 34 is_stmt 1 view -0
+ 590              		.cfi_startproc
+ 591              		@ args = 0, pretend = 0, frame = 8
+ 592              		@ frame_needed = 0, uses_anonymous_args = 0
+ 593 0000 30B5     		push	{r4, r5, lr}
+ 594              	.LCFI0:
+ 595              		.cfi_def_cfa_offset 12
+ 596              		.cfi_offset 4, -12
+ 597              		.cfi_offset 5, -8
+ 598              		.cfi_offset 14, -4
+ 599 0002 83B0     		sub	sp, sp, #12
+ 600              	.LCFI1:
+ 601              		.cfi_def_cfa_offset 24
+ 224:Core/Src/init.c **** 
+ 225:Core/Src/init.c ****     button_action action;
+ 602              		.loc 1 225 5 view .LVU128
+ 226:Core/Src/init.c **** 
+ 227:Core/Src/init.c ****     if (read_button(1) == true) { // if button 1 pressed
+ 603              		.loc 1 227 5 view .LVU129
+ 604              		.loc 1 227 9 is_stmt 0 view .LVU130
+ 605 0004 0120     		movs	r0, #1
+ 606 0006 FFF7FEFF 		bl	read_button
+ 607              	.LVL12:
+ 608              		.loc 1 227 8 discriminator 1 view .LVU131
+ 609 000a 28B3     		cbz	r0, .L62
+ 610              	.LBB2:
+ 228:Core/Src/init.c ****         int i;
+ 229:Core/Src/init.c **** 
+ 230:Core/Src/init.c ****         for (i = 0; i < long_press; i++) {
+ 611              		.loc 1 230 16 view .LVU132
+ 612 000c 0024     		movs	r4, #0
+ 613              	.L42:
+ 614              	.LVL13:
+ 615              		.loc 1 230 23 is_stmt 1 discriminator 1 view .LVU133
+ 616 000e 2546     		mov	r5, r4
+ 617 0010 304B     		ldr	r3, .L64
+ 618 0012 1B68     		ldr	r3, [r3]
+ 619 0014 9C42     		cmp	r4, r3
+ 620 0016 05D2     		bcs	.L44
+ 231:Core/Src/init.c ****             if (read_button(1) == false) {
+ 621              		.loc 1 231 13 view .LVU134
+ 622              		.loc 1 231 17 is_stmt 0 view .LVU135
+ 623 0018 0120     		movs	r0, #1
+ 624 001a FFF7FEFF 		bl	read_button
+ 625              	.LVL14:
+ 626              		.loc 1 231 16 discriminator 1 view .LVU136
+ 627 001e 08B1     		cbz	r0, .L44
+ 230:Core/Src/init.c ****             if (read_button(1) == false) {
+ 628              		.loc 1 230 38 is_stmt 1 discriminator 2 view .LVU137
+ 629 0020 0134     		adds	r4, r4, #1
+ 630              	.LVL15:
+ 230:Core/Src/init.c ****             if (read_button(1) == false) {
+ 631              		.loc 1 230 38 is_stmt 0 discriminator 2 view .LVU138
+ 632 0022 F4E7     		b	.L42
+ 633              	.L44:
+ 232:Core/Src/init.c ****                 break;
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 16
+
+
+ 233:Core/Src/init.c ****             }
+ 234:Core/Src/init.c ****         }
+ 235:Core/Src/init.c **** 
+ 236:Core/Src/init.c ****         action.button_num = 1;
+ 634              		.loc 1 236 9 is_stmt 1 view .LVU139
+ 635              		.loc 1 236 27 is_stmt 0 view .LVU140
+ 636 0024 0123     		movs	r3, #1
+ 637 0026 8DF80030 		strb	r3, [sp]
+ 237:Core/Src/init.c ****         action.is_long = (i >= long_press);
+ 638              		.loc 1 237 9 is_stmt 1 view .LVU141
+ 639              		.loc 1 237 29 is_stmt 0 view .LVU142
+ 640 002a 2A4B     		ldr	r3, .L64
+ 641 002c 1B68     		ldr	r3, [r3]
+ 642 002e 9D42     		cmp	r5, r3
+ 643 0030 34BF     		ite	cc
+ 644 0032 0025     		movcc	r5, #0
+ 645 0034 0125     		movcs	r5, #1
+ 646              		.loc 1 237 24 view .LVU143
+ 647 0036 8DF80150 		strb	r5, [sp, #1]
+ 648              	.LVL16:
+ 649              	.L46:
+ 650              		.loc 1 237 24 view .LVU144
+ 651              	.LBE2:
+ 238:Core/Src/init.c ****     }
+ 239:Core/Src/init.c **** 
+ 240:Core/Src/init.c ****     else if (read_button(2) == true) { // if button 2 pressed
+ 241:Core/Src/init.c ****         int i;
+ 242:Core/Src/init.c **** 
+ 243:Core/Src/init.c ****         for (i = 0; i < long_press; i++) {
+ 244:Core/Src/init.c ****             if (read_button(2) == false) {
+ 245:Core/Src/init.c ****                 break;
+ 246:Core/Src/init.c ****             }
+ 247:Core/Src/init.c ****         }
+ 248:Core/Src/init.c **** 
+ 249:Core/Src/init.c ****         action.button_num = 2;
+ 250:Core/Src/init.c ****         action.is_long = (i >= long_press);
+ 251:Core/Src/init.c ****     }
+ 252:Core/Src/init.c **** 
+ 253:Core/Src/init.c ****     else if (read_button(3) == true) { // if button 3 pressed
+ 254:Core/Src/init.c ****         int i;
+ 255:Core/Src/init.c **** 
+ 256:Core/Src/init.c ****         for (i = 0; i < long_press; i++) {
+ 257:Core/Src/init.c ****             if (read_button(3) == false) {
+ 258:Core/Src/init.c ****                 break;
+ 259:Core/Src/init.c ****             }
+ 260:Core/Src/init.c ****         }
+ 261:Core/Src/init.c **** 
+ 262:Core/Src/init.c ****         action.button_num = 3;
+ 263:Core/Src/init.c ****         action.is_long = (i >= long_press);
+ 264:Core/Src/init.c ****     }
+ 265:Core/Src/init.c **** 
+ 266:Core/Src/init.c ****     else { //if no buttons pressed 
+ 267:Core/Src/init.c **** 
+ 268:Core/Src/init.c ****         action.button_num = 0;
+ 269:Core/Src/init.c ****         action.is_long = false;
+ 270:Core/Src/init.c ****     }
+ 271:Core/Src/init.c **** 
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 17
+
+
+ 272:Core/Src/init.c ****     return action;
+ 652              		.loc 1 272 5 is_stmt 1 view .LVU145
+ 653              		.loc 1 272 12 is_stmt 0 view .LVU146
+ 654 003a BDF80030 		ldrh	r3, [sp]
+ 655 003e ADF80430 		strh	r3, [sp, #4]	@ movhi
+ 656 0042 0020     		movs	r0, #0
+ 657 0044 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
+ 658 0048 63F30700 		bfi	r0, r3, #0, #8
+ 659 004c 9DF80530 		ldrb	r3, [sp, #5]	@ zero_extendqisi2
+ 660 0050 63F30F20 		bfi	r0, r3, #8, #8
+ 273:Core/Src/init.c **** }
+ 661              		.loc 1 273 1 view .LVU147
+ 662 0054 03B0     		add	sp, sp, #12
+ 663              	.LCFI2:
+ 664              		.cfi_remember_state
+ 665              		.cfi_def_cfa_offset 12
+ 666              		@ sp needed
+ 667 0056 30BD     		pop	{r4, r5, pc}
+ 668              	.L62:
+ 669              	.LCFI3:
+ 670              		.cfi_restore_state
+ 240:Core/Src/init.c ****         int i;
+ 671              		.loc 1 240 10 is_stmt 1 view .LVU148
+ 240:Core/Src/init.c ****         int i;
+ 672              		.loc 1 240 14 is_stmt 0 view .LVU149
+ 673 0058 0220     		movs	r0, #2
+ 674 005a FFF7FEFF 		bl	read_button
+ 675              	.LVL17:
+ 240:Core/Src/init.c ****         int i;
+ 676              		.loc 1 240 13 discriminator 1 view .LVU150
+ 677 005e B8B1     		cbz	r0, .L63
+ 678              	.LBB3:
+ 243:Core/Src/init.c ****             if (read_button(2) == false) {
+ 679              		.loc 1 243 16 view .LVU151
+ 680 0060 0024     		movs	r4, #0
+ 681              	.L47:
+ 682              	.LVL18:
+ 243:Core/Src/init.c ****             if (read_button(2) == false) {
+ 683              		.loc 1 243 23 is_stmt 1 discriminator 1 view .LVU152
+ 684 0062 2546     		mov	r5, r4
+ 685 0064 1B4B     		ldr	r3, .L64
+ 686 0066 1B68     		ldr	r3, [r3]
+ 687 0068 9C42     		cmp	r4, r3
+ 688 006a 05D2     		bcs	.L49
+ 244:Core/Src/init.c ****                 break;
+ 689              		.loc 1 244 13 view .LVU153
+ 244:Core/Src/init.c ****                 break;
+ 690              		.loc 1 244 17 is_stmt 0 view .LVU154
+ 691 006c 0220     		movs	r0, #2
+ 692 006e FFF7FEFF 		bl	read_button
+ 693              	.LVL19:
+ 244:Core/Src/init.c ****                 break;
+ 694              		.loc 1 244 16 discriminator 1 view .LVU155
+ 695 0072 08B1     		cbz	r0, .L49
+ 243:Core/Src/init.c ****             if (read_button(2) == false) {
+ 696              		.loc 1 243 38 is_stmt 1 discriminator 2 view .LVU156
+ 697 0074 0134     		adds	r4, r4, #1
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 18
+
+
+ 698              	.LVL20:
+ 243:Core/Src/init.c ****             if (read_button(2) == false) {
+ 699              		.loc 1 243 38 is_stmt 0 discriminator 2 view .LVU157
+ 700 0076 F4E7     		b	.L47
+ 701              	.L49:
+ 249:Core/Src/init.c ****         action.is_long = (i >= long_press);
+ 702              		.loc 1 249 9 is_stmt 1 view .LVU158
+ 249:Core/Src/init.c ****         action.is_long = (i >= long_press);
+ 703              		.loc 1 249 27 is_stmt 0 view .LVU159
+ 704 0078 0223     		movs	r3, #2
+ 705 007a 8DF80030 		strb	r3, [sp]
+ 250:Core/Src/init.c ****     }
+ 706              		.loc 1 250 9 is_stmt 1 view .LVU160
+ 250:Core/Src/init.c ****     }
+ 707              		.loc 1 250 29 is_stmt 0 view .LVU161
+ 708 007e 154B     		ldr	r3, .L64
+ 709 0080 1B68     		ldr	r3, [r3]
+ 710 0082 9D42     		cmp	r5, r3
+ 711 0084 34BF     		ite	cc
+ 712 0086 0025     		movcc	r5, #0
+ 713 0088 0125     		movcs	r5, #1
+ 250:Core/Src/init.c ****     }
+ 714              		.loc 1 250 24 view .LVU162
+ 715 008a 8DF80150 		strb	r5, [sp, #1]
+ 716              	.LBE3:
+ 717 008e D4E7     		b	.L46
+ 718              	.LVL21:
+ 719              	.L63:
+ 253:Core/Src/init.c ****         int i;
+ 720              		.loc 1 253 10 is_stmt 1 view .LVU163
+ 253:Core/Src/init.c ****         int i;
+ 721              		.loc 1 253 14 is_stmt 0 view .LVU164
+ 722 0090 0320     		movs	r0, #3
+ 723 0092 FFF7FEFF 		bl	read_button
+ 724              	.LVL22:
+ 253:Core/Src/init.c ****         int i;
+ 725              		.loc 1 253 13 discriminator 1 view .LVU165
+ 726 0096 28B9     		cbnz	r0, .L57
+ 268:Core/Src/init.c ****         action.is_long = false;
+ 727              		.loc 1 268 9 is_stmt 1 view .LVU166
+ 268:Core/Src/init.c ****         action.is_long = false;
+ 728              		.loc 1 268 27 is_stmt 0 view .LVU167
+ 729 0098 0023     		movs	r3, #0
+ 730 009a 8DF80030 		strb	r3, [sp]
+ 269:Core/Src/init.c ****     }
+ 731              		.loc 1 269 9 is_stmt 1 view .LVU168
+ 269:Core/Src/init.c ****     }
+ 732              		.loc 1 269 24 is_stmt 0 view .LVU169
+ 733 009e 8DF80130 		strb	r3, [sp, #1]
+ 734 00a2 CAE7     		b	.L46
+ 735              	.L57:
+ 736              	.LBB4:
+ 256:Core/Src/init.c ****             if (read_button(3) == false) {
+ 737              		.loc 1 256 16 view .LVU170
+ 738 00a4 0024     		movs	r4, #0
+ 739              	.L51:
+ 740              	.LVL23:
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 19
+
+
+ 256:Core/Src/init.c ****             if (read_button(3) == false) {
+ 741              		.loc 1 256 23 is_stmt 1 discriminator 1 view .LVU171
+ 742 00a6 2546     		mov	r5, r4
+ 743 00a8 0A4B     		ldr	r3, .L64
+ 744 00aa 1B68     		ldr	r3, [r3]
+ 745 00ac 9C42     		cmp	r4, r3
+ 746 00ae 05D2     		bcs	.L53
+ 257:Core/Src/init.c ****                 break;
+ 747              		.loc 1 257 13 view .LVU172
+ 257:Core/Src/init.c ****                 break;
+ 748              		.loc 1 257 17 is_stmt 0 view .LVU173
+ 749 00b0 0320     		movs	r0, #3
+ 750 00b2 FFF7FEFF 		bl	read_button
+ 751              	.LVL24:
+ 257:Core/Src/init.c ****                 break;
+ 752              		.loc 1 257 16 discriminator 1 view .LVU174
+ 753 00b6 08B1     		cbz	r0, .L53
+ 256:Core/Src/init.c ****             if (read_button(3) == false) {
+ 754              		.loc 1 256 38 is_stmt 1 discriminator 2 view .LVU175
+ 755 00b8 0134     		adds	r4, r4, #1
+ 756              	.LVL25:
+ 256:Core/Src/init.c ****             if (read_button(3) == false) {
+ 757              		.loc 1 256 38 is_stmt 0 discriminator 2 view .LVU176
+ 758 00ba F4E7     		b	.L51
+ 759              	.L53:
+ 262:Core/Src/init.c ****         action.is_long = (i >= long_press);
+ 760              		.loc 1 262 9 is_stmt 1 view .LVU177
+ 262:Core/Src/init.c ****         action.is_long = (i >= long_press);
+ 761              		.loc 1 262 27 is_stmt 0 view .LVU178
+ 762 00bc 0323     		movs	r3, #3
+ 763 00be 8DF80030 		strb	r3, [sp]
+ 263:Core/Src/init.c ****     }
+ 764              		.loc 1 263 9 is_stmt 1 view .LVU179
+ 263:Core/Src/init.c ****     }
+ 765              		.loc 1 263 29 is_stmt 0 view .LVU180
+ 766 00c2 044B     		ldr	r3, .L64
+ 767 00c4 1B68     		ldr	r3, [r3]
+ 768 00c6 9D42     		cmp	r5, r3
+ 769 00c8 34BF     		ite	cc
+ 770 00ca 0025     		movcc	r5, #0
+ 771 00cc 0125     		movcs	r5, #1
+ 263:Core/Src/init.c ****     }
+ 772              		.loc 1 263 24 view .LVU181
+ 773 00ce 8DF80150 		strb	r5, [sp, #1]
+ 774              	.LBE4:
+ 775 00d2 B2E7     		b	.L46
+ 776              	.L65:
+ 777              		.align	2
+ 778              	.L64:
+ 779 00d4 00000000 		.word	long_press
+ 780              		.cfi_endproc
+ 781              	.LFE136:
+ 783              		.section	.text.change_led,"ax",%progbits
+ 784              		.align	1
+ 785              		.global	change_led
+ 786              		.syntax unified
+ 787              		.thumb
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 20
+
+
+ 788              		.thumb_func
+ 790              	change_led:
+ 791              	.LVL26:
+ 792              	.LFB137:
+ 274:Core/Src/init.c **** 
+ 275:Core/Src/init.c **** leds change_led (uint8_t led_change, button_action action) {
+ 793              		.loc 1 275 60 is_stmt 1 view -0
+ 794              		.cfi_startproc
+ 795              		@ args = 0, pretend = 0, frame = 8
+ 796              		@ frame_needed = 0, uses_anonymous_args = 0
+ 797              		@ link register save eliminated.
+ 798              		.loc 1 275 60 is_stmt 0 view .LVU183
+ 799 0000 82B0     		sub	sp, sp, #8
+ 800              	.LCFI4:
+ 801              		.cfi_def_cfa_offset 8
+ 802 0002 0346     		mov	r3, r0
+ 803 0004 ADF80420 		strh	r2, [sp, #4]	@ movhi
+ 276:Core/Src/init.c **** 
+ 277:Core/Src/init.c ****     if (action.button_num == 1 && action.is_long == true) {
+ 804              		.loc 1 277 5 is_stmt 1 view .LVU184
+ 805              	.LVL27:
+ 278:Core/Src/init.c ****         led_change++;
+ 279:Core/Src/init.c ****     }
+ 280:Core/Src/init.c **** 
+ 281:Core/Src/init.c ****     else if (action.button_num == 2 && action.is_long == true) {
+ 282:Core/Src/init.c ****         led_change--;
+ 283:Core/Src/init.c ****     }
+ 284:Core/Src/init.c **** }
+ 806              		.loc 1 284 1 is_stmt 0 view .LVU185
+ 807 0008 1846     		mov	r0, r3
+ 808              		.loc 1 284 1 view .LVU186
+ 809 000a 02B0     		add	sp, sp, #8
+ 810              	.LCFI5:
+ 811              		.cfi_def_cfa_offset 0
+ 812              		@ sp needed
+ 813 000c 7047     		bx	lr
+ 814              		.cfi_endproc
+ 815              	.LFE137:
+ 817              		.section	.text.change_frq,"ax",%progbits
+ 818              		.align	1
+ 819              		.global	change_frq
+ 820              		.syntax unified
+ 821              		.thumb
+ 822              		.thumb_func
+ 824              	change_frq:
+ 825              	.LVL28:
+ 826              	.LFB138:
+ 285:Core/Src/init.c **** 
+ 286:Core/Src/init.c **** leds change_frq (leds led_frq, uint8_t led_change, button_action action) {
+ 827              		.loc 1 286 74 is_stmt 1 view -0
+ 828              		.cfi_startproc
+ 829              		@ args = 4, pretend = 0, frame = 8
+ 830              		@ frame_needed = 0, uses_anonymous_args = 0
+ 831              		@ link register save eliminated.
+ 832              		.loc 1 286 74 is_stmt 0 view .LVU188
+ 833 0000 82B0     		sub	sp, sp, #8
+ 834              	.LCFI6:
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 21
+
+
+ 835              		.cfi_def_cfa_offset 8
+ 836 0002 8446     		mov	ip, r0
+ 837 0004 02A8     		add	r0, sp, #8
+ 838              	.LVL29:
+ 839              		.loc 1 286 74 view .LVU189
+ 840 0006 00E90600 		stmdb	r0, {r1, r2}
+ 287:Core/Src/init.c **** 
+ 288:Core/Src/init.c ****     if (action.button_num == 3 && action.is_long == false) {
+ 841              		.loc 1 288 5 is_stmt 1 view .LVU190
+ 842              		.loc 1 288 15 is_stmt 0 view .LVU191
+ 843 000a 9DF80820 		ldrb	r2, [sp, #8]	@ zero_extendqisi2
+ 844              		.loc 1 288 8 view .LVU192
+ 845 000e 032A     		cmp	r2, #3
+ 846 0010 04D0     		beq	.L89
+ 847              	.L70:
+ 289:Core/Src/init.c ****         
+ 290:Core/Src/init.c ****         switch(led_change) {
+ 291:Core/Src/init.c ****             case 1:
+ 292:Core/Src/init.c ****                 led_frq.led1++;
+ 293:Core/Src/init.c ****                 if (led_frq.led1 >= frq_levels) {
+ 294:Core/Src/init.c ****                     led_frq.led1 = frq_levels; 
+ 295:Core/Src/init.c ****                 }
+ 296:Core/Src/init.c ****                 break;
+ 297:Core/Src/init.c **** 
+ 298:Core/Src/init.c ****             case 2:
+ 299:Core/Src/init.c ****                 led_frq.led2++;
+ 300:Core/Src/init.c ****                 if (led_frq.led2 >= frq_levels) {
+ 301:Core/Src/init.c ****                     led_frq.led2 = frq_levels; 
+ 302:Core/Src/init.c ****                 }
+ 303:Core/Src/init.c ****                 break;
+ 304:Core/Src/init.c **** 
+ 305:Core/Src/init.c ****             case 3:
+ 306:Core/Src/init.c ****                 led_frq.led3++;
+ 307:Core/Src/init.c ****                 if (led_frq.led3 >= frq_levels) {
+ 308:Core/Src/init.c ****                     led_frq.led3 = frq_levels; 
+ 309:Core/Src/init.c ****                 }
+ 310:Core/Src/init.c ****                 break;
+ 311:Core/Src/init.c **** 
+ 312:Core/Src/init.c ****             case 4:
+ 313:Core/Src/init.c ****                 led_frq.led4++;
+ 314:Core/Src/init.c ****                 if (led_frq.led4 >= frq_levels) {
+ 315:Core/Src/init.c ****                     led_frq.led4 = frq_levels; 
+ 316:Core/Src/init.c ****                 }
+ 317:Core/Src/init.c ****                 break;
+ 318:Core/Src/init.c ****                 
+ 319:Core/Src/init.c ****             case 5:
+ 320:Core/Src/init.c ****                 led_frq.led5++;
+ 321:Core/Src/init.c ****                 if (led_frq.led5 >= frq_levels) {
+ 322:Core/Src/init.c ****                     led_frq.led5 = frq_levels; 
+ 323:Core/Src/init.c ****                 }
+ 324:Core/Src/init.c ****                 break;
+ 325:Core/Src/init.c **** 
+ 326:Core/Src/init.c ****             case 6:
+ 327:Core/Src/init.c ****                 led_frq.led6++;
+ 328:Core/Src/init.c ****                 if (led_frq.led6 >= frq_levels) {
+ 329:Core/Src/init.c ****                     led_frq.led6 = frq_levels; 
+ 330:Core/Src/init.c ****                 }
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 22
+
+
+ 331:Core/Src/init.c ****                 break;
+ 332:Core/Src/init.c ****         }
+ 333:Core/Src/init.c ****     }
+ 334:Core/Src/init.c **** 
+ 335:Core/Src/init.c ****     else if (action.button_num == 3 && action.is_long == true) {
+ 848              		.loc 1 335 10 is_stmt 1 view .LVU193
+ 849              		.loc 1 335 13 is_stmt 0 view .LVU194
+ 850 0012 032A     		cmp	r2, #3
+ 851 0014 5CD0     		beq	.L90
+ 852              	.LVL30:
+ 853              	.L71:
+ 336:Core/Src/init.c ****         switch(led_change) {
+ 337:Core/Src/init.c ****             case 1:
+ 338:Core/Src/init.c ****                 led_frq.led1--;
+ 339:Core/Src/init.c ****                 if (led_frq.led1 <= 0) {
+ 340:Core/Src/init.c ****                     led_frq.led1 = 0; 
+ 341:Core/Src/init.c ****                 }
+ 342:Core/Src/init.c ****                 break;
+ 343:Core/Src/init.c **** 
+ 344:Core/Src/init.c ****             case 2:
+ 345:Core/Src/init.c ****                 led_frq.led2--;
+ 346:Core/Src/init.c ****                 if (led_frq.led2 <= 0) {
+ 347:Core/Src/init.c ****                     led_frq.led2 = 0; 
+ 348:Core/Src/init.c ****                 }
+ 349:Core/Src/init.c ****                 break;
+ 350:Core/Src/init.c **** 
+ 351:Core/Src/init.c ****             case 3:
+ 352:Core/Src/init.c ****                 led_frq.led3--;
+ 353:Core/Src/init.c ****                 if (led_frq.led3 <= 0) {
+ 354:Core/Src/init.c ****                     led_frq.led3 = 0; 
+ 355:Core/Src/init.c ****                 }
+ 356:Core/Src/init.c ****                 break;
+ 357:Core/Src/init.c **** 
+ 358:Core/Src/init.c ****             case 4:
+ 359:Core/Src/init.c ****                 led_frq.led4--;
+ 360:Core/Src/init.c ****                 if (led_frq.led4 <= 0) {
+ 361:Core/Src/init.c ****                     led_frq.led4 = 0; 
+ 362:Core/Src/init.c ****                 }
+ 363:Core/Src/init.c ****                 break;
+ 364:Core/Src/init.c ****                 
+ 365:Core/Src/init.c ****             case 5:
+ 366:Core/Src/init.c ****                 led_frq.led5--;
+ 367:Core/Src/init.c ****                 if (led_frq.led5 <= 0) {
+ 368:Core/Src/init.c ****                     led_frq.led5 = 0; 
+ 369:Core/Src/init.c ****                 }
+ 370:Core/Src/init.c ****                 break;
+ 371:Core/Src/init.c **** 
+ 372:Core/Src/init.c ****             case 6:
+ 373:Core/Src/init.c ****                 led_frq.led6--;
+ 374:Core/Src/init.c ****                 if (led_frq.led6 <= 0) {
+ 375:Core/Src/init.c ****                     led_frq.led6 = 0; 
+ 376:Core/Src/init.c ****                 }
+ 377:Core/Src/init.c ****                 break;
+ 378:Core/Src/init.c ****         }
+ 379:Core/Src/init.c ****     }
+ 380:Core/Src/init.c **** }
+ 854              		.loc 1 380 1 view .LVU195
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 23
+
+
+ 855 0016 6046     		mov	r0, ip
+ 856 0018 02B0     		add	sp, sp, #8
+ 857              	.LCFI7:
+ 858              		.cfi_remember_state
+ 859              		.cfi_def_cfa_offset 0
+ 860              		@ sp needed
+ 861 001a 7047     		bx	lr
+ 862              	.LVL31:
+ 863              	.L89:
+ 864              	.LCFI8:
+ 865              		.cfi_restore_state
+ 288:Core/Src/init.c ****         
+ 866              		.loc 1 288 41 discriminator 1 view .LVU196
+ 867 001c 9DF80910 		ldrb	r1, [sp, #9]	@ zero_extendqisi2
+ 288:Core/Src/init.c ****         
+ 868              		.loc 1 288 32 discriminator 1 view .LVU197
+ 869 0020 0029     		cmp	r1, #0
+ 870 0022 F6D1     		bne	.L70
+ 290:Core/Src/init.c ****             case 1:
+ 871              		.loc 1 290 9 is_stmt 1 view .LVU198
+ 872 0024 013B     		subs	r3, r3, #1
+ 873              	.LVL32:
+ 290:Core/Src/init.c ****             case 1:
+ 874              		.loc 1 290 9 is_stmt 0 view .LVU199
+ 875 0026 052B     		cmp	r3, #5
+ 876 0028 F5D8     		bhi	.L71
+ 877 002a DFE803F0 		tbb	[pc, r3]
+ 878              	.L73:
+ 879 002e 03       		.byte	(.L78-.L73)/2
+ 880 002f 10       		.byte	(.L77-.L73)/2
+ 881 0030 1D       		.byte	(.L76-.L73)/2
+ 882 0031 2A       		.byte	(.L75-.L73)/2
+ 883 0032 37       		.byte	(.L74-.L73)/2
+ 884 0033 44       		.byte	(.L72-.L73)/2
+ 885              		.p2align 1
+ 886              	.L78:
+ 292:Core/Src/init.c ****                 if (led_frq.led1 >= frq_levels) {
+ 887              		.loc 1 292 17 is_stmt 1 view .LVU200
+ 292:Core/Src/init.c ****                 if (led_frq.led1 >= frq_levels) {
+ 888              		.loc 1 292 24 is_stmt 0 view .LVU201
+ 889 0034 9DF80030 		ldrb	r3, [sp]	@ zero_extendqisi2
+ 292:Core/Src/init.c ****                 if (led_frq.led1 >= frq_levels) {
+ 890              		.loc 1 292 29 view .LVU202
+ 891 0038 0133     		adds	r3, r3, #1
+ 892 003a DBB2     		uxtb	r3, r3
+ 893 003c 8DF80030 		strb	r3, [sp]
+ 293:Core/Src/init.c ****                     led_frq.led1 = frq_levels; 
+ 894              		.loc 1 293 17 is_stmt 1 view .LVU203
+ 293:Core/Src/init.c ****                     led_frq.led1 = frq_levels; 
+ 895              		.loc 1 293 34 is_stmt 0 view .LVU204
+ 896 0040 4C4A     		ldr	r2, .L91
+ 897 0042 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 293:Core/Src/init.c ****                     led_frq.led1 = frq_levels; 
+ 898              		.loc 1 293 20 view .LVU205
+ 899 0044 9342     		cmp	r3, r2
+ 900 0046 E6D3     		bcc	.L71
+ 294:Core/Src/init.c ****                 }
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 24
+
+
+ 901              		.loc 1 294 21 is_stmt 1 view .LVU206
+ 294:Core/Src/init.c ****                 }
+ 902              		.loc 1 294 34 is_stmt 0 view .LVU207
+ 903 0048 8DF80020 		strb	r2, [sp]
+ 904 004c E3E7     		b	.L71
+ 905              	.L77:
+ 299:Core/Src/init.c ****                 if (led_frq.led2 >= frq_levels) {
+ 906              		.loc 1 299 17 is_stmt 1 view .LVU208
+ 299:Core/Src/init.c ****                 if (led_frq.led2 >= frq_levels) {
+ 907              		.loc 1 299 24 is_stmt 0 view .LVU209
+ 908 004e 9DF80130 		ldrb	r3, [sp, #1]	@ zero_extendqisi2
+ 299:Core/Src/init.c ****                 if (led_frq.led2 >= frq_levels) {
+ 909              		.loc 1 299 29 view .LVU210
+ 910 0052 0133     		adds	r3, r3, #1
+ 911 0054 DBB2     		uxtb	r3, r3
+ 912 0056 8DF80130 		strb	r3, [sp, #1]
+ 300:Core/Src/init.c ****                     led_frq.led2 = frq_levels; 
+ 913              		.loc 1 300 17 is_stmt 1 view .LVU211
+ 300:Core/Src/init.c ****                     led_frq.led2 = frq_levels; 
+ 914              		.loc 1 300 34 is_stmt 0 view .LVU212
+ 915 005a 464A     		ldr	r2, .L91
+ 916 005c 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 300:Core/Src/init.c ****                     led_frq.led2 = frq_levels; 
+ 917              		.loc 1 300 20 view .LVU213
+ 918 005e 9342     		cmp	r3, r2
+ 919 0060 D9D3     		bcc	.L71
+ 301:Core/Src/init.c ****                 }
+ 920              		.loc 1 301 21 is_stmt 1 view .LVU214
+ 301:Core/Src/init.c ****                 }
+ 921              		.loc 1 301 34 is_stmt 0 view .LVU215
+ 922 0062 8DF80120 		strb	r2, [sp, #1]
+ 923 0066 D6E7     		b	.L71
+ 924              	.L76:
+ 306:Core/Src/init.c ****                 if (led_frq.led3 >= frq_levels) {
+ 925              		.loc 1 306 17 is_stmt 1 view .LVU216
+ 306:Core/Src/init.c ****                 if (led_frq.led3 >= frq_levels) {
+ 926              		.loc 1 306 24 is_stmt 0 view .LVU217
+ 927 0068 9DF80230 		ldrb	r3, [sp, #2]	@ zero_extendqisi2
+ 306:Core/Src/init.c ****                 if (led_frq.led3 >= frq_levels) {
+ 928              		.loc 1 306 29 view .LVU218
+ 929 006c 0133     		adds	r3, r3, #1
+ 930 006e DBB2     		uxtb	r3, r3
+ 931 0070 8DF80230 		strb	r3, [sp, #2]
+ 307:Core/Src/init.c ****                     led_frq.led3 = frq_levels; 
+ 932              		.loc 1 307 17 is_stmt 1 view .LVU219
+ 307:Core/Src/init.c ****                     led_frq.led3 = frq_levels; 
+ 933              		.loc 1 307 34 is_stmt 0 view .LVU220
+ 934 0074 3F4A     		ldr	r2, .L91
+ 935 0076 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 307:Core/Src/init.c ****                     led_frq.led3 = frq_levels; 
+ 936              		.loc 1 307 20 view .LVU221
+ 937 0078 9342     		cmp	r3, r2
+ 938 007a CCD3     		bcc	.L71
+ 308:Core/Src/init.c ****                 }
+ 939              		.loc 1 308 21 is_stmt 1 view .LVU222
+ 308:Core/Src/init.c ****                 }
+ 940              		.loc 1 308 34 is_stmt 0 view .LVU223
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 25
+
+
+ 941 007c 8DF80220 		strb	r2, [sp, #2]
+ 942 0080 C9E7     		b	.L71
+ 943              	.L75:
+ 313:Core/Src/init.c ****                 if (led_frq.led4 >= frq_levels) {
+ 944              		.loc 1 313 17 is_stmt 1 view .LVU224
+ 313:Core/Src/init.c ****                 if (led_frq.led4 >= frq_levels) {
+ 945              		.loc 1 313 24 is_stmt 0 view .LVU225
+ 946 0082 9DF80330 		ldrb	r3, [sp, #3]	@ zero_extendqisi2
+ 313:Core/Src/init.c ****                 if (led_frq.led4 >= frq_levels) {
+ 947              		.loc 1 313 29 view .LVU226
+ 948 0086 0133     		adds	r3, r3, #1
+ 949 0088 DBB2     		uxtb	r3, r3
+ 950 008a 8DF80330 		strb	r3, [sp, #3]
+ 314:Core/Src/init.c ****                     led_frq.led4 = frq_levels; 
+ 951              		.loc 1 314 17 is_stmt 1 view .LVU227
+ 314:Core/Src/init.c ****                     led_frq.led4 = frq_levels; 
+ 952              		.loc 1 314 34 is_stmt 0 view .LVU228
+ 953 008e 394A     		ldr	r2, .L91
+ 954 0090 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 314:Core/Src/init.c ****                     led_frq.led4 = frq_levels; 
+ 955              		.loc 1 314 20 view .LVU229
+ 956 0092 9342     		cmp	r3, r2
+ 957 0094 BFD3     		bcc	.L71
+ 315:Core/Src/init.c ****                 }
+ 958              		.loc 1 315 21 is_stmt 1 view .LVU230
+ 315:Core/Src/init.c ****                 }
+ 959              		.loc 1 315 34 is_stmt 0 view .LVU231
+ 960 0096 8DF80320 		strb	r2, [sp, #3]
+ 961 009a BCE7     		b	.L71
+ 962              	.L74:
+ 320:Core/Src/init.c ****                 if (led_frq.led5 >= frq_levels) {
+ 963              		.loc 1 320 17 is_stmt 1 view .LVU232
+ 320:Core/Src/init.c ****                 if (led_frq.led5 >= frq_levels) {
+ 964              		.loc 1 320 24 is_stmt 0 view .LVU233
+ 965 009c 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
+ 320:Core/Src/init.c ****                 if (led_frq.led5 >= frq_levels) {
+ 966              		.loc 1 320 29 view .LVU234
+ 967 00a0 0133     		adds	r3, r3, #1
+ 968 00a2 DBB2     		uxtb	r3, r3
+ 969 00a4 8DF80430 		strb	r3, [sp, #4]
+ 321:Core/Src/init.c ****                     led_frq.led5 = frq_levels; 
+ 970              		.loc 1 321 17 is_stmt 1 view .LVU235
+ 321:Core/Src/init.c ****                     led_frq.led5 = frq_levels; 
+ 971              		.loc 1 321 34 is_stmt 0 view .LVU236
+ 972 00a8 324A     		ldr	r2, .L91
+ 973 00aa 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 321:Core/Src/init.c ****                     led_frq.led5 = frq_levels; 
+ 974              		.loc 1 321 20 view .LVU237
+ 975 00ac 9342     		cmp	r3, r2
+ 976 00ae B2D3     		bcc	.L71
+ 322:Core/Src/init.c ****                 }
+ 977              		.loc 1 322 21 is_stmt 1 view .LVU238
+ 322:Core/Src/init.c ****                 }
+ 978              		.loc 1 322 34 is_stmt 0 view .LVU239
+ 979 00b0 8DF80420 		strb	r2, [sp, #4]
+ 980 00b4 AFE7     		b	.L71
+ 981              	.L72:
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 26
+
+
+ 327:Core/Src/init.c ****                 if (led_frq.led6 >= frq_levels) {
+ 982              		.loc 1 327 17 is_stmt 1 view .LVU240
+ 327:Core/Src/init.c ****                 if (led_frq.led6 >= frq_levels) {
+ 983              		.loc 1 327 24 is_stmt 0 view .LVU241
+ 984 00b6 9DF80530 		ldrb	r3, [sp, #5]	@ zero_extendqisi2
+ 327:Core/Src/init.c ****                 if (led_frq.led6 >= frq_levels) {
+ 985              		.loc 1 327 29 view .LVU242
+ 986 00ba 0133     		adds	r3, r3, #1
+ 987 00bc DBB2     		uxtb	r3, r3
+ 988 00be 8DF80530 		strb	r3, [sp, #5]
+ 328:Core/Src/init.c ****                     led_frq.led6 = frq_levels; 
+ 989              		.loc 1 328 17 is_stmt 1 view .LVU243
+ 328:Core/Src/init.c ****                     led_frq.led6 = frq_levels; 
+ 990              		.loc 1 328 34 is_stmt 0 view .LVU244
+ 991 00c2 2C4A     		ldr	r2, .L91
+ 992 00c4 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 328:Core/Src/init.c ****                     led_frq.led6 = frq_levels; 
+ 993              		.loc 1 328 20 view .LVU245
+ 994 00c6 9342     		cmp	r3, r2
+ 995 00c8 A5D3     		bcc	.L71
+ 329:Core/Src/init.c ****                 }
+ 996              		.loc 1 329 21 is_stmt 1 view .LVU246
+ 329:Core/Src/init.c ****                 }
+ 997              		.loc 1 329 34 is_stmt 0 view .LVU247
+ 998 00ca 8DF80520 		strb	r2, [sp, #5]
+ 999 00ce A2E7     		b	.L71
+ 1000              	.LVL33:
+ 1001              	.L90:
+ 335:Core/Src/init.c ****         switch(led_change) {
+ 1002              		.loc 1 335 46 discriminator 1 view .LVU248
+ 1003 00d0 9DF80920 		ldrb	r2, [sp, #9]	@ zero_extendqisi2
+ 335:Core/Src/init.c ****         switch(led_change) {
+ 1004              		.loc 1 335 37 discriminator 1 view .LVU249
+ 1005 00d4 002A     		cmp	r2, #0
+ 1006 00d6 9ED0     		beq	.L71
+ 336:Core/Src/init.c ****             case 1:
+ 1007              		.loc 1 336 9 is_stmt 1 view .LVU250
+ 1008 00d8 013B     		subs	r3, r3, #1
+ 1009              	.LVL34:
+ 336:Core/Src/init.c ****             case 1:
+ 1010              		.loc 1 336 9 is_stmt 0 view .LVU251
+ 1011 00da 052B     		cmp	r3, #5
+ 1012 00dc 9BD8     		bhi	.L71
+ 1013 00de DFE803F0 		tbb	[pc, r3]
+ 1014              	.L80:
+ 1015 00e2 03       		.byte	(.L85-.L80)/2
+ 1016 00e3 0E       		.byte	(.L84-.L80)/2
+ 1017 00e4 19       		.byte	(.L83-.L80)/2
+ 1018 00e5 25       		.byte	(.L82-.L80)/2
+ 1019 00e6 31       		.byte	(.L81-.L80)/2
+ 1020 00e7 3D       		.byte	(.L79-.L80)/2
+ 1021              		.p2align 1
+ 1022              	.L85:
+ 338:Core/Src/init.c ****                 if (led_frq.led1 <= 0) {
+ 1023              		.loc 1 338 17 is_stmt 1 view .LVU252
+ 338:Core/Src/init.c ****                 if (led_frq.led1 <= 0) {
+ 1024              		.loc 1 338 24 is_stmt 0 view .LVU253
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 27
+
+
+ 1025 00e8 9DF80030 		ldrb	r3, [sp]	@ zero_extendqisi2
+ 338:Core/Src/init.c ****                 if (led_frq.led1 <= 0) {
+ 1026              		.loc 1 338 29 view .LVU254
+ 1027 00ec 013B     		subs	r3, r3, #1
+ 1028 00ee DBB2     		uxtb	r3, r3
+ 1029 00f0 8DF80030 		strb	r3, [sp]
+ 339:Core/Src/init.c ****                     led_frq.led1 = 0; 
+ 1030              		.loc 1 339 17 is_stmt 1 view .LVU255
+ 339:Core/Src/init.c ****                     led_frq.led1 = 0; 
+ 1031              		.loc 1 339 20 is_stmt 0 view .LVU256
+ 1032 00f4 002B     		cmp	r3, #0
+ 1033 00f6 8ED1     		bne	.L71
+ 340:Core/Src/init.c ****                 }
+ 1034              		.loc 1 340 21 is_stmt 1 view .LVU257
+ 340:Core/Src/init.c ****                 }
+ 1035              		.loc 1 340 34 is_stmt 0 view .LVU258
+ 1036 00f8 8DF80030 		strb	r3, [sp]
+ 1037 00fc 8BE7     		b	.L71
+ 1038              	.L84:
+ 345:Core/Src/init.c ****                 if (led_frq.led2 <= 0) {
+ 1039              		.loc 1 345 17 is_stmt 1 view .LVU259
+ 345:Core/Src/init.c ****                 if (led_frq.led2 <= 0) {
+ 1040              		.loc 1 345 24 is_stmt 0 view .LVU260
+ 1041 00fe 9DF80130 		ldrb	r3, [sp, #1]	@ zero_extendqisi2
+ 345:Core/Src/init.c ****                 if (led_frq.led2 <= 0) {
+ 1042              		.loc 1 345 29 view .LVU261
+ 1043 0102 013B     		subs	r3, r3, #1
+ 1044 0104 DBB2     		uxtb	r3, r3
+ 1045 0106 8DF80130 		strb	r3, [sp, #1]
+ 346:Core/Src/init.c ****                     led_frq.led2 = 0; 
+ 1046              		.loc 1 346 17 is_stmt 1 view .LVU262
+ 346:Core/Src/init.c ****                     led_frq.led2 = 0; 
+ 1047              		.loc 1 346 20 is_stmt 0 view .LVU263
+ 1048 010a 002B     		cmp	r3, #0
+ 1049 010c 83D1     		bne	.L71
+ 347:Core/Src/init.c ****                 }
+ 1050              		.loc 1 347 21 is_stmt 1 view .LVU264
+ 347:Core/Src/init.c ****                 }
+ 1051              		.loc 1 347 34 is_stmt 0 view .LVU265
+ 1052 010e 8DF80130 		strb	r3, [sp, #1]
+ 1053 0112 80E7     		b	.L71
+ 1054              	.L83:
+ 352:Core/Src/init.c ****                 if (led_frq.led3 <= 0) {
+ 1055              		.loc 1 352 17 is_stmt 1 view .LVU266
+ 352:Core/Src/init.c ****                 if (led_frq.led3 <= 0) {
+ 1056              		.loc 1 352 24 is_stmt 0 view .LVU267
+ 1057 0114 9DF80230 		ldrb	r3, [sp, #2]	@ zero_extendqisi2
+ 352:Core/Src/init.c ****                 if (led_frq.led3 <= 0) {
+ 1058              		.loc 1 352 29 view .LVU268
+ 1059 0118 013B     		subs	r3, r3, #1
+ 1060 011a DBB2     		uxtb	r3, r3
+ 1061 011c 8DF80230 		strb	r3, [sp, #2]
+ 353:Core/Src/init.c ****                     led_frq.led3 = 0; 
+ 1062              		.loc 1 353 17 is_stmt 1 view .LVU269
+ 353:Core/Src/init.c ****                     led_frq.led3 = 0; 
+ 1063              		.loc 1 353 20 is_stmt 0 view .LVU270
+ 1064 0120 002B     		cmp	r3, #0
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 28
+
+
+ 1065 0122 7FF478AF 		bne	.L71
+ 354:Core/Src/init.c ****                 }
+ 1066              		.loc 1 354 21 is_stmt 1 view .LVU271
+ 354:Core/Src/init.c ****                 }
+ 1067              		.loc 1 354 34 is_stmt 0 view .LVU272
+ 1068 0126 8DF80230 		strb	r3, [sp, #2]
+ 1069 012a 74E7     		b	.L71
+ 1070              	.L82:
+ 359:Core/Src/init.c ****                 if (led_frq.led4 <= 0) {
+ 1071              		.loc 1 359 17 is_stmt 1 view .LVU273
+ 359:Core/Src/init.c ****                 if (led_frq.led4 <= 0) {
+ 1072              		.loc 1 359 24 is_stmt 0 view .LVU274
+ 1073 012c 9DF80330 		ldrb	r3, [sp, #3]	@ zero_extendqisi2
+ 359:Core/Src/init.c ****                 if (led_frq.led4 <= 0) {
+ 1074              		.loc 1 359 29 view .LVU275
+ 1075 0130 013B     		subs	r3, r3, #1
+ 1076 0132 DBB2     		uxtb	r3, r3
+ 1077 0134 8DF80330 		strb	r3, [sp, #3]
+ 360:Core/Src/init.c ****                     led_frq.led4 = 0; 
+ 1078              		.loc 1 360 17 is_stmt 1 view .LVU276
+ 360:Core/Src/init.c ****                     led_frq.led4 = 0; 
+ 1079              		.loc 1 360 20 is_stmt 0 view .LVU277
+ 1080 0138 002B     		cmp	r3, #0
+ 1081 013a 7FF46CAF 		bne	.L71
+ 361:Core/Src/init.c ****                 }
+ 1082              		.loc 1 361 21 is_stmt 1 view .LVU278
+ 361:Core/Src/init.c ****                 }
+ 1083              		.loc 1 361 34 is_stmt 0 view .LVU279
+ 1084 013e 8DF80330 		strb	r3, [sp, #3]
+ 1085 0142 68E7     		b	.L71
+ 1086              	.L81:
+ 366:Core/Src/init.c ****                 if (led_frq.led5 <= 0) {
+ 1087              		.loc 1 366 17 is_stmt 1 view .LVU280
+ 366:Core/Src/init.c ****                 if (led_frq.led5 <= 0) {
+ 1088              		.loc 1 366 24 is_stmt 0 view .LVU281
+ 1089 0144 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
+ 366:Core/Src/init.c ****                 if (led_frq.led5 <= 0) {
+ 1090              		.loc 1 366 29 view .LVU282
+ 1091 0148 013B     		subs	r3, r3, #1
+ 1092 014a DBB2     		uxtb	r3, r3
+ 1093 014c 8DF80430 		strb	r3, [sp, #4]
+ 367:Core/Src/init.c ****                     led_frq.led5 = 0; 
+ 1094              		.loc 1 367 17 is_stmt 1 view .LVU283
+ 367:Core/Src/init.c ****                     led_frq.led5 = 0; 
+ 1095              		.loc 1 367 20 is_stmt 0 view .LVU284
+ 1096 0150 002B     		cmp	r3, #0
+ 1097 0152 7FF460AF 		bne	.L71
+ 368:Core/Src/init.c ****                 }
+ 1098              		.loc 1 368 21 is_stmt 1 view .LVU285
+ 368:Core/Src/init.c ****                 }
+ 1099              		.loc 1 368 34 is_stmt 0 view .LVU286
+ 1100 0156 8DF80430 		strb	r3, [sp, #4]
+ 1101 015a 5CE7     		b	.L71
+ 1102              	.L79:
+ 373:Core/Src/init.c ****                 if (led_frq.led6 <= 0) {
+ 1103              		.loc 1 373 17 is_stmt 1 view .LVU287
+ 373:Core/Src/init.c ****                 if (led_frq.led6 <= 0) {
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 29
+
+
+ 1104              		.loc 1 373 24 is_stmt 0 view .LVU288
+ 1105 015c 9DF80530 		ldrb	r3, [sp, #5]	@ zero_extendqisi2
+ 373:Core/Src/init.c ****                 if (led_frq.led6 <= 0) {
+ 1106              		.loc 1 373 29 view .LVU289
+ 1107 0160 013B     		subs	r3, r3, #1
+ 1108 0162 DBB2     		uxtb	r3, r3
+ 1109 0164 8DF80530 		strb	r3, [sp, #5]
+ 374:Core/Src/init.c ****                     led_frq.led6 = 0; 
+ 1110              		.loc 1 374 17 is_stmt 1 view .LVU290
+ 374:Core/Src/init.c ****                     led_frq.led6 = 0; 
+ 1111              		.loc 1 374 20 is_stmt 0 view .LVU291
+ 1112 0168 002B     		cmp	r3, #0
+ 1113 016a 7FF454AF 		bne	.L71
+ 375:Core/Src/init.c ****                 }
+ 1114              		.loc 1 375 21 is_stmt 1 view .LVU292
+ 375:Core/Src/init.c ****                 }
+ 1115              		.loc 1 375 34 is_stmt 0 view .LVU293
+ 1116 016e 8DF80530 		strb	r3, [sp, #5]
+ 1117 0172 50E7     		b	.L71
+ 1118              	.L92:
+ 1119              		.align	2
+ 1120              	.L91:
+ 1121 0174 00000000 		.word	frq_levels
+ 1122              		.cfi_endproc
+ 1123              	.LFE138:
+ 1125              		.section	.text.change_pwr,"ax",%progbits
+ 1126              		.align	1
+ 1127              		.global	change_pwr
+ 1128              		.syntax unified
+ 1129              		.thumb
+ 1130              		.thumb_func
+ 1132              	change_pwr:
+ 1133              	.LVL35:
+ 1134              	.LFB139:
+ 381:Core/Src/init.c **** 
+ 382:Core/Src/init.c **** leds change_pwr (leds led_pwr, button_action action) {
+ 1135              		.loc 1 382 54 is_stmt 1 view -0
+ 1136              		.cfi_startproc
+ 1137              		@ args = 0, pretend = 0, frame = 24
+ 1138              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1139              		@ link register save eliminated.
+ 1140              		.loc 1 382 54 is_stmt 0 view .LVU295
+ 1141 0000 86B0     		sub	sp, sp, #24
+ 1142              	.LCFI9:
+ 1143              		.cfi_def_cfa_offset 24
+ 1144 0002 8446     		mov	ip, r0
+ 1145 0004 02A8     		add	r0, sp, #8
+ 1146              	.LVL36:
+ 1147              		.loc 1 382 54 view .LVU296
+ 1148 0006 80E80600 		stm	r0, {r1, r2}
+ 1149 000a ADF80430 		strh	r3, [sp, #4]	@ movhi
+ 383:Core/Src/init.c **** 
+ 384:Core/Src/init.c ****     leds new_pwr;
+ 1150              		.loc 1 384 5 is_stmt 1 view .LVU297
+ 385:Core/Src/init.c **** 
+ 386:Core/Src/init.c ****     if (action.button_num == 1 && action.is_long == false) {
+ 1151              		.loc 1 386 5 view .LVU298
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 30
+
+
+ 1152              		.loc 1 386 15 is_stmt 0 view .LVU299
+ 1153 000e 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
+ 1154              		.loc 1 386 8 view .LVU300
+ 1155 0012 012B     		cmp	r3, #1
+ 1156 0014 0BD0     		beq	.L106
+ 1157              	.L94:
+ 387:Core/Src/init.c ****         led_num++;
+ 388:Core/Src/init.c ****         if (led_num > 6) {
+ 389:Core/Src/init.c ****             led_num = 6;
+ 390:Core/Src/init.c ****         }
+ 391:Core/Src/init.c ****     }
+ 392:Core/Src/init.c **** 
+ 393:Core/Src/init.c ****     else if (action.button_num == 2 && action.is_long == false) {
+ 1158              		.loc 1 393 10 is_stmt 1 view .LVU301
+ 1159              		.loc 1 393 13 is_stmt 0 view .LVU302
+ 1160 0016 022B     		cmp	r3, #2
+ 1161 0018 18D0     		beq	.L107
+ 1162              	.L95:
+ 394:Core/Src/init.c ****         led_num--;
+ 395:Core/Src/init.c ****         if (led_num < 1) {
+ 396:Core/Src/init.c ****             led_num = 1;
+ 397:Core/Src/init.c ****         }
+ 398:Core/Src/init.c ****     }
+ 399:Core/Src/init.c **** 
+ 400:Core/Src/init.c ****     switch (led_num) {
+ 1163              		.loc 1 400 5 is_stmt 1 view .LVU303
+ 1164 001a 414B     		ldr	r3, .L108
+ 1165 001c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1166 001e 013B     		subs	r3, r3, #1
+ 1167 0020 052B     		cmp	r3, #5
+ 1168 0022 30D8     		bhi	.L96
+ 1169 0024 DFE803F0 		tbb	[pc, r3]
+ 1170              	.L98:
+ 1171 0028 21       		.byte	(.L103-.L98)/2
+ 1172 0029 32       		.byte	(.L102-.L98)/2
+ 1173 002a 41       		.byte	(.L101-.L98)/2
+ 1174 002b 50       		.byte	(.L100-.L98)/2
+ 1175 002c 5F       		.byte	(.L99-.L98)/2
+ 1176 002d 6E       		.byte	(.L97-.L98)/2
+ 1177              		.p2align 1
+ 1178              	.L106:
+ 386:Core/Src/init.c ****         led_num++;
+ 1179              		.loc 1 386 41 is_stmt 0 discriminator 1 view .LVU304
+ 1180 002e 9DF80520 		ldrb	r2, [sp, #5]	@ zero_extendqisi2
+ 386:Core/Src/init.c ****         led_num++;
+ 1181              		.loc 1 386 32 discriminator 1 view .LVU305
+ 1182 0032 002A     		cmp	r2, #0
+ 1183 0034 EFD1     		bne	.L94
+ 387:Core/Src/init.c ****         led_num++;
+ 1184              		.loc 1 387 9 is_stmt 1 view .LVU306
+ 387:Core/Src/init.c ****         led_num++;
+ 1185              		.loc 1 387 16 is_stmt 0 view .LVU307
+ 1186 0036 3A4A     		ldr	r2, .L108
+ 1187 0038 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 1188 003a 0133     		adds	r3, r3, #1
+ 1189 003c DBB2     		uxtb	r3, r3
+ 1190 003e 1370     		strb	r3, [r2]
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 31
+
+
+ 388:Core/Src/init.c ****             led_num = 6;
+ 1191              		.loc 1 388 9 is_stmt 1 view .LVU308
+ 388:Core/Src/init.c ****             led_num = 6;
+ 1192              		.loc 1 388 12 is_stmt 0 view .LVU309
+ 1193 0040 062B     		cmp	r3, #6
+ 1194 0042 EAD9     		bls	.L95
+ 389:Core/Src/init.c ****         }
+ 1195              		.loc 1 389 13 is_stmt 1 view .LVU310
+ 389:Core/Src/init.c ****         }
+ 1196              		.loc 1 389 21 is_stmt 0 view .LVU311
+ 1197 0044 1346     		mov	r3, r2
+ 1198 0046 0622     		movs	r2, #6
+ 1199 0048 1A70     		strb	r2, [r3]
+ 1200 004a E6E7     		b	.L95
+ 1201              	.L107:
+ 393:Core/Src/init.c ****         led_num--;
+ 1202              		.loc 1 393 46 discriminator 1 view .LVU312
+ 1203 004c 9DF80530 		ldrb	r3, [sp, #5]	@ zero_extendqisi2
+ 393:Core/Src/init.c ****         led_num--;
+ 1204              		.loc 1 393 37 discriminator 1 view .LVU313
+ 1205 0050 002B     		cmp	r3, #0
+ 1206 0052 E2D1     		bne	.L95
+ 394:Core/Src/init.c ****         if (led_num < 1) {
+ 1207              		.loc 1 394 9 is_stmt 1 view .LVU314
+ 394:Core/Src/init.c ****         if (led_num < 1) {
+ 1208              		.loc 1 394 16 is_stmt 0 view .LVU315
+ 1209 0054 324A     		ldr	r2, .L108
+ 1210 0056 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 1211 0058 013B     		subs	r3, r3, #1
+ 1212 005a DBB2     		uxtb	r3, r3
+ 1213 005c 1370     		strb	r3, [r2]
+ 395:Core/Src/init.c ****             led_num = 1;
+ 1214              		.loc 1 395 9 is_stmt 1 view .LVU316
+ 395:Core/Src/init.c ****             led_num = 1;
+ 1215              		.loc 1 395 12 is_stmt 0 view .LVU317
+ 1216 005e 002B     		cmp	r3, #0
+ 1217 0060 DBD1     		bne	.L95
+ 396:Core/Src/init.c ****         }
+ 1218              		.loc 1 396 13 is_stmt 1 view .LVU318
+ 396:Core/Src/init.c ****         }
+ 1219              		.loc 1 396 21 is_stmt 0 view .LVU319
+ 1220 0062 1346     		mov	r3, r2
+ 1221 0064 0122     		movs	r2, #1
+ 1222 0066 1A70     		strb	r2, [r3]
+ 1223 0068 D7E7     		b	.L95
+ 1224              	.L103:
+ 401:Core/Src/init.c ****         case 1: 
+ 402:Core/Src/init.c ****             new_pwr; {
+ 1225              		.loc 1 402 13 is_stmt 1 view .LVU320
+ 403:Core/Src/init.c ****                 new_pwr.led1 = 1;
+ 1226              		.loc 1 403 17 view .LVU321
+ 1227              		.loc 1 403 30 is_stmt 0 view .LVU322
+ 1228 006a 0123     		movs	r3, #1
+ 1229 006c 8DF81030 		strb	r3, [sp, #16]
+ 404:Core/Src/init.c ****                 new_pwr.led2 = 0;
+ 1230              		.loc 1 404 17 is_stmt 1 view .LVU323
+ 1231              		.loc 1 404 30 is_stmt 0 view .LVU324
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 32
+
+
+ 1232 0070 0023     		movs	r3, #0
+ 1233 0072 8DF81130 		strb	r3, [sp, #17]
+ 405:Core/Src/init.c ****                 new_pwr.led3 = 0;
+ 1234              		.loc 1 405 17 is_stmt 1 view .LVU325
+ 1235              		.loc 1 405 30 is_stmt 0 view .LVU326
+ 1236 0076 8DF81230 		strb	r3, [sp, #18]
+ 406:Core/Src/init.c ****                 new_pwr.led4 = 0;
+ 1237              		.loc 1 406 17 is_stmt 1 view .LVU327
+ 1238              		.loc 1 406 30 is_stmt 0 view .LVU328
+ 1239 007a 8DF81330 		strb	r3, [sp, #19]
+ 407:Core/Src/init.c ****                 new_pwr.led5 = 0;
+ 1240              		.loc 1 407 17 is_stmt 1 view .LVU329
+ 1241              		.loc 1 407 30 is_stmt 0 view .LVU330
+ 1242 007e 8DF81430 		strb	r3, [sp, #20]
+ 408:Core/Src/init.c ****                 new_pwr.led6 = 0;
+ 1243              		.loc 1 408 17 is_stmt 1 view .LVU331
+ 1244              		.loc 1 408 30 is_stmt 0 view .LVU332
+ 1245 0082 8DF81530 		strb	r3, [sp, #21]
+ 409:Core/Src/init.c ****             }
+ 410:Core/Src/init.c ****             break;
+ 1246              		.loc 1 410 13 is_stmt 1 view .LVU333
+ 1247              	.L96:
+ 411:Core/Src/init.c ****         case 2: 
+ 412:Core/Src/init.c ****             new_pwr; {
+ 413:Core/Src/init.c ****                 new_pwr.led1 = 1;
+ 414:Core/Src/init.c ****                 new_pwr.led2 = 1;
+ 415:Core/Src/init.c ****                 new_pwr.led3 = 0;
+ 416:Core/Src/init.c ****                 new_pwr.led4 = 0;
+ 417:Core/Src/init.c ****                 new_pwr.led5 = 0;
+ 418:Core/Src/init.c ****                 new_pwr.led6 = 0;
+ 419:Core/Src/init.c ****             }
+ 420:Core/Src/init.c ****             break;
+ 421:Core/Src/init.c ****         case 3: 
+ 422:Core/Src/init.c ****             new_pwr; {
+ 423:Core/Src/init.c ****                 new_pwr.led1 = 1;
+ 424:Core/Src/init.c ****                 new_pwr.led2 = 1;
+ 425:Core/Src/init.c ****                 new_pwr.led3 = 1;
+ 426:Core/Src/init.c ****                 new_pwr.led4 = 0;
+ 427:Core/Src/init.c ****                 new_pwr.led5 = 0;
+ 428:Core/Src/init.c ****                 new_pwr.led6 = 0;
+ 429:Core/Src/init.c ****             }
+ 430:Core/Src/init.c ****             break;
+ 431:Core/Src/init.c ****         case 4: 
+ 432:Core/Src/init.c ****             new_pwr; {
+ 433:Core/Src/init.c ****                 new_pwr.led1 = 1;
+ 434:Core/Src/init.c ****                 new_pwr.led2 = 1;
+ 435:Core/Src/init.c ****                 new_pwr.led3 = 1;
+ 436:Core/Src/init.c ****                 new_pwr.led4 = 1;
+ 437:Core/Src/init.c ****                 new_pwr.led5 = 0;
+ 438:Core/Src/init.c ****                 new_pwr.led6 = 0;
+ 439:Core/Src/init.c ****             }
+ 440:Core/Src/init.c ****             break;
+ 441:Core/Src/init.c ****         case 5: 
+ 442:Core/Src/init.c ****             new_pwr; {
+ 443:Core/Src/init.c ****                 new_pwr.led1 = 1;
+ 444:Core/Src/init.c ****                 new_pwr.led2 = 1;
+ 445:Core/Src/init.c ****                 new_pwr.led3 = 1;
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 33
+
+
+ 446:Core/Src/init.c ****                 new_pwr.led4 = 1;
+ 447:Core/Src/init.c ****                 new_pwr.led5 = 1;
+ 448:Core/Src/init.c ****                 new_pwr.led6 = 0;
+ 449:Core/Src/init.c ****             }
+ 450:Core/Src/init.c ****             break;
+ 451:Core/Src/init.c ****         case 6: 
+ 452:Core/Src/init.c ****             new_pwr; {
+ 453:Core/Src/init.c ****                 new_pwr.led1 = 1;
+ 454:Core/Src/init.c ****                 new_pwr.led2 = 1;
+ 455:Core/Src/init.c ****                 new_pwr.led3 = 1;
+ 456:Core/Src/init.c ****                 new_pwr.led4 = 1;
+ 457:Core/Src/init.c ****                 new_pwr.led5 = 1;
+ 458:Core/Src/init.c ****                 new_pwr.led6 = 1;
+ 459:Core/Src/init.c ****             }
+ 460:Core/Src/init.c ****             break;
+ 461:Core/Src/init.c **** 
+ 462:Core/Src/init.c ****         return new_pwr;
+ 463:Core/Src/init.c ****     }
+ 464:Core/Src/init.c **** }
+ 1248              		.loc 1 464 1 is_stmt 0 view .LVU334
+ 1249 0086 6046     		mov	r0, ip
+ 1250 0088 06B0     		add	sp, sp, #24
+ 1251              	.LCFI10:
+ 1252              		.cfi_remember_state
+ 1253              		.cfi_def_cfa_offset 0
+ 1254              		@ sp needed
+ 1255 008a 7047     		bx	lr
+ 1256              	.L102:
+ 1257              	.LCFI11:
+ 1258              		.cfi_restore_state
+ 412:Core/Src/init.c ****                 new_pwr.led1 = 1;
+ 1259              		.loc 1 412 13 is_stmt 1 view .LVU335
+ 413:Core/Src/init.c ****                 new_pwr.led2 = 1;
+ 1260              		.loc 1 413 17 view .LVU336
+ 413:Core/Src/init.c ****                 new_pwr.led2 = 1;
+ 1261              		.loc 1 413 30 is_stmt 0 view .LVU337
+ 1262 008c 0123     		movs	r3, #1
+ 1263 008e 8DF81030 		strb	r3, [sp, #16]
+ 414:Core/Src/init.c ****                 new_pwr.led3 = 0;
+ 1264              		.loc 1 414 17 is_stmt 1 view .LVU338
+ 414:Core/Src/init.c ****                 new_pwr.led3 = 0;
+ 1265              		.loc 1 414 30 is_stmt 0 view .LVU339
+ 1266 0092 8DF81130 		strb	r3, [sp, #17]
+ 415:Core/Src/init.c ****                 new_pwr.led4 = 0;
+ 1267              		.loc 1 415 17 is_stmt 1 view .LVU340
+ 415:Core/Src/init.c ****                 new_pwr.led4 = 0;
+ 1268              		.loc 1 415 30 is_stmt 0 view .LVU341
+ 1269 0096 0023     		movs	r3, #0
+ 1270 0098 8DF81230 		strb	r3, [sp, #18]
+ 416:Core/Src/init.c ****                 new_pwr.led5 = 0;
+ 1271              		.loc 1 416 17 is_stmt 1 view .LVU342
+ 416:Core/Src/init.c ****                 new_pwr.led5 = 0;
+ 1272              		.loc 1 416 30 is_stmt 0 view .LVU343
+ 1273 009c 8DF81330 		strb	r3, [sp, #19]
+ 417:Core/Src/init.c ****                 new_pwr.led6 = 0;
+ 1274              		.loc 1 417 17 is_stmt 1 view .LVU344
+ 417:Core/Src/init.c ****                 new_pwr.led6 = 0;
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 34
+
+
+ 1275              		.loc 1 417 30 is_stmt 0 view .LVU345
+ 1276 00a0 8DF81430 		strb	r3, [sp, #20]
+ 418:Core/Src/init.c ****             }
+ 1277              		.loc 1 418 17 is_stmt 1 view .LVU346
+ 418:Core/Src/init.c ****             }
+ 1278              		.loc 1 418 30 is_stmt 0 view .LVU347
+ 1279 00a4 8DF81530 		strb	r3, [sp, #21]
+ 420:Core/Src/init.c ****         case 3: 
+ 1280              		.loc 1 420 13 is_stmt 1 view .LVU348
+ 1281 00a8 EDE7     		b	.L96
+ 1282              	.L101:
+ 422:Core/Src/init.c ****                 new_pwr.led1 = 1;
+ 1283              		.loc 1 422 13 view .LVU349
+ 423:Core/Src/init.c ****                 new_pwr.led2 = 1;
+ 1284              		.loc 1 423 17 view .LVU350
+ 423:Core/Src/init.c ****                 new_pwr.led2 = 1;
+ 1285              		.loc 1 423 30 is_stmt 0 view .LVU351
+ 1286 00aa 0123     		movs	r3, #1
+ 1287 00ac 8DF81030 		strb	r3, [sp, #16]
+ 424:Core/Src/init.c ****                 new_pwr.led3 = 1;
+ 1288              		.loc 1 424 17 is_stmt 1 view .LVU352
+ 424:Core/Src/init.c ****                 new_pwr.led3 = 1;
+ 1289              		.loc 1 424 30 is_stmt 0 view .LVU353
+ 1290 00b0 8DF81130 		strb	r3, [sp, #17]
+ 425:Core/Src/init.c ****                 new_pwr.led4 = 0;
+ 1291              		.loc 1 425 17 is_stmt 1 view .LVU354
+ 425:Core/Src/init.c ****                 new_pwr.led4 = 0;
+ 1292              		.loc 1 425 30 is_stmt 0 view .LVU355
+ 1293 00b4 8DF81230 		strb	r3, [sp, #18]
+ 426:Core/Src/init.c ****                 new_pwr.led5 = 0;
+ 1294              		.loc 1 426 17 is_stmt 1 view .LVU356
+ 426:Core/Src/init.c ****                 new_pwr.led5 = 0;
+ 1295              		.loc 1 426 30 is_stmt 0 view .LVU357
+ 1296 00b8 0023     		movs	r3, #0
+ 1297 00ba 8DF81330 		strb	r3, [sp, #19]
+ 427:Core/Src/init.c ****                 new_pwr.led6 = 0;
+ 1298              		.loc 1 427 17 is_stmt 1 view .LVU358
+ 427:Core/Src/init.c ****                 new_pwr.led6 = 0;
+ 1299              		.loc 1 427 30 is_stmt 0 view .LVU359
+ 1300 00be 8DF81430 		strb	r3, [sp, #20]
+ 428:Core/Src/init.c ****             }
+ 1301              		.loc 1 428 17 is_stmt 1 view .LVU360
+ 428:Core/Src/init.c ****             }
+ 1302              		.loc 1 428 30 is_stmt 0 view .LVU361
+ 1303 00c2 8DF81530 		strb	r3, [sp, #21]
+ 430:Core/Src/init.c ****         case 4: 
+ 1304              		.loc 1 430 13 is_stmt 1 view .LVU362
+ 1305 00c6 DEE7     		b	.L96
+ 1306              	.L100:
+ 432:Core/Src/init.c ****                 new_pwr.led1 = 1;
+ 1307              		.loc 1 432 13 view .LVU363
+ 433:Core/Src/init.c ****                 new_pwr.led2 = 1;
+ 1308              		.loc 1 433 17 view .LVU364
+ 433:Core/Src/init.c ****                 new_pwr.led2 = 1;
+ 1309              		.loc 1 433 30 is_stmt 0 view .LVU365
+ 1310 00c8 0123     		movs	r3, #1
+ 1311 00ca 8DF81030 		strb	r3, [sp, #16]
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 35
+
+
+ 434:Core/Src/init.c ****                 new_pwr.led3 = 1;
+ 1312              		.loc 1 434 17 is_stmt 1 view .LVU366
+ 434:Core/Src/init.c ****                 new_pwr.led3 = 1;
+ 1313              		.loc 1 434 30 is_stmt 0 view .LVU367
+ 1314 00ce 8DF81130 		strb	r3, [sp, #17]
+ 435:Core/Src/init.c ****                 new_pwr.led4 = 1;
+ 1315              		.loc 1 435 17 is_stmt 1 view .LVU368
+ 435:Core/Src/init.c ****                 new_pwr.led4 = 1;
+ 1316              		.loc 1 435 30 is_stmt 0 view .LVU369
+ 1317 00d2 8DF81230 		strb	r3, [sp, #18]
+ 436:Core/Src/init.c ****                 new_pwr.led5 = 0;
+ 1318              		.loc 1 436 17 is_stmt 1 view .LVU370
+ 436:Core/Src/init.c ****                 new_pwr.led5 = 0;
+ 1319              		.loc 1 436 30 is_stmt 0 view .LVU371
+ 1320 00d6 8DF81330 		strb	r3, [sp, #19]
+ 437:Core/Src/init.c ****                 new_pwr.led6 = 0;
+ 1321              		.loc 1 437 17 is_stmt 1 view .LVU372
+ 437:Core/Src/init.c ****                 new_pwr.led6 = 0;
+ 1322              		.loc 1 437 30 is_stmt 0 view .LVU373
+ 1323 00da 0023     		movs	r3, #0
+ 1324 00dc 8DF81430 		strb	r3, [sp, #20]
+ 438:Core/Src/init.c ****             }
+ 1325              		.loc 1 438 17 is_stmt 1 view .LVU374
+ 438:Core/Src/init.c ****             }
+ 1326              		.loc 1 438 30 is_stmt 0 view .LVU375
+ 1327 00e0 8DF81530 		strb	r3, [sp, #21]
+ 440:Core/Src/init.c ****         case 5: 
+ 1328              		.loc 1 440 13 is_stmt 1 view .LVU376
+ 1329 00e4 CFE7     		b	.L96
+ 1330              	.L99:
+ 442:Core/Src/init.c ****                 new_pwr.led1 = 1;
+ 1331              		.loc 1 442 13 view .LVU377
+ 443:Core/Src/init.c ****                 new_pwr.led2 = 1;
+ 1332              		.loc 1 443 17 view .LVU378
+ 443:Core/Src/init.c ****                 new_pwr.led2 = 1;
+ 1333              		.loc 1 443 30 is_stmt 0 view .LVU379
+ 1334 00e6 0123     		movs	r3, #1
+ 1335 00e8 8DF81030 		strb	r3, [sp, #16]
+ 444:Core/Src/init.c ****                 new_pwr.led3 = 1;
+ 1336              		.loc 1 444 17 is_stmt 1 view .LVU380
+ 444:Core/Src/init.c ****                 new_pwr.led3 = 1;
+ 1337              		.loc 1 444 30 is_stmt 0 view .LVU381
+ 1338 00ec 8DF81130 		strb	r3, [sp, #17]
+ 445:Core/Src/init.c ****                 new_pwr.led4 = 1;
+ 1339              		.loc 1 445 17 is_stmt 1 view .LVU382
+ 445:Core/Src/init.c ****                 new_pwr.led4 = 1;
+ 1340              		.loc 1 445 30 is_stmt 0 view .LVU383
+ 1341 00f0 8DF81230 		strb	r3, [sp, #18]
+ 446:Core/Src/init.c ****                 new_pwr.led5 = 1;
+ 1342              		.loc 1 446 17 is_stmt 1 view .LVU384
+ 446:Core/Src/init.c ****                 new_pwr.led5 = 1;
+ 1343              		.loc 1 446 30 is_stmt 0 view .LVU385
+ 1344 00f4 8DF81330 		strb	r3, [sp, #19]
+ 447:Core/Src/init.c ****                 new_pwr.led6 = 0;
+ 1345              		.loc 1 447 17 is_stmt 1 view .LVU386
+ 447:Core/Src/init.c ****                 new_pwr.led6 = 0;
+ 1346              		.loc 1 447 30 is_stmt 0 view .LVU387
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 36
+
+
+ 1347 00f8 8DF81430 		strb	r3, [sp, #20]
+ 448:Core/Src/init.c ****             }
+ 1348              		.loc 1 448 17 is_stmt 1 view .LVU388
+ 448:Core/Src/init.c ****             }
+ 1349              		.loc 1 448 30 is_stmt 0 view .LVU389
+ 1350 00fc 0023     		movs	r3, #0
+ 1351 00fe 8DF81530 		strb	r3, [sp, #21]
+ 450:Core/Src/init.c ****         case 6: 
+ 1352              		.loc 1 450 13 is_stmt 1 view .LVU390
+ 1353 0102 C0E7     		b	.L96
+ 1354              	.L97:
+ 452:Core/Src/init.c ****                 new_pwr.led1 = 1;
+ 1355              		.loc 1 452 13 view .LVU391
+ 453:Core/Src/init.c ****                 new_pwr.led2 = 1;
+ 1356              		.loc 1 453 17 view .LVU392
+ 453:Core/Src/init.c ****                 new_pwr.led2 = 1;
+ 1357              		.loc 1 453 30 is_stmt 0 view .LVU393
+ 1358 0104 0123     		movs	r3, #1
+ 1359 0106 8DF81030 		strb	r3, [sp, #16]
+ 454:Core/Src/init.c ****                 new_pwr.led3 = 1;
+ 1360              		.loc 1 454 17 is_stmt 1 view .LVU394
+ 454:Core/Src/init.c ****                 new_pwr.led3 = 1;
+ 1361              		.loc 1 454 30 is_stmt 0 view .LVU395
+ 1362 010a 8DF81130 		strb	r3, [sp, #17]
+ 455:Core/Src/init.c ****                 new_pwr.led4 = 1;
+ 1363              		.loc 1 455 17 is_stmt 1 view .LVU396
+ 455:Core/Src/init.c ****                 new_pwr.led4 = 1;
+ 1364              		.loc 1 455 30 is_stmt 0 view .LVU397
+ 1365 010e 8DF81230 		strb	r3, [sp, #18]
+ 456:Core/Src/init.c ****                 new_pwr.led5 = 1;
+ 1366              		.loc 1 456 17 is_stmt 1 view .LVU398
+ 456:Core/Src/init.c ****                 new_pwr.led5 = 1;
+ 1367              		.loc 1 456 30 is_stmt 0 view .LVU399
+ 1368 0112 8DF81330 		strb	r3, [sp, #19]
+ 457:Core/Src/init.c ****                 new_pwr.led6 = 1;
+ 1369              		.loc 1 457 17 is_stmt 1 view .LVU400
+ 457:Core/Src/init.c ****                 new_pwr.led6 = 1;
+ 1370              		.loc 1 457 30 is_stmt 0 view .LVU401
+ 1371 0116 8DF81430 		strb	r3, [sp, #20]
+ 458:Core/Src/init.c ****             }
+ 1372              		.loc 1 458 17 is_stmt 1 view .LVU402
+ 458:Core/Src/init.c ****             }
+ 1373              		.loc 1 458 30 is_stmt 0 view .LVU403
+ 1374 011a 8DF81530 		strb	r3, [sp, #21]
+ 460:Core/Src/init.c **** 
+ 1375              		.loc 1 460 13 is_stmt 1 view .LVU404
+ 1376 011e B2E7     		b	.L96
+ 1377              	.L109:
+ 1378              		.align	2
+ 1379              	.L108:
+ 1380 0120 00000000 		.word	led_num
+ 1381              		.cfi_endproc
+ 1382              	.LFE139:
+ 1384              		.section	.text.leds_flash,"ax",%progbits
+ 1385              		.align	1
+ 1386              		.global	leds_flash
+ 1387              		.syntax unified
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 37
+
+
+ 1388              		.thumb
+ 1389              		.thumb_func
+ 1391              	leds_flash:
+ 1392              	.LVL37:
+ 1393              	.LFB140:
+ 465:Core/Src/init.c **** 
+ 466:Core/Src/init.c **** void leds_flash(uint32_t count, leds led_frq, leds led_pwr) {
+ 1394              		.loc 1 466 61 view -0
+ 1395              		.cfi_startproc
+ 1396              		@ args = 12, pretend = 8, frame = 16
+ 1397              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1398              		.loc 1 466 61 is_stmt 0 view .LVU406
+ 1399 0000 82B0     		sub	sp, sp, #8
+ 1400              	.LCFI12:
+ 1401              		.cfi_def_cfa_offset 8
+ 1402 0002 10B5     		push	{r4, lr}
+ 1403              	.LCFI13:
+ 1404              		.cfi_def_cfa_offset 16
+ 1405              		.cfi_offset 4, -16
+ 1406              		.cfi_offset 14, -12
+ 1407 0004 84B0     		sub	sp, sp, #16
+ 1408              	.LCFI14:
+ 1409              		.cfi_def_cfa_offset 32
+ 1410 0006 0446     		mov	r4, r0
+ 1411 0008 6846     		mov	r0, sp
+ 1412              	.LVL38:
+ 1413              		.loc 1 466 61 view .LVU407
+ 1414 000a 80E80600 		stm	r0, {r1, r2}
+ 1415 000e 0793     		str	r3, [sp, #28]
+ 467:Core/Src/init.c ****     
+ 468:Core/Src/init.c ****     leds final_states = led_frq;
+ 1416              		.loc 1 468 5 is_stmt 1 view .LVU408
+ 1417              		.loc 1 468 10 is_stmt 0 view .LVU409
+ 1418 0010 03C8     		ldm	r0, {r0, r1}
+ 1419 0012 0290     		str	r0, [sp, #8]
+ 1420 0014 ADF80C10 		strh	r1, [sp, #12]	@ movhi
+ 469:Core/Src/init.c **** 
+ 470:Core/Src/init.c ****     // combining pwr and frq
+ 471:Core/Src/init.c **** 
+ 472:Core/Src/init.c ****     if (led_pwr.led1 == 0) {
+ 1421              		.loc 1 472 5 is_stmt 1 view .LVU410
+ 1422              		.loc 1 472 16 is_stmt 0 view .LVU411
+ 1423 0018 9DF81C30 		ldrb	r3, [sp, #28]	@ zero_extendqisi2
+ 1424              		.loc 1 472 8 view .LVU412
+ 1425 001c 0BB9     		cbnz	r3, .L111
+ 473:Core/Src/init.c ****         final_states.led1 = 0;
+ 1426              		.loc 1 473 9 is_stmt 1 view .LVU413
+ 1427              		.loc 1 473 27 is_stmt 0 view .LVU414
+ 1428 001e 8DF80830 		strb	r3, [sp, #8]
+ 1429              	.L111:
+ 474:Core/Src/init.c ****     }
+ 475:Core/Src/init.c **** 
+ 476:Core/Src/init.c ****     if (led_pwr.led2 == 0) {
+ 1430              		.loc 1 476 5 is_stmt 1 view .LVU415
+ 1431              		.loc 1 476 16 is_stmt 0 view .LVU416
+ 1432 0022 9DF81D30 		ldrb	r3, [sp, #29]	@ zero_extendqisi2
+ 1433              		.loc 1 476 8 view .LVU417
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 38
+
+
+ 1434 0026 0BB9     		cbnz	r3, .L112
+ 477:Core/Src/init.c ****         final_states.led2 = 0;
+ 1435              		.loc 1 477 9 is_stmt 1 view .LVU418
+ 1436              		.loc 1 477 27 is_stmt 0 view .LVU419
+ 1437 0028 8DF80930 		strb	r3, [sp, #9]
+ 1438              	.L112:
+ 478:Core/Src/init.c ****     }
+ 479:Core/Src/init.c **** 
+ 480:Core/Src/init.c ****     if (led_pwr.led3 == 0) {
+ 1439              		.loc 1 480 5 is_stmt 1 view .LVU420
+ 1440              		.loc 1 480 16 is_stmt 0 view .LVU421
+ 1441 002c 9DF81E30 		ldrb	r3, [sp, #30]	@ zero_extendqisi2
+ 1442              		.loc 1 480 8 view .LVU422
+ 1443 0030 0BB9     		cbnz	r3, .L113
+ 481:Core/Src/init.c ****         final_states.led3 = 0;
+ 1444              		.loc 1 481 9 is_stmt 1 view .LVU423
+ 1445              		.loc 1 481 27 is_stmt 0 view .LVU424
+ 1446 0032 8DF80A30 		strb	r3, [sp, #10]
+ 1447              	.L113:
+ 482:Core/Src/init.c ****     }
+ 483:Core/Src/init.c **** 
+ 484:Core/Src/init.c ****     if (led_pwr.led4 == 0) {
+ 1448              		.loc 1 484 5 is_stmt 1 view .LVU425
+ 1449              		.loc 1 484 16 is_stmt 0 view .LVU426
+ 1450 0036 9DF81F30 		ldrb	r3, [sp, #31]	@ zero_extendqisi2
+ 1451              		.loc 1 484 8 view .LVU427
+ 1452 003a 0BB9     		cbnz	r3, .L114
+ 485:Core/Src/init.c ****         final_states.led4 = 0;
+ 1453              		.loc 1 485 9 is_stmt 1 view .LVU428
+ 1454              		.loc 1 485 27 is_stmt 0 view .LVU429
+ 1455 003c 8DF80B30 		strb	r3, [sp, #11]
+ 1456              	.L114:
+ 486:Core/Src/init.c ****     }
+ 487:Core/Src/init.c **** 
+ 488:Core/Src/init.c ****     if (led_pwr.led5 == 0) {
+ 1457              		.loc 1 488 5 is_stmt 1 view .LVU430
+ 1458              		.loc 1 488 16 is_stmt 0 view .LVU431
+ 1459 0040 9DF82030 		ldrb	r3, [sp, #32]	@ zero_extendqisi2
+ 1460              		.loc 1 488 8 view .LVU432
+ 1461 0044 0BB9     		cbnz	r3, .L115
+ 489:Core/Src/init.c ****         final_states.led5 = 0;
+ 1462              		.loc 1 489 9 is_stmt 1 view .LVU433
+ 1463              		.loc 1 489 27 is_stmt 0 view .LVU434
+ 1464 0046 8DF80C30 		strb	r3, [sp, #12]
+ 1465              	.L115:
+ 490:Core/Src/init.c ****     }
+ 491:Core/Src/init.c **** 
+ 492:Core/Src/init.c ****     if (led_pwr.led6 == 0) {
+ 1466              		.loc 1 492 5 is_stmt 1 view .LVU435
+ 1467              		.loc 1 492 16 is_stmt 0 view .LVU436
+ 1468 004a 9DF82130 		ldrb	r3, [sp, #33]	@ zero_extendqisi2
+ 1469              		.loc 1 492 8 view .LVU437
+ 1470 004e 0BB9     		cbnz	r3, .L116
+ 493:Core/Src/init.c ****         final_states.led6 = 0;
+ 1471              		.loc 1 493 9 is_stmt 1 view .LVU438
+ 1472              		.loc 1 493 27 is_stmt 0 view .LVU439
+ 1473 0050 8DF80D30 		strb	r3, [sp, #13]
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 39
+
+
+ 1474              	.L116:
+ 494:Core/Src/init.c ****     }
+ 495:Core/Src/init.c **** 
+ 496:Core/Src/init.c ****     // actually flashing LEDs
+ 497:Core/Src/init.c **** 
+ 498:Core/Src/init.c ****     if (final_states.led1 == 0) {
+ 1475              		.loc 1 498 5 is_stmt 1 view .LVU440
+ 1476              		.loc 1 498 21 is_stmt 0 view .LVU441
+ 1477 0054 9DF80830 		ldrb	r3, [sp, #8]	@ zero_extendqisi2
+ 1478              		.loc 1 498 8 view .LVU442
+ 1479 0058 002B     		cmp	r3, #0
+ 1480 005a 47D0     		beq	.L136
+ 499:Core/Src/init.c ****         led_off(1);
+ 500:Core/Src/init.c ****     }
+ 501:Core/Src/init.c ****     else if ((count % final_states.led1) == 0) {
+ 1481              		.loc 1 501 10 is_stmt 1 view .LVU443
+ 1482              		.loc 1 501 21 is_stmt 0 view .LVU444
+ 1483 005c B4FBF3F2 		udiv	r2, r4, r3
+ 1484 0060 03FB1243 		mls	r3, r3, r2, r4
+ 1485              		.loc 1 501 13 view .LVU445
+ 1486 0064 002B     		cmp	r3, #0
+ 1487 0066 45D1     		bne	.L119
+ 502:Core/Src/init.c ****         led_on(1);
+ 1488              		.loc 1 502 9 is_stmt 1 view .LVU446
+ 1489 0068 0120     		movs	r0, #1
+ 1490 006a FFF7FEFF 		bl	led_on
+ 1491              	.LVL39:
+ 1492              	.L118:
+ 503:Core/Src/init.c ****     }
+ 504:Core/Src/init.c ****     else {
+ 505:Core/Src/init.c ****         led_off(1);
+ 506:Core/Src/init.c ****     }
+ 507:Core/Src/init.c **** 
+ 508:Core/Src/init.c ****     if (final_states.led2 == 0) {
+ 1493              		.loc 1 508 5 view .LVU447
+ 1494              		.loc 1 508 21 is_stmt 0 view .LVU448
+ 1495 006e 9DF80930 		ldrb	r3, [sp, #9]	@ zero_extendqisi2
+ 1496              		.loc 1 508 8 view .LVU449
+ 1497 0072 002B     		cmp	r3, #0
+ 1498 0074 42D0     		beq	.L137
+ 509:Core/Src/init.c ****         led_off(2);
+ 510:Core/Src/init.c ****     }
+ 511:Core/Src/init.c ****     else if ((count % final_states.led2) == 0) {
+ 1499              		.loc 1 511 10 is_stmt 1 view .LVU450
+ 1500              		.loc 1 511 21 is_stmt 0 view .LVU451
+ 1501 0076 B4FBF3F2 		udiv	r2, r4, r3
+ 1502 007a 03FB1243 		mls	r3, r3, r2, r4
+ 1503              		.loc 1 511 13 view .LVU452
+ 1504 007e 002B     		cmp	r3, #0
+ 1505 0080 40D1     		bne	.L122
+ 512:Core/Src/init.c ****         led_on(2);
+ 1506              		.loc 1 512 9 is_stmt 1 view .LVU453
+ 1507 0082 0220     		movs	r0, #2
+ 1508 0084 FFF7FEFF 		bl	led_on
+ 1509              	.LVL40:
+ 1510              	.L121:
+ 513:Core/Src/init.c ****     }
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 40
+
+
+ 514:Core/Src/init.c ****     else {
+ 515:Core/Src/init.c ****         led_off(2);
+ 516:Core/Src/init.c ****     }
+ 517:Core/Src/init.c **** 
+ 518:Core/Src/init.c ****     if (final_states.led3 == 0) {
+ 1511              		.loc 1 518 5 view .LVU454
+ 1512              		.loc 1 518 21 is_stmt 0 view .LVU455
+ 1513 0088 9DF80A30 		ldrb	r3, [sp, #10]	@ zero_extendqisi2
+ 1514              		.loc 1 518 8 view .LVU456
+ 1515 008c 002B     		cmp	r3, #0
+ 1516 008e 3DD0     		beq	.L138
+ 519:Core/Src/init.c ****         led_off(3);
+ 520:Core/Src/init.c ****     }
+ 521:Core/Src/init.c ****     else if ((count % final_states.led3) == 0) {
+ 1517              		.loc 1 521 10 is_stmt 1 view .LVU457
+ 1518              		.loc 1 521 21 is_stmt 0 view .LVU458
+ 1519 0090 B4FBF3F2 		udiv	r2, r4, r3
+ 1520 0094 03FB1243 		mls	r3, r3, r2, r4
+ 1521              		.loc 1 521 13 view .LVU459
+ 1522 0098 E3BB     		cbnz	r3, .L125
+ 522:Core/Src/init.c ****         led_on(3);
+ 1523              		.loc 1 522 9 is_stmt 1 view .LVU460
+ 1524 009a 0320     		movs	r0, #3
+ 1525 009c FFF7FEFF 		bl	led_on
+ 1526              	.LVL41:
+ 1527              	.L124:
+ 523:Core/Src/init.c ****     }
+ 524:Core/Src/init.c ****     else {
+ 525:Core/Src/init.c ****         led_off(3);
+ 526:Core/Src/init.c ****     }
+ 527:Core/Src/init.c **** 
+ 528:Core/Src/init.c ****     if (final_states.led4 == 0) {
+ 1528              		.loc 1 528 5 view .LVU461
+ 1529              		.loc 1 528 21 is_stmt 0 view .LVU462
+ 1530 00a0 9DF80B30 		ldrb	r3, [sp, #11]	@ zero_extendqisi2
+ 1531              		.loc 1 528 8 view .LVU463
+ 1532 00a4 D3B3     		cbz	r3, .L139
+ 529:Core/Src/init.c ****         led_off(4);
+ 530:Core/Src/init.c ****     }
+ 531:Core/Src/init.c ****     else if ((count % final_states.led4) == 0) {
+ 1533              		.loc 1 531 10 is_stmt 1 view .LVU464
+ 1534              		.loc 1 531 21 is_stmt 0 view .LVU465
+ 1535 00a6 B4FBF3F2 		udiv	r2, r4, r3
+ 1536 00aa 03FB1243 		mls	r3, r3, r2, r4
+ 1537              		.loc 1 531 13 view .LVU466
+ 1538 00ae CBBB     		cbnz	r3, .L128
+ 532:Core/Src/init.c ****         led_on(4);
+ 1539              		.loc 1 532 9 is_stmt 1 view .LVU467
+ 1540 00b0 0420     		movs	r0, #4
+ 1541 00b2 FFF7FEFF 		bl	led_on
+ 1542              	.LVL42:
+ 1543              	.L127:
+ 533:Core/Src/init.c ****     }
+ 534:Core/Src/init.c ****     else {
+ 535:Core/Src/init.c ****         led_off(4);
+ 536:Core/Src/init.c ****     }
+ 537:Core/Src/init.c **** 
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 41
+
+
+ 538:Core/Src/init.c ****     if (final_states.led5 == 0) {
+ 1544              		.loc 1 538 5 view .LVU468
+ 1545              		.loc 1 538 21 is_stmt 0 view .LVU469
+ 1546 00b6 9DF80C30 		ldrb	r3, [sp, #12]	@ zero_extendqisi2
+ 1547              		.loc 1 538 8 view .LVU470
+ 1548 00ba BBB3     		cbz	r3, .L140
+ 539:Core/Src/init.c ****         led_off(5);
+ 540:Core/Src/init.c ****     }
+ 541:Core/Src/init.c ****     else if ((count % final_states.led5) == 0) {
+ 1549              		.loc 1 541 10 is_stmt 1 view .LVU471
+ 1550              		.loc 1 541 21 is_stmt 0 view .LVU472
+ 1551 00bc B4FBF3F2 		udiv	r2, r4, r3
+ 1552 00c0 03FB1243 		mls	r3, r3, r2, r4
+ 1553              		.loc 1 541 13 view .LVU473
+ 1554 00c4 B3BB     		cbnz	r3, .L131
+ 542:Core/Src/init.c ****         led_on(5);
+ 1555              		.loc 1 542 9 is_stmt 1 view .LVU474
+ 1556 00c6 0520     		movs	r0, #5
+ 1557 00c8 FFF7FEFF 		bl	led_on
+ 1558              	.LVL43:
+ 1559              	.L130:
+ 543:Core/Src/init.c ****     }
+ 544:Core/Src/init.c ****     else {
+ 545:Core/Src/init.c ****         led_off(5);
+ 546:Core/Src/init.c ****     }
+ 547:Core/Src/init.c **** 
+ 548:Core/Src/init.c ****     if (final_states.led6 == 0) {
+ 1560              		.loc 1 548 5 view .LVU475
+ 1561              		.loc 1 548 21 is_stmt 0 view .LVU476
+ 1562 00cc 9DF80D30 		ldrb	r3, [sp, #13]	@ zero_extendqisi2
+ 1563              		.loc 1 548 8 view .LVU477
+ 1564 00d0 A3B3     		cbz	r3, .L141
+ 549:Core/Src/init.c ****         led_off(6);
+ 550:Core/Src/init.c ****     }
+ 551:Core/Src/init.c ****     else if ((count % final_states.led6) == 0) {
+ 1565              		.loc 1 551 10 is_stmt 1 view .LVU478
+ 1566              		.loc 1 551 21 is_stmt 0 view .LVU479
+ 1567 00d2 B4FBF3F2 		udiv	r2, r4, r3
+ 1568 00d6 03FB1244 		mls	r4, r3, r2, r4
+ 1569              	.LVL44:
+ 1570              		.loc 1 551 13 view .LVU480
+ 1571 00da 9CBB     		cbnz	r4, .L134
+ 552:Core/Src/init.c ****         led_on(6);
+ 1572              		.loc 1 552 9 is_stmt 1 view .LVU481
+ 1573 00dc 0620     		movs	r0, #6
+ 1574 00de FFF7FEFF 		bl	led_on
+ 1575              	.LVL45:
+ 1576              	.L110:
+ 553:Core/Src/init.c ****     }
+ 554:Core/Src/init.c ****     else {
+ 555:Core/Src/init.c ****         led_off(6);
+ 556:Core/Src/init.c ****     }
+ 557:Core/Src/init.c **** };
+ 1577              		.loc 1 557 1 is_stmt 0 view .LVU482
+ 1578 00e2 04B0     		add	sp, sp, #16
+ 1579              	.LCFI15:
+ 1580              		.cfi_remember_state
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 42
+
+
+ 1581              		.cfi_def_cfa_offset 16
+ 1582              		@ sp needed
+ 1583 00e4 BDE81040 		pop	{r4, lr}
+ 1584              	.LCFI16:
+ 1585              		.cfi_restore 14
+ 1586              		.cfi_restore 4
+ 1587              		.cfi_def_cfa_offset 8
+ 1588 00e8 02B0     		add	sp, sp, #8
+ 1589              	.LCFI17:
+ 1590              		.cfi_def_cfa_offset 0
+ 1591 00ea 7047     		bx	lr
+ 1592              	.LVL46:
+ 1593              	.L136:
+ 1594              	.LCFI18:
+ 1595              		.cfi_restore_state
+ 499:Core/Src/init.c ****     }
+ 1596              		.loc 1 499 9 is_stmt 1 view .LVU483
+ 1597 00ec 0120     		movs	r0, #1
+ 1598 00ee FFF7FEFF 		bl	led_off
+ 1599              	.LVL47:
+ 1600 00f2 BCE7     		b	.L118
+ 1601              	.L119:
+ 505:Core/Src/init.c ****     }
+ 1602              		.loc 1 505 9 view .LVU484
+ 1603 00f4 0120     		movs	r0, #1
+ 1604 00f6 FFF7FEFF 		bl	led_off
+ 1605              	.LVL48:
+ 1606 00fa B8E7     		b	.L118
+ 1607              	.L137:
+ 509:Core/Src/init.c ****     }
+ 1608              		.loc 1 509 9 view .LVU485
+ 1609 00fc 0220     		movs	r0, #2
+ 1610 00fe FFF7FEFF 		bl	led_off
+ 1611              	.LVL49:
+ 1612 0102 C1E7     		b	.L121
+ 1613              	.L122:
+ 515:Core/Src/init.c ****     }
+ 1614              		.loc 1 515 9 view .LVU486
+ 1615 0104 0220     		movs	r0, #2
+ 1616 0106 FFF7FEFF 		bl	led_off
+ 1617              	.LVL50:
+ 1618 010a BDE7     		b	.L121
+ 1619              	.L138:
+ 519:Core/Src/init.c ****     }
+ 1620              		.loc 1 519 9 view .LVU487
+ 1621 010c 0320     		movs	r0, #3
+ 1622 010e FFF7FEFF 		bl	led_off
+ 1623              	.LVL51:
+ 1624 0112 C5E7     		b	.L124
+ 1625              	.L125:
+ 525:Core/Src/init.c ****     }
+ 1626              		.loc 1 525 9 view .LVU488
+ 1627 0114 0320     		movs	r0, #3
+ 1628 0116 FFF7FEFF 		bl	led_off
+ 1629              	.LVL52:
+ 1630 011a C1E7     		b	.L124
+ 1631              	.L139:
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 43
+
+
+ 529:Core/Src/init.c ****     }
+ 1632              		.loc 1 529 9 view .LVU489
+ 1633 011c 0420     		movs	r0, #4
+ 1634 011e FFF7FEFF 		bl	led_off
+ 1635              	.LVL53:
+ 1636 0122 C8E7     		b	.L127
+ 1637              	.L128:
+ 535:Core/Src/init.c ****     }
+ 1638              		.loc 1 535 9 view .LVU490
+ 1639 0124 0420     		movs	r0, #4
+ 1640 0126 FFF7FEFF 		bl	led_off
+ 1641              	.LVL54:
+ 1642 012a C4E7     		b	.L127
+ 1643              	.L140:
+ 539:Core/Src/init.c ****     }
+ 1644              		.loc 1 539 9 view .LVU491
+ 1645 012c 0520     		movs	r0, #5
+ 1646 012e FFF7FEFF 		bl	led_off
+ 1647              	.LVL55:
+ 1648 0132 CBE7     		b	.L130
+ 1649              	.L131:
+ 545:Core/Src/init.c ****     }
+ 1650              		.loc 1 545 9 view .LVU492
+ 1651 0134 0520     		movs	r0, #5
+ 1652 0136 FFF7FEFF 		bl	led_off
+ 1653              	.LVL56:
+ 1654 013a C7E7     		b	.L130
+ 1655              	.L141:
+ 549:Core/Src/init.c ****     }
+ 1656              		.loc 1 549 9 view .LVU493
+ 1657 013c 0620     		movs	r0, #6
+ 1658 013e FFF7FEFF 		bl	led_off
+ 1659              	.LVL57:
+ 1660 0142 CEE7     		b	.L110
+ 1661              	.LVL58:
+ 1662              	.L134:
+ 555:Core/Src/init.c ****     }
+ 1663              		.loc 1 555 9 view .LVU494
+ 1664 0144 0620     		movs	r0, #6
+ 1665 0146 FFF7FEFF 		bl	led_off
+ 1666              	.LVL59:
+ 1667              		.loc 1 557 1 is_stmt 0 view .LVU495
+ 1668 014a CAE7     		b	.L110
+ 1669              		.cfi_endproc
+ 1670              	.LFE140:
+ 1672              		.global	led_num
+ 1673              		.section	.data.led_num,"aw"
+ 1676              	led_num:
+ 1677 0000 02       		.byte	2
+ 1678              		.global	led_change
+ 1679              		.section	.data.led_change,"aw"
+ 1682              	led_change:
+ 1683 0000 02       		.byte	2
+ 1684              		.global	count
+ 1685              		.section	.bss.count,"aw",%nobits
+ 1686              		.align	2
+ 1689              	count:
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 44
+
+
+ 1690 0000 00000000 		.space	4
+ 1691              		.global	frq_step
+ 1692              		.section	.data.frq_step,"aw"
+ 1693              		.align	2
+ 1696              	frq_step:
+ 1697 0000 10270000 		.word	10000
+ 1698              		.global	frq_levels
+ 1699              		.section	.data.frq_levels,"aw"
+ 1702              	frq_levels:
+ 1703 0000 03       		.byte	3
+ 1704              		.global	long_press
+ 1705              		.section	.data.long_press,"aw"
+ 1706              		.align	2
+ 1709              	long_press:
+ 1710 0000 E8030000 		.word	1000
+ 1711              		.text
+ 1712              	.Letext0:
+ 1713              		.file 2 "C:/tools/SysGCC/arm-none-eabi/include/machine/_default_types.h"
+ 1714              		.file 3 "C:/tools/SysGCC/arm-none-eabi/include/sys/_stdint.h"
+ 1715              		.file 4 "Core/Inc/../../CMSIS/Devices/Inc/stm32f429xx.h"
+ 1716              		.file 5 "Core/Inc/init.h"
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s 			page 45
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 init.c
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:21     .text.RCC_init:00000000 $t
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:27     .text.RCC_init:00000000 RCC_init
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:44     .text.RCC_init:0000000c $d
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:49     .text.Onboard_leds_init:00000000 $t
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:55     .text.Onboard_leds_init:00000000 Onboard_leds_init
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:147    .text.Onboard_leds_init:000000b0 $d
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:153    .text.Button1_input:00000000 $t
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:159    .text.Button1_input:00000000 Button1_input
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:192    .text.Button1_input:0000002c $d
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:197    .text.Button2_input:00000000 $t
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:203    .text.Button2_input:00000000 Button2_input
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:236    .text.Button2_input:0000002c $d
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:241    .text.ButtonAndLed_input:00000000 $t
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:247    .text.ButtonAndLed_input:00000000 ButtonAndLed_input
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:280    .text.ButtonAndLed_input:0000002c $d
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:285    .text.ButtonAndLed_output:00000000 $t
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:291    .text.ButtonAndLed_output:00000000 ButtonAndLed_output
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccNTHjfz.s:340    .text.ButtonAndLed_output:0000004c $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:21     .text.RCC_init:00000000 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:27     .text.RCC_init:00000000 RCC_init
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:44     .text.RCC_init:0000000c $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:49     .text.leds_init:00000000 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:55     .text.leds_init:00000000 leds_init
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:260    .text.leds_init:00000184 $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:265    .text.buttons_init:00000000 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:271    .text.buttons_init:00000000 buttons_init
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:338    .text.buttons_init:0000004c $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:343    .text.led_on:00000000 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:349    .text.led_on:00000000 led_on
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:365    .text.led_on:0000000a $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:371    .text.led_on:00000010 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:425    .text.led_on:00000058 $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:430    .text.led_off:00000000 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:436    .text.led_off:00000000 led_off
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:452    .text.led_off:0000000a $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:458    .text.led_off:00000010 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:512    .text.led_off:00000058 $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:517    .text.read_button:00000000 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:523    .text.read_button:00000000 read_button
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:576    .text.read_button:00000030 $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:581    .text.check_action:00000000 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:587    .text.check_action:00000000 check_action
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:779    .text.check_action:000000d4 $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:1709   .data.long_press:00000000 long_press
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:784    .text.change_led:00000000 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:790    .text.change_led:00000000 change_led
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:818    .text.change_frq:00000000 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:824    .text.change_frq:00000000 change_frq
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:879    .text.change_frq:0000002e $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:885    .text.change_frq:00000034 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:1015   .text.change_frq:000000e2 $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:1021   .text.change_frq:000000e8 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:1121   .text.change_frq:00000174 $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:1702   .data.frq_levels:00000000 frq_levels
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:1126   .text.change_pwr:00000000 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:1132   .text.change_pwr:00000000 change_pwr
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:1171   .text.change_pwr:00000028 $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:1177   .text.change_pwr:0000002e $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:1380   .text.change_pwr:00000120 $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:1676   .data.led_num:00000000 led_num
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:1385   .text.leds_flash:00000000 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:1391   .text.leds_flash:00000000 leds_flash
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:1682   .data.led_change:00000000 led_change
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:1689   .bss.count:00000000 count
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:1686   .bss.count:00000000 $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:1696   .data.frq_step:00000000 frq_step
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:1693   .data.frq_step:00000000 $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccmbqijn.s:1706   .data.long_press:00000000 $d
 
 NO UNDEFINED SYMBOLS

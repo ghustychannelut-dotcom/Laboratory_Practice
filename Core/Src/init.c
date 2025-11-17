@@ -15,11 +15,13 @@ Button pins:
     3 - PB2
 */
 
-// global variables
+uint32_t long_press = 1000;
+uint8_t frq_levels = 3;
+uint32_t frq_step = 10000;
+uint32_t count = 0;
+uint8_t led_change = 2;
+uint8_t led_num = 2;
 
-extern uint32_t long_press = 0;
-extern uint8_t frq_levels = 3;
-extern uint32_t frq_step = 10000;
 
 // Actual initialization
 
@@ -91,6 +93,7 @@ void leds_init(void) {
 
 }
 
+/*
 void buttons_init(void) {
    
     // button 1: PB1 input, push-pull, medium speed, pull-up
@@ -120,6 +123,25 @@ void buttons_init(void) {
     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD2_0);
     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD2_1);
 
+}
+
+*/
+
+void buttons_init(void) {
+    // Кнопка 1: PB1 - INPUT mode (00), Pull-down
+    GPIOB->MODER &= ~(0x3 << (1 * 2));    // Input mode (00)
+    GPIOB->PUPDR &= ~(0x3 << (1 * 2));    // Clear pull settings
+    GPIOB->PUPDR |= (0x2 << (1 * 2));     // Pull-down (10)
+
+    // Кнопка 2: PB6 - INPUT mode (00), Pull-down
+    GPIOB->MODER &= ~(0x3 << (6 * 2));    // Input mode (00)
+    GPIOB->PUPDR &= ~(0x3 << (6 * 2));    // Clear pull settings
+    GPIOB->PUPDR |= (0x2 << (6 * 2));     // Pull-down (10)
+
+    // Кнопка 3: PB2 - INPUT mode (00), Pull-down
+    GPIOB->MODER &= ~(0x3 << (2 * 2));    // Input mode (00)
+    GPIOB->PUPDR &= ~(0x3 << (2 * 2));    // Clear pull settings
+    GPIOB->PUPDR |= (0x2 << (2 * 2));     // Pull-down (10)
 }
 
 // functions
@@ -182,18 +204,19 @@ void led_off(uint8_t num) {
 }
 
 bool read_button(uint8_t num) {
+    // Для pull-down конфигурации:
+    // - Нажата = 1 (подтянута к VCC через кнопку)
+    // - Отпущена = 0 (подтянута к земле)
+    
     switch (num) {
         case 1:
-            return READ_BIT(GPIOB -> IDR, GPIO_IDR_IDR_1);
-            break;
-
+            return (GPIOB->IDR & GPIO_IDR_ID1) != 0; // Нажата если 1
         case 2:
-            return READ_BIT(GPIOB -> IDR, GPIO_IDR_IDR_6);
-            break;
-
+            return (GPIOB->IDR & GPIO_IDR_ID6) != 0; // Нажата если 1
         case 3:
-            return READ_BIT(GPIOB -> IDR, GPIO_IDR_IDR_2);
-            break;
+            return (GPIOB->IDR & GPIO_IDR_ID2) != 0; // Нажата если 1
+        default:
+            return false;
     }
 }
 
@@ -358,22 +381,25 @@ leds change_frq (leds led_frq, uint8_t led_change, button_action action) {
 
 leds change_pwr (leds led_pwr, button_action action) {
 
+    leds new_pwr;
+
     if (action.button_num == 1 && action.is_long == false) {
         led_num++;
-        if (led_num >= 6) {
+        if (led_num > 6) {
             led_num = 6;
         }
     }
 
     else if (action.button_num == 2 && action.is_long == false) {
-        if (led_num <= 1) {
+        led_num--;
+        if (led_num < 1) {
             led_num = 1;
         }
     }
 
     switch (led_num) {
         case 1: 
-            leds new_pwr {
+            new_pwr; {
                 new_pwr.led1 = 1;
                 new_pwr.led2 = 0;
                 new_pwr.led3 = 0;
@@ -383,7 +409,7 @@ leds change_pwr (leds led_pwr, button_action action) {
             }
             break;
         case 2: 
-            leds new_pwr {
+            new_pwr; {
                 new_pwr.led1 = 1;
                 new_pwr.led2 = 1;
                 new_pwr.led3 = 0;
@@ -393,7 +419,7 @@ leds change_pwr (leds led_pwr, button_action action) {
             }
             break;
         case 3: 
-            leds new_pwr {
+            new_pwr; {
                 new_pwr.led1 = 1;
                 new_pwr.led2 = 1;
                 new_pwr.led3 = 1;
@@ -403,7 +429,7 @@ leds change_pwr (leds led_pwr, button_action action) {
             }
             break;
         case 4: 
-            leds new_pwr {
+            new_pwr; {
                 new_pwr.led1 = 1;
                 new_pwr.led2 = 1;
                 new_pwr.led3 = 1;
@@ -413,7 +439,7 @@ leds change_pwr (leds led_pwr, button_action action) {
             }
             break;
         case 5: 
-            leds new_pwr {
+            new_pwr; {
                 new_pwr.led1 = 1;
                 new_pwr.led2 = 1;
                 new_pwr.led3 = 1;
@@ -423,7 +449,7 @@ leds change_pwr (leds led_pwr, button_action action) {
             }
             break;
         case 6: 
-            leds new_pwr {
+            new_pwr; {
                 new_pwr.led1 = 1;
                 new_pwr.led2 = 1;
                 new_pwr.led3 = 1;
@@ -443,27 +469,27 @@ void leds_flash(uint32_t count, leds led_frq, leds led_pwr) {
 
     // combining pwr and frq
 
-    if (led_pwr.led1 = 0) {
+    if (led_pwr.led1 == 0) {
         final_states.led1 = 0;
     }
 
-    if (led_pwr.led2 = 0) {
+    if (led_pwr.led2 == 0) {
         final_states.led2 = 0;
     }
 
-    if (led_pwr.led3 = 0) {
+    if (led_pwr.led3 == 0) {
         final_states.led3 = 0;
     }
 
-    if (led_pwr.led4 = 0) {
+    if (led_pwr.led4 == 0) {
         final_states.led4 = 0;
     }
 
-    if (led_pwr.led5 = 0) {
+    if (led_pwr.led5 == 0) {
         final_states.led5 = 0;
     }
 
-    if (led_pwr.led6 = 0) {
+    if (led_pwr.led6 == 0) {
         final_states.led6 = 0;
     }
 
@@ -529,7 +555,6 @@ void leds_flash(uint32_t count, leds led_frq, leds led_pwr) {
         led_off(6);
     }
 };
-
 
       
 /* 
