@@ -12,6 +12,9 @@ void test_leds(void); // testing LEDs and led_on led_off
 void test_read_button_fixed(void); // testing read_button, led_on and led_off
 void test_check_action(void); // testing check_action
 void test_change_led(void);
+void test_change_frq_in_main(void);
+
+void test_leds_flash(void);
 
 // init functions
 void RCC_init(void);
@@ -46,7 +49,7 @@ void led_on(uint8_t num); // работает
 void led_off(uint8_t num); // работает
 bool read_button(uint8_t num); // работает
 button_action check_action(void); // работает
-void change_led (uint8_t led_change, button_action action);
+void change_led(button_action action); // работает
 leds change_frq (leds led_frq, uint8_t led_change, button_action action);
 leds change_pwr (leds led_pwr, button_action action);
 void leds_flash(uint32_t count, leds led_frq, leds led_pwr);

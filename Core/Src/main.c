@@ -30,50 +30,53 @@ count++
 
 #include "init.h"
 
-
 int main(void) {
-
     RCC_init();
     leds_init();
     buttons_init();
 
-    //test_leds();
-    //test_read_button_fixed();
-    //test_check_action();
-    //test_change_led();
+    leds led_pwr = {1, 1, 1, 1, 1, 1};
+    leds led_frq = {1, 1, 1, 1, 1, 1};
 
-    leds led_pwr = { // leds on/off memory
-        .led1 = 1,
-        .led2 = 1,
-        .led3 = 1,
-        .led4 = 1,
-        .led5 = 1,
-        .led6 = 1,
-    };
-
-    leds led_frq = { // leds frequences memory
-        .led1 = 1,
-        .led2 = 1,
-        .led3 = 1,
-        .led4 = 1,
-        .led5 = 1,
-        .led6 = 1,
-    };
+    // Антидребезг для КОНКРЕТНЫХ действий
+    uint32_t last_led_change_time = 0;
+    uint32_t last_pwr_change_time = 0;
+    const uint32_t DEBOUNCE_DELAY = 200000;
 
     while(1) {
+        button_action action = check_action();
 
-        button_action action = check_action(); // checking what if any button nas been pressed and for how long
-
-        change_led(led_change, action); // changing the number of LED, that is set to change its frq
+        // change_led - вызываем всегда, но запоминаем время только при реальных изменениях
+        change_led(action);
         
-        led_frq = change_frq(led_frq, led_change, action); //changing frq of the LED chosen
-        led_pwr = change_pwr(led_pwr, action); // turning on / off an LED if needed
+        // change_pwr - вызываем всегда
+        led_pwr = change_pwr(led_pwr, action);
+        
+        // change_frq - вызываем всегда (без антидребезга)
+        led_frq = change_frq(led_frq, led_change, action);
 
-        leds_flash(count, led_frq, led_pwr); // Turning on the needed LEDs according to the pwr structure, frq structure and current count (flashing)
+        // Запоминаем время действий ТОЛЬКО если было реальное нажатие
+        if (action.button_num != 0) {
+            if (action.button_num == 1 || action.button_num == 2) {
+                if (action.is_long) {
+                    // Длинные нажатия для change_led
+                    last_led_change_time = count;
+                } else {
+                    // Короткие нажатия для change_pwr  
+                    last_pwr_change_time = count;
+                }
+            }
+        }
 
+        leds_flash(count, led_frq, led_pwr);
         count++;
+        for(volatile int i = 0; i < 10000; i++);
+        if (count >= 2000000) count = 0;
     }
 }
+
+
+
 
 void test_leds(void) { // testing LEDs and led_on led_off
     // Поочередно включаем все светодиоды с задержкой
@@ -132,7 +135,7 @@ void test_check_action(void) { // testing check_action (is.long for instance)
     // Тестируем функцию check_action с визуальной индикацией
     
     uint32_t counter = 0;
-    uint8_t last_action = 0;
+    // uint8_t last_action = 0;
     
     while(1) {
         counter++;
@@ -187,47 +190,115 @@ void test_check_action(void) { // testing check_action (is.long for instance)
 }
 
 void test_change_led(void) {
-    // Простой тест change_led - все диоды выключены, только выбранный включен
+    // Тестируем ТОЛЬКО функцию change_led
     
-    uint8_t test_led_change = 1; // Начинаем с LED1
+    // Инициализируем глобальную переменную
+    led_change = 1;
+    
+    // ВЫКЛЮЧАЕМ ВСЕ СВЕТОДИОДЫ ПЕРЕД НАЧАЛОМ
+    for(int i = 1; i <= 6; i++) {
+        led_off(i);
+    }
     
     while(1) {
         // Проверяем действие кнопок
         button_action action = check_action();
         
-        // Изменяем выбранный светодиод по длинному нажатию
-        if (action.button_num == 1 && action.is_long == true) {
-            test_led_change++;
-            if (test_led_change > 6) test_led_change = 6;
-            
-            // Короткая задержка для предотвращения множественных срабатываний
-            for(volatile int i = 0; i < 100000; i++);
-        }
-        else if (action.button_num == 2 && action.is_long == true) {
-            test_led_change--;
-            if (test_led_change < 1) test_led_change = 1;
-            
-            // Короткая задержка для предотвращения множественных срабатываний
-            for(volatile int i = 0; i < 100000; i++);
+        // ВЫЗЫВАЕМ ФУНКЦИЮ change_led
+        change_led(action);
+        
+        // ОЧИЩАЕМ ВСЕ СВЕТОДИОДЫ
+        for(int i = 1; i <= 6; i++) {
+            led_off(i);
         }
         
-        // ВКЛЮЧАЕМ ТОЛЬКО ВЫБРАННЫЙ СВЕТОДИОД, ОСТАЛЬНЫЕ ВЫКЛЮЧАЕМ
+        // ВКЛЮЧАЕМ ТОЛЬКО ВЫБРАННЫЙ СВЕТОДИОД
+        led_on(led_change);
+        
+        // Короткая задержка
+        for(volatile int i = 0; i < 10000; i++);
+    }
+}
+
+void test_leds_flash(void) {
+    // Тест исправленной функции leds_flash
+    
+    leds led_frq = {
+        .led1 = 1,  // Медленное мигание
+        .led2 = 2,  // Среднее мигание  
+        .led3 = 3,  // Быстрое мигание
+        .led4 = 0,  // Всегда выключен (через частоту)
+        .led5 = 1,  // Медленное мигание
+        .led6 = 2   // Среднее мигание
+    };
+    
+    leds led_pwr = {
+        .led1 = 1,  // Включен
+        .led2 = 1,  // Включен
+        .led3 = 1,  // Включен
+        .led4 = 1,  // Включен (но частота 0 - должен быть выключен)
+        .led5 = 0,  // Выключен (принудительно)
+        .led6 = 1   // Включен
+    };
+    
+    uint32_t test_count = 0;
+    
+    while(1) {
+        // ВЫЗЫВАЕМ ИСПРАВЛЕННУЮ ФУНКЦИЮ
+        leds_flash(test_count, led_frq, led_pwr);
+        
+        // Увеличиваем счетчик
+        test_count++;
+        
+        // Задержка для замедления
+        for(volatile int i = 0; i < 10000; i++);
+        
+        // Каждые 50000 циклов меняем режим для демонстрации
+        if (test_count % 50000 == 0) {
+            // Меняем частоты
+            led_frq.led1 = (led_frq.led1 % 3) + 1;
+            led_frq.led3 = (led_frq.led3 % 3) + 1;
+            led_frq.led6 = (led_frq.led6 % 3) + 1;
+        }
+        
+        // Сбрасываем счетчик чтобы не переполнялся
+        if (test_count >= 100000) {
+            test_count = 0;
+        }
+    }
+}
+
+void test_change_frq_in_main(void) {
+    leds led_frq = {1, 1, 1, 1, 1, 1}; // Все на частоте 1
+    leds led_pwr = {1, 1, 1, 1, 1, 1}; // Все включены
+    
+    while(1) {
+        button_action action = check_action();
+        
+        change_led(action);
+        led_frq = change_frq(led_frq, led_change, action);
+        
+        // Индикация: показываем частоту выбранного светодиода
         for(int i = 1; i <= 6; i++) {
-            if (i == test_led_change) {
-                led_on(i);  // Включаем только выбранный
+            if (i == led_change) {
+                // Выбранный мигает с его частотой
             } else {
-                led_off(i); // Выключаем все остальные
+                // Остальные горят постоянно или выключены
+                if (led_frq.led1 > 0) led_on(i); else led_off(i);
             }
         }
         
-        // Минимальная задержка для стабильности
-        for(volatile int i = 0; i < 1000; i++);
+        leds_flash(count, led_frq, led_pwr);
+        count++;
+        for(volatile int i = 0; i < 10000; i++);
+        if (count >= 2000000) count = 0;
     }
 }
 
 
 
-            /* 1 часть ЛБ 1
+
+/* 1 часть ЛБ 1
 
 #include "init.h"
 #include <stdbool.h>
