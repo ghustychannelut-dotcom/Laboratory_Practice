@@ -8,19 +8,10 @@
 
 
 // test functions
-void test_leds(void);
-void test_read_button(void);
-void test_read_button_fixed(void);
-void test_all_functions(void);
-void test_simple_guaranteed(void);
-void test_only_led4_blink(void);
-void test_debug_step_by_step(void);
-void test_led4_direct(void);
-void test_all_pins_sequential(void);
-void test_led_swap(void);
-void test_led4_only(void);
-void test_led5_blink(void);
-test_all_working_leds(void);
+void test_leds(void); // testing LEDs and led_on led_off
+void test_read_button_fixed(void); // testing read_button, led_on and led_off
+void test_check_action(void); // testing check_action
+void test_change_led(void);
 
 // init functions
 void RCC_init(void);
@@ -54,8 +45,8 @@ typedef struct {
 void led_on(uint8_t num); // работает
 void led_off(uint8_t num); // работает
 bool read_button(uint8_t num); // работает
-button_action check_action(void);
-leds change_led (uint8_t led_change, button_action action);
+button_action check_action(void); // работает
+void change_led (uint8_t led_change, button_action action);
 leds change_frq (leds led_frq, uint8_t led_change, button_action action);
 leds change_pwr (leds led_pwr, button_action action);
 void leds_flash(uint32_t count, leds led_frq, leds led_pwr);

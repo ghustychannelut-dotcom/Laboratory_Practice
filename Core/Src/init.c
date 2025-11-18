@@ -15,7 +15,7 @@ Button pins:
     3 - PB2
 */
 
-uint32_t long_press = 1000;
+uint32_t long_press = 500000;
 uint8_t frq_levels = 3;
 uint32_t frq_step = 10000;
 uint32_t count = 0;
@@ -272,15 +272,23 @@ button_action check_action(void) {
     return action;
 }
 
-leds change_led (uint8_t led_change, button_action action) {
+void change_led (uint8_t led_change, button_action action) {
 
     if (action.button_num == 1 && action.is_long == true) {
-        led_change++;
-    }
+            led_change++;
+            if (led_change > 6) led_change = 6;
+            
+            // Короткая задержка для предотвращения множественных срабатываний
+            for(volatile int i = 0; i < 100000; i++);
+        }
 
     else if (action.button_num == 2 && action.is_long == true) {
-        led_change--;
-    }
+            led_change--;
+            if (led_change < 1) led_change = 1;
+            
+            // Короткая задержка для предотвращения множественных срабатываний
+            for(volatile int i = 0; i < 100000; i++);
+        }
 }
 
 leds change_frq (leds led_frq, uint8_t led_change, button_action action) {

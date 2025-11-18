@@ -37,11 +37,10 @@ int main(void) {
     leds_init();
     buttons_init();
 
-    test_all_working_leds();
-    //test_led4_only();
     //test_leds();
-    //test_buttons_direct();
     //test_read_button_fixed();
+    //test_check_action();
+    //test_change_led();
 
     leds led_pwr = { // leds on/off memory
         .led1 = 1,
@@ -76,46 +75,7 @@ int main(void) {
     }
 }
 
-void test_led5_blink(void) {
-    // Используем LED5 (PB3) вместо LED4
-    
-    while(1) {
-        // Включаем LED5
-        GPIOB->BSRR = GPIO_BSRR_BS_3;
-        for(volatile int i = 0; i < 1000000; i++);
-        
-        // Выключаем LED5
-        GPIOB->BSRR = GPIO_BSRR_BR_3;
-        for(volatile int i = 0; i < 1000000; i++);
-    }
-}
-
-void test_all_working_leds(void) {
-    // Тестируем все рабочие светодиоды (1,2,3,5,6)
-    
-    uint8_t working_leds[] = {1, 2, 3, 5, 6};
-    uint8_t current_led = 0;
-    
-    while(1) {
-        // Включаем текущий светодиод
-        led_on(working_leds[current_led]);
-        
-        // Ждем 1.5 секунды
-        for(volatile int i = 0; i < 1500000; i++);
-        
-        // Выключаем
-        led_off(working_leds[current_led]);
-        
-        // Следующий светодиод
-        current_led++;
-        if (current_led >= 5) current_led = 0;
-        
-        // Короткая пауза 0.5 секунды
-        for(volatile int i = 0; i < 500000; i++);
-    }
-}
-
-void test_leds(void) {
+void test_leds(void) { // testing LEDs and led_on led_off
     // Поочередно включаем все светодиоды с задержкой
     for(int i = 1; i <= 6; i++) {
         led_on(i);
@@ -135,90 +95,11 @@ void test_leds(void) {
     }
 }
 
-void test_simple_guaranteed(void) {
-    // Максимально простой тест с гарантированным миганием
-    
-    uint32_t counter = 0;
+void test_read_button_fixed(void) { // testing read_button, led_on and led_off
+    // Тестируем функцию read_button с визуальной индикацией на светодиодах
     
     while(1) {
-        counter++;
-        
-        // ОЧЕНЬ ПРОСТАЯ логика мигания LED4
-        if (counter < 500000) {
-            led_on(4);  // Горит
-        } else {
-            led_off(4); // Не горит
-        }
-        
-        // Сбрасываем счетчик чтобы мигать
-        if (counter >= 1000000) {
-            counter = 0;
-        }
-        
-        // Кнопки управляют LED1-3
-        if (read_button(1)) led_on(1); else led_off(1);
-        if (read_button(2)) led_on(2); else led_off(2);
-        if (read_button(3)) led_on(3); else led_off(3);
-        
-        // Минимальная задержка
-        for(volatile int i = 0; i < 1000; i++);
-    }
-}
-
-void test_buttons_direct(void) {
-    // Настраиваем светодиоды как выходы (если еще не настроены)
-    // LED1: PB15, LED2: PB13, LED3: PB12, LED4: PB5, LED5: PB3, LED6: PB4
-    
-    // Бесконечный цикл проверки кнопок
-    while(1) {
-        // Читаем состояние кнопок напрямую из регистра IDR
-        
-        // Кнопка 1: PB1 - при нажатии = 0 (pull-up)
-        if ((GPIOB->IDR & GPIO_IDR_ID1) == 0) {
-            // Кнопка нажата - включаем LED1 (PB15)
-            GPIOB->BSRR = GPIO_BSRR_BS_15;
-        } else {
-            // Кнопка отпущена - выключаем LED1 (PB15)
-            GPIOB->BSRR = GPIO_BSRR_BR_15;
-        }
-        
-        // Кнопка 2: PB6 - при нажатии = 0 (pull-up)
-        if ((GPIOB->IDR & GPIO_IDR_ID6) == 0) {
-            // Кнопка нажата - включаем LED2 (PB13)
-            GPIOB->BSRR = GPIO_BSRR_BS_13;
-        } else {
-            // Кнопка отпущена - выключаем LED2 (PB13)
-            GPIOB->BSRR = GPIO_BSRR_BR_13;
-        }
-        
-        // Кнопка 3: PB2 - при нажатии = 0 (pull-up)
-        if ((GPIOB->IDR & GPIO_IDR_ID2) == 0) {
-            // Кнопка нажата - включаем LED3 (PB12)
-            GPIOB->BSRR = GPIO_BSRR_BS_12;
-        } else {
-            // Кнопка отпущена - выключаем LED3 (PB12)
-            GPIOB->BSRR = GPIO_BSRR_BR_12;
-        }
-        
-        // LED4 (PB3) мигает как индикатор работы программы
-        static uint32_t counter = 0;
-        counter++;
-        if ((counter % 1000000) == 0) {
-            GPIOB->BSRR = GPIO_BSRR_BS_3;  // Включить LED4
-        } else if ((counter % 1000000) == 500000) {
-            GPIOB->BSRR = GPIO_BSRR_BR_3;  // Выключить LED4
-        }
-        
-        // Небольшая задержка
-        for(volatile int i = 0; i < 10000; i++);
-    }
-}
-
-void test_read_button(void) {
-    // Тестируем функцию read_button с визуальной индикацией
-    
-    while(1) {
-        // Тестируем кнопку 1 (PB1)
+        // Тестируем кнопку 1 (PB1) - используем LED1 (PB15)
         bool btn1 = read_button(1);
         if (btn1) {
             led_on(1);  // LED1 горит когда кнопка 1 нажата
@@ -226,7 +107,7 @@ void test_read_button(void) {
             led_off(1); // LED1 выключен когда кнопка 1 отпущена
         }
         
-        // Тестируем кнопку 2 (PB6)  
+        // Тестируем кнопку 2 (PB6) - используем LED2 (PB13)  
         bool btn2 = read_button(2);
         if (btn2) {
             led_on(2);  // LED2 горит когда кнопка 2 нажата
@@ -234,7 +115,7 @@ void test_read_button(void) {
             led_off(2); // LED2 выключен когда кнопка 2 отпущена
         }
         
-        // Тестируем кнопку 3 (PB2)
+        // Тестируем кнопку 3 (PB2) - используем LED3 (PB12)
         bool btn3 = read_button(3);
         if (btn3) {
             led_on(3);  // LED3 горит когда кнопка 3 нажата
@@ -242,34 +123,109 @@ void test_read_button(void) {
             led_off(3); // LED3 выключен когда кнопка 3 отпущена
         }
         
-        // LED4 мигает - индикатор что программа работает
-        static uint32_t counter = 0;
-        counter++;
-        if ((counter % 1000000) == 0) {
-            led_on(4);
-        } else if ((counter % 1000000) == 500000) {
-            led_off(4);
-        }
-        
-        // Небольшая задержка
+        // Небольшая задержка для стабильности
         for(volatile int i = 0; i < 10000; i++);
     }
 }
 
-
-void test_led4_only(void) {
-    // Тестируем только LED4 (PB5)
+void test_check_action(void) { // testing check_action (is.long for instance)
+    // Тестируем функцию check_action с визуальной индикацией
+    
+    uint32_t counter = 0;
+    uint8_t last_action = 0;
     
     while(1) {
-        // Включаем LED4
-        led_on(4);
-        for(volatile int i = 0; i < 1000000; i++);
+        counter++;
         
-        // Выключаем LED4  
-        led_off(4);
-        for(volatile int i = 0; i < 1000000; i++);
+        // Проверяем действие кнопок
+        button_action action = check_action();
+        
+        // Визуальная индикация на светодиодах:
+        // LED1 - короткое нажатие кнопки 1
+        // LED2 - длинное нажатие кнопки 1  
+        // LED3 - короткое нажатие кнопки 2
+        // LED4 - длинное нажатие кнопки 2
+        // LED5 - короткое нажатие кнопки 3
+        // LED6 - длинное нажатие кнопки 3
+        
+        // Сначала выключаем все светодиоды
+        for(int i = 1; i <= 6; i++) {
+            led_off(i);
+        }
+        
+        // Включаем соответствующий светодиод в зависимости от действия
+        switch(action.button_num) {
+            case 1: // Кнопка 1
+                if(action.is_long) {
+                    led_on(2); // Длинное нажатие - LED2
+                } else {
+                    led_on(1); // Короткое нажатие - LED1
+                }
+                break;
+                
+            case 2: // Кнопка 2
+                if(action.is_long) {
+                    led_on(4); // Длинное нажатие - LED4
+                } else {
+                    led_on(3); // Короткое нажатие - LED3
+                }
+                break;
+                
+            case 3: // Кнопка 3
+                if(action.is_long) {
+                    led_on(6); // Длинное нажатие - LED6
+                } else {
+                    led_on(5); // Короткое нажатие - LED5
+                }
+                break;
+                
+        }
+        
+        // Задержка для стабильности
+        for(volatile int i = 0; i < 300000; i++);
     }
 }
+
+void test_change_led(void) {
+    // Простой тест change_led - все диоды выключены, только выбранный включен
+    
+    uint8_t test_led_change = 1; // Начинаем с LED1
+    
+    while(1) {
+        // Проверяем действие кнопок
+        button_action action = check_action();
+        
+        // Изменяем выбранный светодиод по длинному нажатию
+        if (action.button_num == 1 && action.is_long == true) {
+            test_led_change++;
+            if (test_led_change > 6) test_led_change = 6;
+            
+            // Короткая задержка для предотвращения множественных срабатываний
+            for(volatile int i = 0; i < 100000; i++);
+        }
+        else if (action.button_num == 2 && action.is_long == true) {
+            test_led_change--;
+            if (test_led_change < 1) test_led_change = 1;
+            
+            // Короткая задержка для предотвращения множественных срабатываний
+            for(volatile int i = 0; i < 100000; i++);
+        }
+        
+        // ВКЛЮЧАЕМ ТОЛЬКО ВЫБРАННЫЙ СВЕТОДИОД, ОСТАЛЬНЫЕ ВЫКЛЮЧАЕМ
+        for(int i = 1; i <= 6; i++) {
+            if (i == test_led_change) {
+                led_on(i);  // Включаем только выбранный
+            } else {
+                led_off(i); // Выключаем все остальные
+            }
+        }
+        
+        // Минимальная задержка для стабильности
+        for(volatile int i = 0; i < 1000; i++);
+    }
+}
+
+
 
             /* 1 часть ЛБ 1
 
