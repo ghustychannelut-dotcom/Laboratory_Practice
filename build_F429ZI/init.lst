@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -46,7 +46,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
   16:Core/Src/init.c **** */
   17:Core/Src/init.c **** 
   18:Core/Src/init.c **** uint32_t long_press = 500000;
-  19:Core/Src/init.c **** uint8_t frq_levels = 3;
+  19:Core/Src/init.c **** uint8_t frq_levels = 4;
   20:Core/Src/init.c **** uint32_t frq_step = 10000;
   21:Core/Src/init.c **** uint32_t count = 0;
   22:Core/Src/init.c **** uint8_t led_change = 2;
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
   28:Core/Src/init.c **** void RCC_init(void) {
   29              		.loc 1 28 21 view -0
   30              		.cfi_startproc
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 2
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 2
 
 
   31              		@ args = 0, pretend = 0, frame = 0
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
   77 001c 42F08042 		orr	r2, r2, #1073741824
   78 0020 9A60     		str	r2, [r3, #8]
   39:Core/Src/init.c ****     CLEAR_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR15_1);
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 3
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 3
 
 
   79              		.loc 1 39 5 view .LVU8
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  121 0074 22F08062 		bic	r2, r2, #67108864
  122 0078 DA60     		str	r2, [r3, #12]
   52:Core/Src/init.c ****     SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_13); // LED reset to 0
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 4
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 4
 
 
  123              		.loc 1 52 5 view .LVU19
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  163              		.loc 1 66 5 view .LVU29
  164 00ca 1A68     		ldr	r2, [r3]
  165 00cc 22F40062 		bic	r2, r2, #2048
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 5
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 5
 
 
  166 00d0 1A60     		str	r2, [r3]
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  207              		.loc 1 79 5 view .LVU40
  208 0122 9A68     		ldr	r2, [r3, #8]
  209 0124 22F08002 		bic	r2, r2, #128
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 6
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 6
 
 
  210 0128 9A60     		str	r2, [r3, #8]
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  251              		.loc 1 92 5 view .LVU51
  252 017a 9A69     		ldr	r2, [r3, #24]
  253 017c 42F48012 		orr	r2, r2, #1048576
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 7
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 7
 
 
  254 0180 9A61     		str	r2, [r3, #24]
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  299 001a 1A68     		ldr	r2, [r3]
  300              		.loc 1 103 18 view .LVU65
  301 001c 22F44052 		bic	r2, r2, #12288
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 8
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 8
 
 
  302 0020 1A60     		str	r2, [r3]
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  350              	.LVL0:
  351              	.LFB133:
  112:Core/Src/init.c **** 
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 9
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 9
 
 
  113:Core/Src/init.c **** // functions
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  392 002c 43F48053 		orr	r3, r3, #4096
  393 0030 9361     		str	r3, [r2, #24]
  127:Core/Src/init.c ****             break;
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 10
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 10
 
 
  394              		.loc 1 127 13 view .LVU90
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  436              	led_off:
  437              	.LVL2:
  438              	.LFB134:
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 11
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 11
 
 
  142:Core/Src/init.c **** 
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  480 0030 9361     		str	r3, [r2, #24]
  155:Core/Src/init.c ****             break;
  481              		.loc 1 155 13 view .LVU106
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 12
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 12
 
 
  482 0032 7047     		bx	lr
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  523              	read_button:
  524              	.LVL4:
  525              	.LFB135:
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 13
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 13
 
 
  171:Core/Src/init.c **** 
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  567              	.L38:
  177:Core/Src/init.c ****         case 1:
  568              		.loc 1 177 5 view .LVU125
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 14
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 14
 
 
  569 002a 0020     		movs	r0, #0
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  612 000c 0024     		movs	r4, #0
  613              	.L42:
  614              	.LVL13:
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 15
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 15
 
 
  615              		.loc 1 196 23 is_stmt 1 discriminator 1 view .LVU133
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  212:Core/Src/init.c ****             }
  213:Core/Src/init.c ****         }
  214:Core/Src/init.c **** 
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 16
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 16
 
 
  215:Core/Src/init.c ****         action.button_num = 2;
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  678              	.LBB3:
  209:Core/Src/init.c ****             if (read_button(2) == false) {
  679              		.loc 1 209 16 view .LVU151
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 17
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 17
 
 
  680 0060 0024     		movs	r4, #0
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  721              		.loc 1 219 14 is_stmt 0 view .LVU164
  722 0090 0320     		movs	r0, #3
  723 0092 FFF7FEFF 		bl	read_button
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 18
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 18
 
 
  724              	.LVL22:
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  229:Core/Src/init.c ****     }
  764              		.loc 1 229 9 is_stmt 1 view .LVU179
  229:Core/Src/init.c ****     }
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 19
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 19
 
 
  765              		.loc 1 229 29 is_stmt 0 view .LVU180
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  809              		.loc 1 250 13 is_stmt 0 view .LVU187
  810 000e 022B     		cmp	r3, #2
  811 0010 1AD0     		beq	.L77
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 20
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 20
 
 
  812              	.L66:
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  848              		.loc 1 248 26 is_stmt 0 view .LVU199
  849 0032 0023     		movs	r3, #0
  850 0034 0293     		str	r3, [sp, #8]
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 21
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 21
 
 
  248:Core/Src/init.c ****     }
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  891              		.loc 1 255 26 is_stmt 0 view .LVU213
  892 0062 0023     		movs	r3, #0
  893 0064 0393     		str	r3, [sp, #12]
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 22
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 22
 
 
  255:Core/Src/init.c ****     }
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  943 000a 9DF80820 		ldrb	r2, [sp, #8]	@ zero_extendqisi2
  944              		.loc 1 261 8 view .LVU222
  945 000e 032A     		cmp	r2, #3
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 23
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 23
 
 
  946 0010 0BD0     		beq	.L100
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  953              	.L82:
  309:Core/Src/init.c ****         switch(led_change) {
  310:Core/Src/init.c ****             case 1:
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 24
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 24
 
 
  311:Core/Src/init.c ****                 led_frq.led1--;
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  964              		.cfi_remember_state
  965              		.cfi_def_cfa_offset 0
  966              		@ sp needed
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 25
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 25
 
 
  967 0028 7047     		bx	lr
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  1009 0056 8DF80020 		strb	r2, [sp]
  1010 005a DCE7     		b	.L82
  1011              	.L88:
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 26
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 26
 
 
  272:Core/Src/init.c ****                 if (led_frq.led2 >= frq_levels) {
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  286:Core/Src/init.c ****                 if (led_frq.led4 >= frq_levels) {
  1050              		.loc 1 286 17 is_stmt 1 view .LVU256
  286:Core/Src/init.c ****                 if (led_frq.led4 >= frq_levels) {
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 27
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 27
 
 
  1051              		.loc 1 286 24 is_stmt 0 view .LVU257
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  1089              		.loc 1 300 24 is_stmt 0 view .LVU273
  1090 00c4 9DF80530 		ldrb	r3, [sp, #5]	@ zero_extendqisi2
  300:Core/Src/init.c ****                 if (led_frq.led6 >= frq_levels) {
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 28
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 28
 
 
  1091              		.loc 1 300 29 view .LVU274
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  1133 00fa 013B     		subs	r3, r3, #1
  1134 00fc DBB2     		uxtb	r3, r3
  1135 00fe 8DF80030 		strb	r3, [sp]
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 29
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 29
 
 
  312:Core/Src/init.c ****                     led_frq.led1 = 0; 
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  327:Core/Src/init.c ****                 }
  1173              		.loc 1 327 34 is_stmt 0 view .LVU304
  1174 0136 8DF80230 		strb	r3, [sp, #2]
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 30
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 30
 
 
  1175 013a 6CE7     		b	.L82
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  1212              		.loc 1 346 29 view .LVU321
  1213 0170 013B     		subs	r3, r3, #1
  1214 0172 DBB2     		uxtb	r3, r3
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 31
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 31
 
 
  1215 0174 8DF80530 		strb	r3, [sp, #5]
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  360:Core/Src/init.c **** 
  361:Core/Src/init.c ****     if (action.button_num == 1 && !action.is_long) {
  1262              		.loc 1 361 5 view .LVU332
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 32
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 32
 
 
  1263              		.loc 1 361 15 is_stmt 0 view .LVU333
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  1300              		.loc 1 378 41 is_stmt 0 view .LVU347
  1301 0048 032B     		cmp	r3, #3
  1302 004a 94BF     		ite	ls
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 33
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 33
 
 
  1303 004c 0022     		movls	r2, #0
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  1348 008a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
  363:Core/Src/init.c ****             led_state++;
  1349              		.loc 1 363 12 view .LVU362
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 34
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 34
 
 
  1350 008c 052B     		cmp	r3, #5
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  1395              		.cfi_startproc
  1396              		@ args = 12, pretend = 8, frame = 16
  1397              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 35
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 35
 
 
  1398              		.loc 1 385 61 is_stmt 0 view .LVU373
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  1443 002e 8DF80990 		strb	r9, [sp, #9]
  395:Core/Src/init.c ****     final_states.led3 = (led_pwr.led3 == 0) ? 0 : led_frq.led3;
  1444              		.loc 1 395 5 is_stmt 1 view .LVU387
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 36
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 36
 
 
  1445              		.loc 1 395 33 is_stmt 0 view .LVU388
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  405:Core/Src/init.c ****         uint16_t period = final_states.led1 * 100; // Маленькие числа
  1490              		.loc 1 405 9 is_stmt 1 view .LVU409
  1491              		.loc 1 405 18 is_stmt 0 view .LVU410
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 37
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 37
 
 
  1492 0072 03EB8303 		add	r3, r3, r3, lsl #2
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  1533 00b8 62D2     		bcs	.L124
  419:Core/Src/init.c ****             led_on(2);
  1534              		.loc 1 419 13 is_stmt 1 view .LVU424
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 38
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 38
 
 
  1535 00ba 0220     		movs	r0, #2
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  1569              		.loc 1 439 8 is_stmt 0 view .LVU436
  1570 00ec 002F     		cmp	r7, #0
  1571 00ee 53D0     		beq	.L141
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 39
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 39
 
 
  1572              	.LBB10:
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  1610 0126 06FB1343 		mls	r3, r6, r3, r4
  1611 012a 9BB2     		uxth	r3, r3
  1612              		.loc 1 455 12 view .LVU450
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 40
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 40
 
 
  1613 012c B3EB560F 		cmp	r3, r6, lsr #1
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  472:Core/Src/init.c ****     }
  473:Core/Src/init.c **** }
  1651              		.loc 1 473 1 view .LVU463
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 41
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 41
 
 
  1652 015e 05B0     		add	sp, sp, #20
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  1699 017a FFF7FEFF 		bl	led_off
  1700              	.LVL58:
  1701 017e 9FE7     		b	.L123
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 42
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 42
 
 
  1702              	.LVL59:
@@ -2518,7 +2518,7 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  452:Core/Src/init.c ****     } else {
  1748              		.loc 1 452 9 is_stmt 1 view .LVU479
  1749 01a8 0520     		movs	r0, #5
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 43
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 43
 
 
  1750 01aa FFF7FEFF 		bl	led_off
@@ -2578,13 +2578,13 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  1809              		.align	2
  1812              	frq_step:
  1813 0000 10270000 		.word	10000
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 44
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 44
 
 
  1814              		.global	frq_levels
  1815              		.section	.data.frq_levels,"aw"
  1818              	frq_levels:
- 1819 0000 03       		.byte	3
+ 1819 0000 04       		.byte	4
  1820              		.global	long_press
  1821              		.section	.data.long_press,"aw"
  1822              		.align	2
@@ -2596,61 +2596,61 @@ ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 1
  1830              		.file 3 "C:/tools/SysGCC/arm-none-eabi/include/sys/_stdint.h"
  1831              		.file 4 "Core/Inc/../../CMSIS/Devices/Inc/stm32f429xx.h"
  1832              		.file 5 "Core/Inc/init.h"
-ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s 			page 45
+ARM GAS  C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s 			page 45
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 init.c
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:21     .text.RCC_init:00000000 $t
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:27     .text.RCC_init:00000000 RCC_init
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:44     .text.RCC_init:0000000c $d
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:49     .text.leds_init:00000000 $t
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:55     .text.leds_init:00000000 leds_init
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:260    .text.leds_init:00000184 $d
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:265    .text.buttons_init:00000000 $t
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:271    .text.buttons_init:00000000 buttons_init
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:338    .text.buttons_init:0000004c $d
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:343    .text.led_on:00000000 $t
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:349    .text.led_on:00000000 led_on
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:365    .text.led_on:0000000a $d
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:371    .text.led_on:00000010 $t
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:425    .text.led_on:00000058 $d
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:430    .text.led_off:00000000 $t
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:436    .text.led_off:00000000 led_off
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:452    .text.led_off:0000000a $d
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:458    .text.led_off:00000010 $t
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:512    .text.led_off:00000058 $d
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:517    .text.read_button:00000000 $t
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:523    .text.read_button:00000000 read_button
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:576    .text.read_button:00000030 $d
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:581    .text.check_action:00000000 $t
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:587    .text.check_action:00000000 check_action
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:779    .text.check_action:000000d4 $d
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:1825   .data.long_press:00000000 long_press
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:784    .text.change_led:00000000 $t
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:790    .text.change_led:00000000 change_led
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:911    .text.change_led:00000078 $d
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:1798   .data.led_change:00000000 led_change
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:918    .text.change_frq:00000000 $t
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:924    .text.change_frq:00000000 change_frq
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:985    .text.change_frq:0000003c $d
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:991    .text.change_frq:00000042 $t
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:1121   .text.change_frq:000000f0 $d
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:1127   .text.change_frq:000000f6 $t
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:1227   .text.change_frq:00000184 $d
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:1818   .data.frq_levels:00000000 frq_levels
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:1232   .text.change_pwr:00000000 $t
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:1238   .text.change_pwr:00000000 change_pwr
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:1380   .text.change_pwr:000000b0 $d
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:1786   .bss.led_state.0:00000000 led_state.0
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:1385   .text.leds_flash:00000000 $t
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:1391   .text.leds_flash:00000000 leds_flash
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:1787   .bss.led_state.0:00000000 $d
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:1792   .data.led_num:00000000 led_num
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:1805   .bss.count:00000000 count
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:1802   .bss.count:00000000 $d
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:1812   .data.frq_step:00000000 frq_step
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:1809   .data.frq_step:00000000 $d
-C:\Users\ELLIOT~1\AppData\Local\Temp\ccVgfb1v.s:1822   .data.long_press:00000000 $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:21     .text.RCC_init:00000000 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:27     .text.RCC_init:00000000 RCC_init
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:44     .text.RCC_init:0000000c $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:49     .text.leds_init:00000000 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:55     .text.leds_init:00000000 leds_init
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:260    .text.leds_init:00000184 $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:265    .text.buttons_init:00000000 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:271    .text.buttons_init:00000000 buttons_init
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:338    .text.buttons_init:0000004c $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:343    .text.led_on:00000000 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:349    .text.led_on:00000000 led_on
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:365    .text.led_on:0000000a $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:371    .text.led_on:00000010 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:425    .text.led_on:00000058 $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:430    .text.led_off:00000000 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:436    .text.led_off:00000000 led_off
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:452    .text.led_off:0000000a $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:458    .text.led_off:00000010 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:512    .text.led_off:00000058 $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:517    .text.read_button:00000000 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:523    .text.read_button:00000000 read_button
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:576    .text.read_button:00000030 $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:581    .text.check_action:00000000 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:587    .text.check_action:00000000 check_action
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:779    .text.check_action:000000d4 $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:1825   .data.long_press:00000000 long_press
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:784    .text.change_led:00000000 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:790    .text.change_led:00000000 change_led
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:911    .text.change_led:00000078 $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:1798   .data.led_change:00000000 led_change
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:918    .text.change_frq:00000000 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:924    .text.change_frq:00000000 change_frq
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:985    .text.change_frq:0000003c $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:991    .text.change_frq:00000042 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:1121   .text.change_frq:000000f0 $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:1127   .text.change_frq:000000f6 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:1227   .text.change_frq:00000184 $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:1818   .data.frq_levels:00000000 frq_levels
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:1232   .text.change_pwr:00000000 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:1238   .text.change_pwr:00000000 change_pwr
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:1380   .text.change_pwr:000000b0 $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:1786   .bss.led_state.0:00000000 led_state.0
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:1385   .text.leds_flash:00000000 $t
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:1391   .text.leds_flash:00000000 leds_flash
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:1787   .bss.led_state.0:00000000 $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:1792   .data.led_num:00000000 led_num
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:1805   .bss.count:00000000 count
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:1802   .bss.count:00000000 $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:1812   .data.frq_step:00000000 frq_step
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:1809   .data.frq_step:00000000 $d
+C:\Users\ELLIOT~1\AppData\Local\Temp\ccKknQBe.s:1822   .data.long_press:00000000 $d
 
 NO UNDEFINED SYMBOLS

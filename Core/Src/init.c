@@ -16,7 +16,7 @@ Button pins:
 */
 
 uint32_t long_press = 500000;
-uint8_t frq_levels = 3;
+uint8_t frq_levels = 4;
 uint32_t frq_step = 10000;
 uint32_t count = 0;
 uint8_t led_change = 2;
