@@ -17,8 +17,8 @@ Button pins:
 
 uint32_t long_press = 500000;
 uint8_t frq_levels = 4;
-uint32_t frq_step = 10000;
-uint32_t count = 0;
+uint16_t frq_step = 10000;
+uint16_t count = 0;
 uint8_t led_change = 2;
 uint8_t led_num = 2;
 
@@ -170,17 +170,14 @@ void led_off(uint8_t num) {
 }
 
 bool read_button(uint8_t num) {
-    // Для pull-down конфигурации:
-    // - Нажата = 1 (подтянута к VCC через кнопку)
-    // - Отпущена = 0 (подтянута к земле)
     
     switch (num) {
         case 1:
-            return (GPIOB->IDR & GPIO_IDR_ID1) != 0; // Нажата если 1
+            return (GPIOB->IDR & GPIO_IDR_ID1) != 0;
         case 2:
-            return (GPIOB->IDR & GPIO_IDR_ID6) != 0; // Нажата если 1
+            return (GPIOB->IDR & GPIO_IDR_ID6) != 0;
         case 3:
-            return (GPIOB->IDR & GPIO_IDR_ID2) != 0; // Нажата если 1
+            return (GPIOB->IDR & GPIO_IDR_ID2) != 0;
         default:
             return false;
     }
@@ -190,7 +187,7 @@ button_action check_action(void) {
 
     button_action action;
 
-    if (read_button(1) == true) { // if button 1 pressed
+    if (read_button(1) == true) {
         int i;
 
         for (i = 0; i < long_press; i++) {
@@ -203,7 +200,7 @@ button_action check_action(void) {
         action.is_long = (i >= long_press);
     }
 
-    else if (read_button(2) == true) { // if button 2 pressed
+    else if (read_button(2) == true) {
         int i;
 
         for (i = 0; i < long_press; i++) {
@@ -216,7 +213,7 @@ button_action check_action(void) {
         action.is_long = (i >= long_press);
     }
 
-    else if (read_button(3) == true) { // if button 3 pressed
+    else if (read_button(3) == true) {
         int i;
 
         for (i = 0; i < long_press; i++) {
@@ -229,7 +226,7 @@ button_action check_action(void) {
         action.is_long = (i >= long_press);
     }
 
-    else { //if no buttons pressed 
+    else {
 
         action.button_num = 0;
         action.is_long = false;
@@ -239,19 +236,16 @@ button_action check_action(void) {
 }
 
 void change_led(button_action action) {
-    // Работаем напрямую с глобальной переменной led_change
     if (action.button_num == 1 && action.is_long == true) {
         led_change++;
         if (led_change > 6) led_change = 6;
         
-        // Короткая задержка для предотвращения множественных срабатываний
         for(volatile int i = 0; i < 100000; i++);
     }
     else if (action.button_num == 2 && action.is_long == true) {
         led_change--;
         if (led_change < 1) led_change = 1;
         
-        // Короткая задержка для предотвращения множественных срабатываний
         for(volatile int i = 0; i < 100000; i++);
     }
 }
@@ -356,22 +350,19 @@ leds change_frq (leds led_frq, uint8_t led_change, button_action action) {
 leds change_pwr(leds led_pwr, button_action action) {
     leds new_pwr = led_pwr;
     
-    static uint8_t led_state = 0; // 0-6: сколько светодиодов включено
+    static uint8_t led_state = 0;
 
     if (action.button_num == 1 && !action.is_long) {
-        // Кнопка 1 короткое: увеличиваем количество включенных
         if (led_state < 6) {
             led_state++;
         }
     }
     else if (action.button_num == 2 && !action.is_long) {
-        // Кнопка 2 короткое: уменьшаем количество включенных
         if (led_state > 0) {
             led_state--;
         }
     }
 
-    // Устанавливаем состояния светодиодов
     new_pwr.led1 = (led_state >= 1) ? 1 : 0;
     new_pwr.led2 = (led_state >= 2) ? 1 : 0;
     new_pwr.led3 = (led_state >= 3) ? 1 : 0;
@@ -382,13 +373,8 @@ leds change_pwr(leds led_pwr, button_action action) {
     return new_pwr;
 }
 
-void leds_flash(uint32_t count, leds led_frq, leds led_pwr) {
-    // Исправленная версия с защитой от переполнения
+void leds_flash(uint16_t count, leds led_frq, leds led_pwr) {
     
-    // Используем только младшие биты счетчика для избежания переполнения
-    uint16_t safe_count = count & 0xFFFF; // Берем только младшие 16 бит
-    
-    // Финальные состояния
     leds final_states;
     final_states.led1 = (led_pwr.led1 == 0) ? 0 : led_frq.led1;
     final_states.led2 = (led_pwr.led2 == 0) ? 0 : led_frq.led2;
@@ -397,74 +383,66 @@ void leds_flash(uint32_t count, leds led_frq, leds led_pwr) {
     final_states.led5 = (led_pwr.led5 == 0) ? 0 : led_frq.led5;
     final_states.led6 = (led_pwr.led6 == 0) ? 0 : led_frq.led6;
 
-    // Используем маленькие периоды
-    // LED1
     if (final_states.led1 == 0) {
         led_off(1);
     } else {
-        uint16_t period = final_states.led1 * 100; // Маленькие числа
-        if ((safe_count % period) < (period / 2)) {
+        uint16_t period = final_states.led1 * 100;
+        if ((count % period) < (period / 2)) {
             led_on(1);
         } else {
             led_off(1);
         }
     }
 
-    // LED2
     if (final_states.led2 == 0) {
         led_off(2);
     } else {
         uint16_t period = final_states.led2 * 100;
-        if ((safe_count % period) < (period / 2)) {
+        if ((count % period) < (period / 2)) {
             led_on(2);
         } else {
             led_off(2);
         }
     }
 
-    // ... аналогично для остальных светодиодов
-    // LED3
     if (final_states.led3 == 0) {
         led_off(3);
     } else {
         uint16_t period = final_states.led3 * 100;
-        if ((safe_count % period) < (period / 2)) {
+        if ((count % period) < (period / 2)) {
             led_on(3);
         } else {
             led_off(3);
         }
     }
 
-    // LED4
     if (final_states.led4 == 0) {
         led_off(4);
     } else {
         uint16_t period = final_states.led4 * 100;
-        if ((safe_count % period) < (period / 2)) {
+        if ((count % period) < (period / 2)) {
             led_on(4);
         } else {
             led_off(4);
         }
     }
 
-    // LED5
     if (final_states.led5 == 0) {
         led_off(5);
     } else {
         uint16_t period = final_states.led5 * 100;
-        if ((safe_count % period) < (period / 2)) {
+        if ((count % period) < (period / 2)) {
             led_on(5);
         } else {
             led_off(5);
         }
     }
 
-    // LED6
     if (final_states.led6 == 0) {
         led_off(6);
     } else {
         uint16_t period = final_states.led6 * 100;
-        if ((safe_count % period) < (period / 2)) {
+        if ((count % period) < (period / 2)) {
             led_on(6);
         } else {
             led_off(6);

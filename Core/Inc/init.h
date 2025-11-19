@@ -1,33 +1,25 @@
 #pragma once
 
 #include <stdint.h>
+#include <stdbool.h>
+
 #include "../../CMSIS/Devices/Inc/system_stm32f4xx.h"
 #include "../../CMSIS/Devices/Inc/stm32f429xx.h"
 #include "../../CMSIS/Devices/Inc/stm32f4xx.h"
-#include <stdbool.h>
 
 
-// test functions
-void test_leds(void); // testing LEDs and led_on led_off
-void test_read_button_fixed(void); // testing read_button, led_on and led_off
-void test_check_action(void); // testing check_action
-void test_change_led(void);
-void test_change_frq_in_main(void);
-
-void test_leds_flash(void);
 
 // init functions
 void RCC_init(void);
 void leds_init(void);
 void buttons_init(void);
 
-
+// global variables
 extern uint32_t long_press;
 extern uint8_t frq_levels;
-extern uint32_t frq_step;
-extern uint32_t count;
+extern uint16_t frq_step;
+extern uint16_t count;
 extern uint8_t led_change;
-extern uint8_t led_num;
 
 // Structures 
 typedef struct {
@@ -45,14 +37,16 @@ typedef struct {
 } leds;
 
 // functions
-void led_on(uint8_t num); // работает
-void led_off(uint8_t num); // работает
-bool read_button(uint8_t num); // работает
-button_action check_action(void); // работает
-void change_led(button_action action); // работает
+void led_on(uint8_t num);
+void led_off(uint8_t num);
+bool read_button(uint8_t num);
+button_action check_action(void);
+void change_led(button_action action);
 leds change_frq (leds led_frq, uint8_t led_change, button_action action);
 leds change_pwr (leds led_pwr, button_action action);
-void leds_flash(uint32_t count, leds led_frq, leds led_pwr);
+void leds_flash(uint16_t count, leds led_frq, leds led_pwr);
+
+
 
 
             /* 1 часть ЛБ 1
