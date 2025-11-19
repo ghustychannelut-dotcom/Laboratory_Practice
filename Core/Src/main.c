@@ -23,36 +23,20 @@ int main(void) {
     leds_init();
     buttons_init();
 
-    leds led_pwr = {1, 1, 1, 1, 1, 1};
+    leds led_pwr = {0, 0, 0, 0, 0, 0};
     leds led_frq = {1, 1, 1, 1, 1, 1};
-
-    uint16_t last_led_change_time = 0;
-    uint16_t last_pwr_change_time = 0;
-    const uint32_t DEBOUNCE_DELAY = 200000;
 
     while(1) {
         button_action action = check_action();
 
         change_led(action);
-        
         led_pwr = change_pwr(led_pwr, action);
-        
         led_frq = change_frq(led_frq, led_change, action);
 
-        if (action.button_num != 0) {
-            if (action.button_num == 1 || action.button_num == 2) {
-                if (action.is_long) {
-                    last_led_change_time = count;
-                } else { 
-                    last_pwr_change_time = count;
-                }
-            }
-        }
-
         leds_flash(count, led_frq, led_pwr);
+
         count++;
         for(volatile int i = 0; i < 10000; i++);
-        if (count >= 2000000) count = 0;
     }
 }
 

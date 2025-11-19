@@ -729,22 +729,22 @@ LOAD C:/tools/SysGCC/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard\lib
 LOAD C:/tools/SysGCC/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard\libm.a
 LOAD C:/tools/SysGCC/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard\libgcc.a
 
-.debug_info     0x00000000     0x1347
+.debug_info     0x00000000     0x1301
  .debug_info    0x00000000      0x5ce build_F429ZI/system_stm32f4xx.o
- .debug_info    0x000005ce      0x327 build_F429ZI/main.o
- .debug_info    0x000008f5      0xa22 build_F429ZI/init.o
- .debug_info    0x00001317       0x30 build_F429ZI/startup_stm32f429xx.o
+ .debug_info    0x000005ce      0x2e1 build_F429ZI/main.o
+ .debug_info    0x000008af      0xa22 build_F429ZI/init.o
+ .debug_info    0x000012d1       0x30 build_F429ZI/startup_stm32f429xx.o
 
-.debug_abbrev   0x00000000      0x545
+.debug_abbrev   0x00000000      0x50a
  .debug_abbrev  0x00000000      0x11b build_F429ZI/system_stm32f4xx.o
- .debug_abbrev  0x0000011b      0x178 build_F429ZI/main.o
- .debug_abbrev  0x00000293      0x295 build_F429ZI/init.o
- .debug_abbrev  0x00000528       0x1d build_F429ZI/startup_stm32f429xx.o
+ .debug_abbrev  0x0000011b      0x13d build_F429ZI/main.o
+ .debug_abbrev  0x00000258      0x295 build_F429ZI/init.o
+ .debug_abbrev  0x000004ed       0x1d build_F429ZI/startup_stm32f429xx.o
 
-.debug_loc      0x00000000      0x5a7
+.debug_loc      0x00000000      0x591
  .debug_loc     0x00000000      0x181 build_F429ZI/system_stm32f4xx.o
- .debug_loc     0x00000181       0x42 build_F429ZI/main.o
- .debug_loc     0x000001c3      0x3e4 build_F429ZI/init.o
+ .debug_loc     0x00000181       0x2c build_F429ZI/main.o
+ .debug_loc     0x000001ad      0x3e4 build_F429ZI/init.o
 
 .debug_aranges  0x00000000       0xe0
  .debug_aranges
@@ -756,24 +756,24 @@ LOAD C:/tools/SysGCC/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard\lib
  .debug_aranges
                 0x000000b8       0x28 build_F429ZI/startup_stm32f429xx.o
 
-.debug_ranges   0x00000000      0x168
+.debug_ranges   0x00000000      0x138
  .debug_ranges  0x00000000       0x18 build_F429ZI/system_stm32f4xx.o
- .debug_ranges  0x00000018       0x40 build_F429ZI/main.o
- .debug_ranges  0x00000058       0xf0 build_F429ZI/init.o
- .debug_ranges  0x00000148       0x20 build_F429ZI/startup_stm32f429xx.o
+ .debug_ranges  0x00000018       0x10 build_F429ZI/main.o
+ .debug_ranges  0x00000028       0xf0 build_F429ZI/init.o
+ .debug_ranges  0x00000118       0x20 build_F429ZI/startup_stm32f429xx.o
 
-.debug_line     0x00000000      0xb8e
+.debug_line     0x00000000      0xb7d
  .debug_line    0x00000000      0x1f8 build_F429ZI/system_stm32f4xx.o
- .debug_line    0x000001f8      0x12f build_F429ZI/main.o
- .debug_line    0x00000327      0x7f4 build_F429ZI/init.o
- .debug_line    0x00000b1b       0x73 build_F429ZI/startup_stm32f429xx.o
+ .debug_line    0x000001f8      0x11e build_F429ZI/main.o
+ .debug_line    0x00000316      0x7f4 build_F429ZI/init.o
+ .debug_line    0x00000b0a       0x73 build_F429ZI/startup_stm32f429xx.o
 
-.debug_str      0x00000000      0x50e
- .debug_str     0x00000000      0x50e build_F429ZI/system_stm32f4xx.o
+.debug_str      0x00000000      0x4d5
+ .debug_str     0x00000000      0x4d5 build_F429ZI/system_stm32f4xx.o
                                 0x35f (size before relaxing)
- .debug_str     0x0000050e      0x292 build_F429ZI/main.o
- .debug_str     0x0000050e      0x3fd build_F429ZI/init.o
- .debug_str     0x0000050e       0x52 build_F429ZI/startup_stm32f429xx.o
+ .debug_str     0x000004d5      0x245 build_F429ZI/main.o
+ .debug_str     0x000004d5      0x3fd build_F429ZI/init.o
+ .debug_str     0x000004d5       0x52 build_F429ZI/startup_stm32f429xx.o
 
 .comment        0x00000000       0x45
  .comment       0x00000000       0x45 build_F429ZI/system_stm32f4xx.o
@@ -781,11 +781,11 @@ LOAD C:/tools/SysGCC/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard\lib
  .comment       0x00000045       0x46 build_F429ZI/main.o
  .comment       0x00000045       0x46 build_F429ZI/init.o
 
-.debug_frame    0x00000000      0x1ac
+.debug_frame    0x00000000      0x1a8
  .debug_frame   0x00000000       0x30 build_F429ZI/system_stm32f4xx.o
- .debug_frame   0x00000030       0x2c build_F429ZI/main.o
- .debug_frame   0x0000005c      0x124 build_F429ZI/init.o
- .debug_frame   0x00000180       0x2c C:/tools/SysGCC/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-init.o)
+ .debug_frame   0x00000030       0x28 build_F429ZI/main.o
+ .debug_frame   0x00000058      0x124 build_F429ZI/init.o
+ .debug_frame   0x0000017c       0x2c C:/tools/SysGCC/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-init.o)
 
 Cross Reference Table
 
