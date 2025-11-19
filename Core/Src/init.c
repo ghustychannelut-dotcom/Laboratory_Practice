@@ -39,7 +39,7 @@ void leds_init(void) {
     CLEAR_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR15_1);
     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD15_0);
     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD15_0);
-    SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_15); // LED reset to 0
+    SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_15);
 
     // LED 2: PB13 General purpose output, push-pull, medium speed, no pull-up/pull-down
     SET_BIT(GPIOB -> MODER, GPIO_MODER_MODE13_0);
@@ -49,7 +49,7 @@ void leds_init(void) {
     CLEAR_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR13_1);
     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD13_0);
     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD13_0);
-    SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_13); // LED reset to 0
+    SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_13);
 
     // LED 3: PB12 General purpose output, push-pull, medium speed, no pull-up/pull-down
     SET_BIT(GPIOB -> MODER, GPIO_MODER_MODE12_0);
@@ -59,7 +59,7 @@ void leds_init(void) {
     CLEAR_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR12_1);
     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD12_0);
     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD12_0);
-    SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_12); // LED reset to 0
+    SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_12);
 
     // LED 4: PB5 General purpose output, push-pull, medium speed, no pull-up/pull-down
     SET_BIT(GPIOB -> MODER, GPIO_MODER_MODE5_0);
@@ -69,7 +69,7 @@ void leds_init(void) {
     CLEAR_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR5_1);
     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD5_0);
     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD5_0);
-    SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_5); // LED reset to 0
+    SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_5);
 
     // LED 5: PB3 General purpose output, push-pull, medium speed, no pull-up/pull-down
     SET_BIT(GPIOB -> MODER, GPIO_MODER_MODE3_0);
@@ -93,21 +93,36 @@ void leds_init(void) {
 
 }
 
-void buttons_init(void) { // !
-    // Кнопка 1: PB1 - INPUT mode (00), Pull-down
-    GPIOB->MODER &= ~(0x3 << (1 * 2));    // Input mode (00)
-    GPIOB->PUPDR &= ~(0x3 << (1 * 2));    // Clear pull settings
-    GPIOB->PUPDR |= (0x2 << (1 * 2));     // Pull-down (10)
+void buttons_init(void) {
+    // Button 1: PB1 - Input mode, Pull-down, Medium speed
+    CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE1_0);
+    CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE1_1);
+    CLEAR_BIT(GPIOB -> OTYPER, GPIO_OTYPER_OT1);
+    SET_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR1_0);
+    CLEAR_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR1_1);
+    CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD1_0);
+    CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD1_1);
+    SET_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD1_1);
 
-    // Кнопка 2: PB6 - INPUT mode (00), Pull-down
-    GPIOB->MODER &= ~(0x3 << (6 * 2));    // Input mode (00)
-    GPIOB->PUPDR &= ~(0x3 << (6 * 2));    // Clear pull settings
-    GPIOB->PUPDR |= (0x2 << (6 * 2));     // Pull-down (10)
+    // Button 2: PB6 - Input mode, Pull-down, Medium speed
+    CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE6_0);
+    CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE6_1);
+    CLEAR_BIT(GPIOB -> OTYPER, GPIO_OTYPER_OT6);
+    SET_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR6_0);
+    CLEAR_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR6_1);
+    CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD6_0);
+    CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD6_1);
+    SET_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD6_1);
 
-    // Кнопка 3: PB2 - INPUT mode (00), Pull-down
-    GPIOB->MODER &= ~(0x3 << (2 * 2));    // Input mode (00)
-    GPIOB->PUPDR &= ~(0x3 << (2 * 2));    // Clear pull settings
-    GPIOB->PUPDR |= (0x2 << (2 * 2));     // Pull-down (10)
+    // Button 3: PB2 - Input mode, Pull-down, Medium speed
+    CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE2_0);
+    CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE2_1);
+    CLEAR_BIT(GPIOB -> OTYPER, GPIO_OTYPER_OT2);
+    SET_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR2_0);
+    CLEAR_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR2_1);
+    CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD2_0);
+    CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD2_1);
+    SET_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD2_1);
 }
 
 // functions
