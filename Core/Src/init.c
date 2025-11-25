@@ -466,7 +466,56 @@ void leds_flash(uint16_t count, leds led_frq, leds led_pwr) {
 }
 
       
-/* 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 1 часть ЛБ 1
 
 #include "init.h"
@@ -489,7 +538,7 @@ void Onboard_leds_init(void) {
     *(uint32_t*)(0x40020400UL + 0x0CUL) &= ~0x00UL; // PUPDR 0_0 
     *(uint32_t*)(0x40020400UL + 0x0CUL) &= ~0x01UL; // PUPDR 1_0
 
-    *(uint32_t*)(0x40020400UL + 0x18) |= 0x10000UL; // BSRR reser PB0 output
+    *(uint32_t*)(0x40020400UL + 0x18) |= 0x10000UL; // BSRR reset PB0 output
 
     // blue led PB7 через CMSIS
     SET_BIT(GPIOB -> MODER, GPIO_MODER_MODE7_0); // Moder 14_1

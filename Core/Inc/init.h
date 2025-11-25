@@ -48,8 +48,8 @@ void leds_flash(uint16_t count, leds led_frq, leds led_pwr);
 
 
 
-
-            /* 1 часть ЛБ 1
+/*
+ 1 часть ЛБ 1
 
 
 #include <stdint.h>

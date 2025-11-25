@@ -40,7 +40,41 @@ int main(void) {
     }
 }
 
-/* 1 часть ЛБ 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+
+ 1 часть ЛБ 1
 
 #include "init.h"
 #include <stdbool.h>
@@ -60,15 +94,20 @@ int main(void) {
     Button1_input();
     Button2_input();
 
+    uint8_t flag = 0;
+    uint8_t LEDON = 0;
+
     while (1) {
 
         // reading buttons states and managing their LEDs
         Button1State = !(READ_BIT(GPIOB -> IDR, GPIO_IDR_IDR_12));
         if (Button1State == 1) {
             SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BS_14);
+            flag = 1;
         }
         else {
             SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_14);
+            flag = 0;
         }
 
         Button2State = !(READ_BIT(GPIOB -> IDR, GPIO_IDR_IDR_15));
@@ -108,6 +147,7 @@ int main(void) {
             ButtonAndLed_output();
             SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BS_9);
         }
+        LEDON = READ_BIT(GPIOB -> IDR, GPIO_IDR_IDR_14);
     }
 }
 
