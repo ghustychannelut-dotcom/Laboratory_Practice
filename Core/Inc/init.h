@@ -43,6 +43,10 @@ void leds_flash(uint16_t count, leds led_frq, leds led_pwr);
 
 /*
 
+<<<<<<< HEAD
+=======
+/*
+>>>>>>> 61d29589ecf2f45d1298afed61d143f747f6df81
  1 часть ЛБ 1
 
 
