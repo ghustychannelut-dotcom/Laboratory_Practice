@@ -7,21 +7,16 @@
 #include "../../CMSIS/Devices/Inc/stm32f429xx.h"
 #include "../../CMSIS/Devices/Inc/stm32f4xx.h"
 
-
-
-// init functions
 void RCC_init(void);
 void leds_init(void);
 void buttons_init(void);
 
-// global variables
 extern uint32_t long_press;
 extern uint8_t frq_levels;
 extern uint16_t frq_step;
 extern uint16_t count;
 extern uint8_t led_change;
 
-// Structures 
 typedef struct {
     uint8_t button_num;
     bool is_long;
@@ -36,7 +31,6 @@ typedef struct {
     uint8_t led6;
 } leds;
 
-// functions
 void led_on(uint8_t num);
 void led_off(uint8_t num);
 bool read_button(uint8_t num);
@@ -47,9 +41,9 @@ leds change_pwr (leds led_pwr, button_action action);
 void leds_flash(uint16_t count, leds led_frq, leds led_pwr);
 
 
+/*
 
-
-            /* 1 часть ЛБ 1
+ 1 часть ЛБ 1
 
 
 #include <stdint.h>

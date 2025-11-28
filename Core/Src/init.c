@@ -22,16 +22,12 @@ uint16_t count = 0;
 uint8_t led_change = 2;
 uint8_t led_num = 2;
 
-
-// Actual initialization
-
 void RCC_init(void) {
     SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_GPIOBEN);
 }
 
 void leds_init(void) {
     
-    // LED 1: PB15 General purpose output, push-pull, medium speed, no pull-up/pull-down
     SET_BIT(GPIOB -> MODER, GPIO_MODER_MODE15_0);
     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE15_1);
     CLEAR_BIT(GPIOB -> OTYPER, GPIO_OTYPER_OT15);
@@ -41,7 +37,6 @@ void leds_init(void) {
     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD15_0);
     SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_15);
 
-    // LED 2: PB13 General purpose output, push-pull, medium speed, no pull-up/pull-down
     SET_BIT(GPIOB -> MODER, GPIO_MODER_MODE13_0);
     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE13_1);
     CLEAR_BIT(GPIOB -> OTYPER, GPIO_OTYPER_OT13);
@@ -51,7 +46,6 @@ void leds_init(void) {
     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD13_0);
     SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_13);
 
-    // LED 3: PB12 General purpose output, push-pull, medium speed, no pull-up/pull-down
     SET_BIT(GPIOB -> MODER, GPIO_MODER_MODE12_0);
     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE12_1);
     CLEAR_BIT(GPIOB -> OTYPER, GPIO_OTYPER_OT12);
@@ -61,7 +55,6 @@ void leds_init(void) {
     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD12_0);
     SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_12);
 
-    // LED 4: PB5 General purpose output, push-pull, medium speed, no pull-up/pull-down
     SET_BIT(GPIOB -> MODER, GPIO_MODER_MODE5_0);
     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE5_1);
     CLEAR_BIT(GPIOB -> OTYPER, GPIO_OTYPER_OT5);
@@ -71,7 +64,6 @@ void leds_init(void) {
     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD5_0);
     SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_5);
 
-    // LED 5: PB3 General purpose output, push-pull, medium speed, no pull-up/pull-down
     SET_BIT(GPIOB -> MODER, GPIO_MODER_MODE3_0);
     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE3_1);
     CLEAR_BIT(GPIOB -> OTYPER, GPIO_OTYPER_OT3);
@@ -79,9 +71,8 @@ void leds_init(void) {
     CLEAR_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR3_1);
     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD3_0);
     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD3_0);
-    SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_3); // LED reset to 0
+    SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_3);
 
-    // LED 6: PB4 General purpose output, push-pull, medium speed, no pull-up/pull-down
     SET_BIT(GPIOB -> MODER, GPIO_MODER_MODE4_0);
     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE4_1);
     CLEAR_BIT(GPIOB -> OTYPER, GPIO_OTYPER_OT4);
@@ -89,12 +80,11 @@ void leds_init(void) {
     CLEAR_BIT(GPIOB -> OSPEEDR, GPIO_OSPEEDER_OSPEEDR4_1);
     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD4_0);
     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD4_0);
-    SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_4); // LED reset to 0
+    SET_BIT(GPIOB -> BSRR, GPIO_BSRR_BR_4);
 
 }
 
 void buttons_init(void) {
-    // Button 1: PB1 - Input mode, Pull-down, Medium speed
     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE1_0);
     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE1_1);
     CLEAR_BIT(GPIOB -> OTYPER, GPIO_OTYPER_OT1);
@@ -104,7 +94,6 @@ void buttons_init(void) {
     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD1_1);
     SET_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD1_1);
 
-    // Button 2: PB6 - Input mode, Pull-down, Medium speed
     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE6_0);
     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE6_1);
     CLEAR_BIT(GPIOB -> OTYPER, GPIO_OTYPER_OT6);
@@ -114,7 +103,6 @@ void buttons_init(void) {
     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD6_1);
     SET_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD6_1);
 
-    // Button 3: PB2 - Input mode, Pull-down, Medium speed
     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE2_0);
     CLEAR_BIT(GPIOB -> MODER, GPIO_MODER_MODE2_1);
     CLEAR_BIT(GPIOB -> OTYPER, GPIO_OTYPER_OT2);
@@ -124,8 +112,6 @@ void buttons_init(void) {
     CLEAR_BIT(GPIOB -> PUPDR, GPIO_PUPDR_PUPD2_1);
     SET_BIT(GPIOB-> PUPDR, GPIO_PUPDR_PUPD2_1);
 }
-
-// functions
 
 void led_on(uint8_t num) {
     switch (num) {
@@ -466,7 +452,56 @@ void leds_flash(uint16_t count, leds led_frq, leds led_pwr) {
 }
 
       
-/* 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 1 часть ЛБ 1
 
 #include "init.h"
@@ -489,7 +524,7 @@ void Onboard_leds_init(void) {
     *(uint32_t*)(0x40020400UL + 0x0CUL) &= ~0x00UL; // PUPDR 0_0 
     *(uint32_t*)(0x40020400UL + 0x0CUL) &= ~0x01UL; // PUPDR 1_0
 
-    *(uint32_t*)(0x40020400UL + 0x18) |= 0x10000UL; // BSRR reser PB0 output
+    *(uint32_t*)(0x40020400UL + 0x18) |= 0x10000UL; // BSRR reset PB0 output
 
     // blue led PB7 через CMSIS
     SET_BIT(GPIOB -> MODER, GPIO_MODER_MODE7_0); // Moder 14_1
